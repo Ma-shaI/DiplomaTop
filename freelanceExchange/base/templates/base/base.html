@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+</head>
+<body>
+{% include 'base/navbar.html' %}
+{% include 'base/subnav.html' %}
+{% block content %}
+{% endblock %}
+</body>
+</html>

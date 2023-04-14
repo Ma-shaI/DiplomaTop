@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.header {
+  /* background: #37a0a0; */
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;
+  box-sizing: border-box;
+}
+.header > .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.header__left > ul,
+.header__nav > ul {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+  gap: 3.5rem;
+}
+.header__menu__left {
+  list-style: none; /* Для списка убираем маркеры */
+  margin: 0; /* Нет отступов вокруг */
+  padding: 0; /* Убираем поля вокруг текста */
+  font-family: Arial, sans-serif; /* Рубленый шрифт для текста меню */
+  font-size: 10pt; /* Размер названий в пункте меню */
+}
+.header__menuItem .header__menuUl,
+.subnav__menuItem .subnav__menuUl {
+  position: absolute; /* Подменю позиционируются абсолютно */
+  display: none; /* Скрываем подменю */
+
+  /* margin-left: 165px; 
+  margin-top: -2em; */
+}
+li a {
+  display: block; /* Ссылка как блочный элемент */
+  padding: 5px; /* Поля вокруг надписи */
+  text-decoration: none; /* Подчеркивание у ссылок убираем */
+  color: #0b0b0b;
+  font-size: 20px;
+  border-bottom: none; /* Границу снизу не проводим */
+}
+
+.header__menuItem:hover .header__menuUl,
+.subnav__menuItem:hover .subnav__menuUl {
+  display: block; /* При выделении пункта курсором мыши отображается подменю */
+}
+
+.subnav__nav > .subnav__menu {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 3.5rem;
+  list-style: none;
+  padding: 0;
+}
+span {
+  border: 1px solid #080808;
+}
+
+button {
+  height: 26px;
+  width: 26px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #f15b42;
+  cursor: pointer;
+}
+button:before {
+  content: '\f105';
+  font-family: FontAwesome;
+  color: #f9f0da;
+  font-size: 20px;
+  font-weight: bold;
+}
+.header__nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

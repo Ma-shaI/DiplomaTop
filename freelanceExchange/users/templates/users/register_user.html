@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<div class="register">
+    <div class="container">
+        <div class="register__block">
+            <h2>Зарегистрируйтесь как фрилансер или клиент</h2>
+            <form action="{% url 'register_user' %}" method="post">
+                {% csrf_token %}
+                <div class="register__btns">
+                    <div class="btn__box">
+                        <input type="radio" value="freelancer" name="reg">
+                        <p>Я фрилансер</p>
+                    </div>
+                    <div class="btn__box">
+                        <input type="radio" value="client" name="reg">
+                        <p>Я клиент</p>
+                    </div>
+                </div>
+                <div class="register__btn">
+                    <input type="submit" value="Зарегистрироваться">
+                </div>
+            </form>
+            <p>У вас уже есть аккаунт? <a href="#">Авторизоваться</a></p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% load static %}
+<header class="header">
+    <div class="container container__navbar">
+        <div class="header__left">
+            <a href="#" class="header__logo">
+                <img src="#" alt="DevSearch Logo"/>
+            </a>
+            <ul class="header__menu__left">
+                <li class="header__menuItem"><a href="#">Найти талант</a>
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="#">Разместить вакансию</a></li>
+                        <li class="header__menuItem"><a href="#">Рынок талантов</a></li>
+                    </ul>
+                </li>
+                <li class="header__menuItem"><a href="#">Найти работу</a>
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="#">Разместить талант</a></li>
+                        <li class="header__menuItem"><a href="#">Рынок вакансий</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <nav class="header__nav">
+            <form>
+                <input type="text" placeholder="Искать здесь...">
+
+            </form>
+            <ul class="header__menu__right">
+<!--                <li class="header__menuItem">-->
+
+<!--                    <ul class="header__menuUl">-->
+<!--                        <li class="header__menuItem"><a href="#">Найти талант</a></li>-->
+<!--                        <li class="header__menuItem"><a href="#">Найти работу</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+                <li class="header__menuItem"><a href="#">Войти</a></li>
+                <li class="header__menuItem"><a href="{% url 'register_user' %}">Регистрация</a></li>
+            </ul>
+        </nav>
+
+    </div>
+    <hr/>
+</header>
