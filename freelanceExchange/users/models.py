@@ -24,24 +24,15 @@ class LevelsLanguage(models.Model):
         return f'{self.name}'
 
 
-class Freelancer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
-    first_name = models.CharField(max_length=200, null=True, blank=True)
-    last_name = models.CharField(max_length=200, null=True, blank=True)
-    email = models.EmailField(max_length=500)
-    username = models.CharField(max_length=200, null=True, blank=True)
-    experiences = models.ManyToManyField(Experience, blank=True)
-    resume = models.FileField(upload_to='freelancers/resumes/%Y/%m/%d/', blank=True)
-    profile_image = models.ImageField(upload_to='freelancers/', default='user-default.png')
-    bio = models.TextField(null=True, blank=True)
-    hourly_rate = models.IntegerField(blank=True, null=True)
+class Languages(models.Model):
+    name = models.CharField(max_length=200, blank=True, null=True)
+    level = models.ManyToManyField(LevelsLanguage, blank=True)
 
     def __str__(self):
-        return f'{self.first_name}'
+        return f'{self.name}'
 
 
 class Education(models.Model):
-    owner = models.ForeignKey(Freelancer, on_delete=models.CASCADE, null=True, blank=True)
     level = models.ManyToManyField(LevelsEducation, blank=True)
     institution = models.CharField(max_length=500, blank=True, null=True)
     faculty = models.CharField(max_length=500, blank=True, null=True)
@@ -52,12 +43,22 @@ class Education(models.Model):
         return f'{self.major}'
 
 
-class Languages(models.Model):
-    name = models.CharField(max_length=200, blank=True, null=True)
-    level = models.ManyToManyField(LevelsLanguage, blank=True)
+class Freelancer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=500)
+    username = models.CharField(max_length=200, null=True, blank=True)
+    experiences = models.ManyToManyField(Experience, blank=True)
+    resume = models.FileField(upload_to='freelancers/resumes/%Y/%m/%d/', blank=True)
+    profile_image = models.ImageField(upload_to='freelancers/', default='user-default.png')
+    bio = models.TextField(null=True, blank=True)
+    language = models.ManyToManyField(Languages, null=True, blank=True)
+    education = models.ManyToManyField(Education, null=True, blank=True)
+    hourly_rate = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.first_name}'
 
 
 class Skill(models.Model):
@@ -68,3 +69,15 @@ class Skill(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+
+class Customer(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    first_name = models.CharField(max_length=200, null=True, blank=True)
+    last_name = models.CharField(max_length=200, null=True, blank=True)
+    email = models.EmailField(max_length=500)
+    username = models.CharField(max_length=200, null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.first_name}'
