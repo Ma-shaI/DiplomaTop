@@ -5,7 +5,7 @@
     <div class="container">
         <div class="register__block">
             <h2>Зарегистрируйтесь как фрилансер или клиент</h2>
-            <form action="{% url 'register_user' %}" method="post">
+            <form action="{% url 'register_user' %}" method="post" >
                 {% csrf_token %}
                 <div class="register__btns">
                     <div class="btn__box">

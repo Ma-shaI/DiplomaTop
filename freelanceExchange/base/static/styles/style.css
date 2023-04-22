@@ -92,3 +92,38 @@ button:before {
   flex-direction: row;
   align-items: center;
 }
+
+/* Register_user */
+.register__block {
+  padding: 40px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.register__btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+}
+.btn__box {
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid gray;
+  width: 250px;
+}
+.btn__box input {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.register__btn {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
