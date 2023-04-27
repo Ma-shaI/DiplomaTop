@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'users.apps.UsersConfig',
     'tasks.apps.TasksConfig',
+    'mptt',
 ]
 
 MIDDLEWARE = [

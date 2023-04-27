@@ -28,7 +28,11 @@ def reg_start_client(request):
             print('FAAAALSE CLIENT')
             messages.error(request, 'Ошибка при регистрации')
     print('что-то пошло не так CLIENT')
-    return render(request, 'users/reg_start_client.html', {'form': form})
+    context = {
+        'form': form,
+        'reg': 'client'
+    }
+    return render(request, 'users/register.html', context)
 
 
 def reg_client(request):
@@ -49,8 +53,11 @@ def reg_start_frlnc(request):
         else:
             print('FAAALSEEE')
             messages.error(request, 'Ошибка при регистрации')
-    print('что-то пошло не tak freelancer')
-    return render(request, 'users/reg_start_frlnc.html', {'form': form})
+    context = {
+        'form': form,
+        'reg': 'client'
+    }
+    return render(request, 'users/register.html', context)
 
 
 def reg_freelancer(request):
@@ -62,17 +69,3 @@ def reg_freelancer(request):
         else:
             messages.error(request, 'Ошибка')
     return render(request, 'users/reg_freelancer.html', {'form': form})
-
-# def register_user(request):
-#     # if request.method == 'POST':
-#     # if request.POST['reg'] == 'client':
-#     #     return redirect('base-register/client')
-#     # elif request.POST['reg'] == 'freelancer':
-#     #     return redirect('base-register/freelancer')
-#     return render(request, 'users/register_user.html')
-#
-#
-# def base_register(request):
-#     form = CustomUserCreationForm()
-#
-#     return render(request, 'users/base_register.html', {'form': form})

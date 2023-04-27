@@ -1,5 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from mptt.models import MPTTModel, TreeForeignKey
+
+
+class Services(MPTTModel):
+    name = models.CharField(max_length=200, unique=True)
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Experience(models.Model):
@@ -53,9 +65,10 @@ class Freelancer(models.Model):
     resume = models.FileField(upload_to='freelancers/resumes/%Y/%m/%d/', blank=True)
     profile_image = models.ImageField(upload_to='freelancers/', default='user-default.png')
     bio = models.TextField(null=True, blank=True)
-    language = models.ManyToManyField(Languages, null=True, blank=True)
-    education = models.ManyToManyField(Education, null=True, blank=True)
+    language = models.ManyToManyField(Languages, blank=True)
+    education = models.ManyToManyField(Education, blank=True)
     hourly_rate = models.IntegerField(blank=True, null=True)
+    serves = models.ManyToManyField(Services)
 
     def __str__(self):
         return f'{self.first_name}'

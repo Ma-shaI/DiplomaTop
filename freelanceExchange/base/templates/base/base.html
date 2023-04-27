@@ -1,4 +1,5 @@
 {% load static %}
+{% load show_menu %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,7 @@
 </head>
 <body>
 {% include 'base/navbar.html' %}
-{% include 'base/subnav.html' %}
+{% show_menu_items %}
 {% block content %}
 {% endblock %}
 <script src="{% static 'uikit/app.js'%}"></script>
