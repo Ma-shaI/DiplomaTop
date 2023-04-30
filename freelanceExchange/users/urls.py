@@ -7,5 +7,6 @@ urlpatterns = [
     path('reg_client', views.reg_client, name='reg_client'),
     path('reg_start_frlnc', views.reg_start_frlnc, name='reg_start_frlnc'),
     path('reg_freelancer', views.reg_freelancer, name='reg_freelancer'),
-    # path('base-register/', views.base_register, name='base-register'),
+    path('login', views.login_user, name='login_user'),
+    path('logout', views.logout_user, name='logout')
 ]

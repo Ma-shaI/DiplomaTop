@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import FreelanceCreationForm, CustomUserCreationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def register_user(request):
@@ -55,7 +57,7 @@ def reg_start_frlnc(request):
             messages.error(request, 'Ошибка при регистрации')
     context = {
         'form': form,
-        'reg': 'client'
+        'reg': 'freelancer'
     }
     return render(request, 'users/register.html', context)
 
@@ -69,3 +71,32 @@ def reg_freelancer(request):
         else:
             messages.error(request, 'Ошибка')
     return render(request, 'users/reg_freelancer.html', {'form': form})
+
+
+def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            messages.error(request, 'Пользователь с таким логином не найден')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, 'Логин или пароль введены некорректно')
+
+    return render(request, 'users/login_user.html')
+
+
+def logout_user(request):
+    logout(request)
+    messages.info(request, 'Вы вышли из аккаунта')
+    return redirect('login_user')

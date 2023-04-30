@@ -33,8 +33,13 @@
 <!--                        <li class="header__menuItem"><a href="#">Найти работу</a></li>-->
 <!--                    </ul>-->
 <!--                </li>-->
-                <li class="header__menuItem"><a href="#">Войти</a></li>
+                {% if request.user.is_authenticated%}
+                <li class="header__menuItem"><a href="{% url 'logout' %}">Выйти</a></li>
+
+                {% else %}
+                <li class="header__menuItem"><a href="{% url 'login_user' %}">Войти</a></li>
                 <li class="header__menuItem"><a href="{% url 'register_user' %}">Регистрация</a></li>
+                {% endif %}
             </ul>
         </nav>
 
