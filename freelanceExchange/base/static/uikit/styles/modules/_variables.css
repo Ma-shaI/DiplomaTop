@@ -1,0 +1,18 @@
+:root {
+  --color-main: #5aa5b9;
+  --color-main-light: #e6faff;
+
+  --color-white-light: #f3f3f3;
+  --color-success: #359e64;
+  --color-success-bg: #def8e8;
+  --color-error: #fc4b0b;
+  --color-error-bg: #fff2ee;
+  --font-base: 'Poppins', arial, helvetica, 'Segoe UI', roboto, ubuntu,
+    sans-serif;
+  --font-monospace: 'Fira Code', 'Courier New', courier, monospace;
+  --font-regular: 300;
+  --font-medium: 500;
+  --font-bold: 700;
+
+  --generic-transition: all 0.3s ease-in-out;
+}

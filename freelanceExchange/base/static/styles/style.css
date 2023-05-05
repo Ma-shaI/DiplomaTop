@@ -61,7 +61,7 @@ span {
   border: 1px solid #080808;
 }
 
-button {
+/* button {
   height: 26px;
   width: 26px;
   position: absolute;
@@ -76,7 +76,7 @@ button:before {
   color: #f9f0da;
   font-size: 20px;
   font-weight: bold;
-}
+} */
 .header__nav {
   display: flex;
   flex-direction: row;
@@ -190,4 +190,8 @@ button:before {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+p {
+  margin: 0;
 }

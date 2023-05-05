@@ -28,3 +28,14 @@ function showHide(element_id) {
   //Если элемент с id-шником element_id не найден, то выводим сообщение
   else alert('Элемент с id: ' + element_id + ' не найден!');
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  let alertClose = document.querySelectorAll('.alert__close');
+
+  alertClose.forEach(function (item) {
+    item.addEventListener('click', function (e) {
+      parentModal = this.closest('.alert');
+      parentModal.style.display = 'none';
+    });
+  });
+});

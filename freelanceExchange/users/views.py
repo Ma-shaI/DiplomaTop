@@ -67,9 +67,17 @@ def reg_freelancer(request):
     if request.method == 'POST':
         form = FreelanceCreationForm(request.POST)
         if form.is_valid():
-            print('TRUE')
+            freelancer = form.save(commit=False)
+            freelancer.first_name = request.user.first_name
+            freelancer.last_name = request.user.last_name
+            freelancer.email = request.user.email
+            freelancer.username = request.user.username
+            freelancer.save()
+            messages.success(request, 'Аккаунт фрилансера был создан')
+            login(request, freelancer)
+            return redirect('index')
         else:
-            messages.error(request, 'Ошибка')
+            messages.error(request, 'Ошибка регистрации фрилансера')
     return render(request, 'users/reg_freelancer.html', {'form': form})
 
 
