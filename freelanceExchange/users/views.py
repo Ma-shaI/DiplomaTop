@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import FreelanceCreationForm, CustomUserCreationForm
+from .forms import FreelanceCreationForm, CustomUserCreationForm, LanguageForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -64,6 +64,7 @@ def reg_start_frlnc(request):
 
 def reg_freelancer(request):
     form = FreelanceCreationForm()
+    form_language = LanguageForm()
     if request.method == 'POST':
         form = FreelanceCreationForm(request.POST)
         if form.is_valid():
@@ -78,7 +79,11 @@ def reg_freelancer(request):
             return redirect('index')
         else:
             messages.error(request, 'Ошибка регистрации фрилансера')
-    return render(request, 'users/reg_freelancer.html', {'form': form})
+    context = {
+        'form': form,
+        'form_language': form_language
+    }
+    return render(request, 'users/reg_freelancer.html', context)
 
 
 def login_user(request):

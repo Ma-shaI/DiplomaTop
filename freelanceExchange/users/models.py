@@ -29,16 +29,9 @@ class LevelsEducation(models.Model):
         return f'{self.name}'
 
 
-class LevelsLanguage(models.Model):
-    name = models.CharField(max_length=200)
-
-    def __str__(self):
-        return f'{self.name}'
-
 
 class Languages(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
-    level = models.ManyToManyField(LevelsLanguage, blank=True)
 
     def __str__(self):
         return f'{self.name}'
@@ -65,8 +58,6 @@ class Freelancer(models.Model):
     resume = models.FileField(upload_to='freelancers/resumes/%Y/%m/%d/', blank=True)
     profile_image = models.ImageField(upload_to='freelancers/', default='user-default.png')
     bio = models.TextField(null=True, blank=True)
-    language = models.ManyToManyField(Languages, blank=True)
-    education = models.ManyToManyField(Education, blank=True)
     hourly_rate = models.IntegerField(blank=True, null=True)
     serves = models.ManyToManyField(Services)
 
@@ -94,3 +85,20 @@ class Customer(models.Model):
 
     def __str__(self):
         return f'{self.first_name}'
+
+
+class Language(models.Model):
+    LEVEL = (
+        ('A1', 'Начальный'),
+        ('A2', 'Элементарный'),
+        ('B1', 'Средний'),
+        ('B2', 'Средне-продвинутый'),
+        ('C1', 'Продвинутый'),
+        ('C2', 'В совершенстве')
+    )
+    owner = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+    language = models.ManyToManyField(Languages, blank=True)
+    level = models.CharField(max_length=200, choices=LEVEL)
+
+    def __str__(self):
+        return self.language

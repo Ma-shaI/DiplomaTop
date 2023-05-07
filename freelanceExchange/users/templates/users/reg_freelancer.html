@@ -12,6 +12,26 @@
         {% endfor %}
     </div>
     {% endfor %}
+    {% for field in form_language %}
+    <div>
+        {% if field.label == 'Выберите язык, которым вы владеете' %}
+        <label>Выберите язык</label>
+        <select>
+            <option value="">Пожалуйста выберите язык</option>
+            {% for e in field%}
+
+            <option value=""> {{ e.name }}</option>
+            {% endfor %}
+        </select>
+        {% else %}
+        <label> {{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% endfor %}
     <div>
         <input type="submit" value="Регистрация"/>
     </div>
