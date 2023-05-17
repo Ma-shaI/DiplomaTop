@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Customer, Experience
+from users.models import  Customer, Experience
 
 
 class AmountHours(models.Model):
@@ -29,15 +29,21 @@ class Budget(models.Model):
 
 
 class Task(models.Model):
+    EXPERIENCE = (
+        ('junior', 'Новичок'),
+        ('middle', 'Средний'),
+        ('senior', 'Эксперт')
+    )
     owner = models.ForeignKey(Customer, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
-    experiences = models.ManyToManyField(Experience, blank=True)
+    experiences = models.CharField(max_length=200, choices=EXPERIENCE)
     amount_of_work = models.ManyToManyField(AmountOfWork, blank=True)
     contract_work = models.BooleanField()
     budget = models.ManyToManyField(Budget)
-    about_work = models.TextField()
-    about_task = models.FileField(upload_to='customer/tasks/%Y/%m/%d/', blank=True)
-    created = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
+    time_created = models.DateTimeField(auto_now_add=True)
+    time_updated = models.DateTimeField(auto_now=True)
+    is_published = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.title}'

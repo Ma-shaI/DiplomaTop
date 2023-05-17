@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'tasks.apps.TasksConfig',
     'mptt',
+    'phonenumber_field',
+    'talents.apps.TalentsConfig',
 ]
 
 MIDDLEWARE = [

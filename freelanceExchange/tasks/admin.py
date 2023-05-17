@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import *
 
-# Register your models here.
+admin.site.register(AmountHours)
+admin.site.register(AmountOfWork)
+admin.site.register(Budget)
+admin.site.register(Task)
