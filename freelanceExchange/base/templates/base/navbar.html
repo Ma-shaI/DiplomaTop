@@ -34,11 +34,11 @@
 <!--                    </ul>-->
 <!--                </li>-->
                 {% if request.user.is_authenticated%}
-                <li class="header__menuItem"><a href="">Выйти</a></li>
+                <li class="header__menuItem"><a href="{% url 'logout' %}">Выйти</a></li>
 
                 {% else %}
                 <li class="header__menuItem"><a href="">Войти</a></li>
-                <li class="header__menuItem"><a href="">Регистрация</a></li>
+                <li class="header__menuItem"><a href="{% url 'register' %}">Регистрация</a></li>
                 {% endif %}
             </ul>
         </nav>

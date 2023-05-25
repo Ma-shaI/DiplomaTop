@@ -18,15 +18,15 @@ class Profile(models.Model):
     email = models.EmailField(max_length=500, unique=True)
     username = models.CharField(max_length=200, null=True, blank=True)
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', default='default.jpg')
-    country = models.CharField(max_length=200)
-    city = models.CharField(max_length=200)
-    phone_number = PhoneNumberField(unique=True, null=False, blank=False)
+    country = models.CharField(max_length=200, null=True, blank=True)
+    city = models.CharField(max_length=200, null=True, blank=True)
+    phone_number = PhoneNumberField(unique=True, null=True, blank=True)
     secondPhoneNumber = PhoneNumberField(null=True, blank=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.first_name}'
+        return f'{self.username}'
 
 
 class Services(MPTTModel):

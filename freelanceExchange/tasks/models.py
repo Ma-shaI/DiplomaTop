@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import  Customer, Experience
+from users.models import Customer, Experience
 
 
 class AmountHours(models.Model):

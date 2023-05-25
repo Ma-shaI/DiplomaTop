@@ -9,9 +9,11 @@
     <link rel="stylesheet" href="{% static 'uikit/styles/uikit.css' %}"/>
 </head>
 <body>
+
+{% if request.path != '/user/register/' %}
 {% include 'base/navbar.html' %}
 {% show_menu_items %}
-
+{% endif %}
 
 {% block content %}
 {% endblock %}
