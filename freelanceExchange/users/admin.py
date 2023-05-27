@@ -5,6 +5,7 @@ from mptt.admin import MPTTModelAdmin
 
 class MenuItemMPTTModelAdmin(MPTTModelAdmin):
     mptt_level_indent = 20
+    prepopulated_fields = {'slug': ('name',)}
 
 
 admin.site.register(Role)

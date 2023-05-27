@@ -31,6 +31,7 @@ class Profile(models.Model):
 
 class Services(MPTTModel):
     name = models.CharField(max_length=200, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, verbose_name='URL')
     parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
 
     class MPTTMeta:
