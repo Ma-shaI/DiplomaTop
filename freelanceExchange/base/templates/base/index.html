@@ -1,4 +1,7 @@
 {% extends 'base/base.html' %}
+{% load show_menu %}
 {% block content %}
+{% include 'base/navbar.html' %}
+{% show_menu_items %}
 <h1>Hello Freelance Exchange </h1>
 {% endblock%}

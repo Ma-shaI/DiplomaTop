@@ -1,25 +1,13 @@
 from django.db import models
-from users.models import Customer, Experience
-
-
-class AmountHours(models.Model):
-    name = models.CharField(max_length=200)
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f'{self.name}'
-
-
-class AmountOfWork(models.Model):
-    name = models.CharField(max_length=200)
-    amount_hours = models.ManyToManyField(AmountHours)
-
-    def __str__(self):
-        return f'{self.name}'
+from users.models import Customer
+from talents.models import Skills
+from .utils import EXPERIENCE, AMOUNT_OF_WORK
 
 
 class Budget(models.Model):
-    name = models.CharField(max_length=200)
+    NAME = (('hourly_rate', 'Почасовая ставка'), ('fix', 'Бюджет проекта'))
+    owner = models.ForeignKey('Task', on_delete=models.CASCADE)
+    name = models.CharField(max_length=250, choices=NAME)
     min_price = models.IntegerField(null=True, blank=True)
     max_price = models.IntegerField(null=True, blank=True)
     fix_price = models.IntegerField(null=True, blank=True)
@@ -29,21 +17,16 @@ class Budget(models.Model):
 
 
 class Task(models.Model):
-    EXPERIENCE = (
-        ('junior', 'Новичок'),
-        ('middle', 'Средний'),
-        ('senior', 'Эксперт')
-    )
     owner = models.ForeignKey(Customer, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     experiences = models.CharField(max_length=200, choices=EXPERIENCE)
-    amount_of_work = models.ManyToManyField(AmountOfWork, blank=True)
+    amount_of_work = models.CharField(max_length=200, choices=AMOUNT_OF_WORK)
     contract_work = models.BooleanField()
-    budget = models.ManyToManyField(Budget)
     description = models.TextField()
+    skills = models.ManyToManyField(Skills, blank=True)
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=True)
+    is_published = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.title}'

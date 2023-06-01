@@ -1,0 +1,18 @@
+{% extends 'base/base.html'%}
+
+{% block content%}
+
+ <form action="{% url 'profile_update' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token%}
+                <!-- Input:Text -->
+                {% for field in form %}
+                <div class="form__field">
+                    <label> {{ field.label }}</label>
+                    {{ field}}
+                </div>
+                {% endfor%}
+
+
+                <input type="submit" value="Submit"/>
+            </form>
+{% endblock %}

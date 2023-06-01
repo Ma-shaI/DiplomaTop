@@ -1,5 +1,8 @@
 from django import forms
 from .models import *
+from django.forms import ModelForm
+from .utils import LANGUAGE, LEVEL
+
 
 class RoleForm(forms.Form):
     ROLE = (('client', 'Клиент'), ('freelancer', 'Фрилансер'))
@@ -23,6 +26,14 @@ class FreelanceForm1(forms.Form):
     experiences_for_freelance = forms.ChoiceField(choices=EXPERIENCE, widget=forms.RadioSelect())
 
 
+class FreelanceForm2(forms.Form):
+    resume = forms.FileField(widget=forms.ClearableFileInput())
+
+
+class FreelanceForm3(forms.Form):
+    bio = forms.CharField(widget=forms.Textarea)
+
+
 class EducationForm(forms.Form):
     LEVEL = (('secondary', 'Среднее'),
              ('special_secondary', 'Среднее специальное'),
@@ -36,13 +47,24 @@ class EducationForm(forms.Form):
     institution = forms.CharField(max_length=300)
     faculty = forms.CharField(max_length=250)
     major = forms.CharField(max_length=355)
-    year = forms.DateTimeField()
+    start_training = forms.IntegerField()
+    end_training = forms.IntegerField()
 
 
-class FreelanceForm2(forms.Form):
-    bio = forms.CharField(widget=forms.Textarea)
+class ExperienceForm(forms.Form):
+    organization = forms.CharField(max_length=250)
+    post = forms.CharField(max_length=250)
+    duties = forms.CharField(widget=forms.TextInput())
+    start_work = forms.IntegerField()
+    end_work = forms.IntegerField()
 
 
+class LanguageForm(forms.Form):
+    language = forms.ChoiceField(choices=LANGUAGE, widget=forms.RadioSelect())
+    level = forms.ChoiceField(choices=LEVEL, widget=forms.RadioSelect())
 
-class ServicesForm(forms.Form):
-    category = forms.ModelChoiceField(queryset=Services.objects.all())
+
+class ProfileForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['photo', 'country', 'city', 'phone_number', 'second_number']

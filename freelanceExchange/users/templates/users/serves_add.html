@@ -1,0 +1,28 @@
+{% extends 'base/base.html'%}
+{% block content %}
+{% load mptt_tags %}
+<form method="post">
+    {% csrf_token %}
+    <div class="subnav">
+        <ul class="topmenu">
+            {% recursetree service %}
+                {% if node.is_leaf_node %}
+                    <li class="active">
+                        <input type="checkbox" name="service" value="{{node.id}}">
+                        {{ node.name }}
+                    </li>
+                {% else %}
+                    <li>
+                        {{ node.name }}
+                        <ul class="submenu">
+                            {{ children }}
+                        </ul>
+                    </li>
+                {% endif %}
+            {% endrecursetree %}
+        </ul>
+    </div>
+    <input type="submit" value="Выбрать">
+</form>
+
+{% endblock%}
