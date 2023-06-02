@@ -4,9 +4,10 @@ from .forms import *
 from .models import *
 from formtools.wizard.views import SessionWizardView
 from django.urls import reverse_lazy
-from django.contrib.auth import logout, login
+from django.contrib.auth import logout, login, authenticate
 from django.core.files.storage import FileSystemStorage
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 class MyStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
@@ -38,7 +39,7 @@ class RegisterWizard(SessionWizardView):
     form_list = [RoleForm, RegisterForm2]
 
     def done(self, form_list, **kwargs):
-        username = f"{form_list[1].cleaned_data['first_name']}_{form_list[1].cleaned_data['last_name']}"
+        username = form_list[1].cleaned_data['email']
         first_name = form_list[1].cleaned_data['first_name']
         last_name = form_list[1].cleaned_data['last_name']
         email = form_list[1].cleaned_data['email']
@@ -103,6 +104,28 @@ class FreelanceLogin(SessionWizardView):
         user.resume = form_list[1].cleaned_data['resume']
         user.save()
         return redirect('serves_add')
+
+
+def login_user(request):
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        try:
+            user = User.objects.get(username=username)
+        except ObjectDoesNotExist:
+            messages.error(request, "Такого пользователя не существует")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, "Почта или пароль были введены не корректно")
+    return render(request, 'users/login_user.html')
 
 
 def logout_user(request):
