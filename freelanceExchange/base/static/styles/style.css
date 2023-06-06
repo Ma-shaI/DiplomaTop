@@ -168,6 +168,11 @@ p {
   justify-content: center;
   align-items: center;
 }
+.role div:hover {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .role,
 .freelance_experience {
   display: flex;
@@ -193,6 +198,7 @@ p {
 .freelance_experience label {
   display: inline-block;
   width: 150px;
+  cursor: pointer;
 }
 
 .btn_subnav {
@@ -306,4 +312,8 @@ p {
   margin: 15px 10px;
   border-radius: 10px;
   display: inline-block;
+}
+.reg_form_text {
+  width: 800px;
+  height: 400px;
 }

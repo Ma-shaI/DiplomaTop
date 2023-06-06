@@ -24,7 +24,7 @@ class AmountOfWorkForm(forms.Form):
 
 class DescriptionForm(forms.Form):
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'reg_form', 'placeholder': 'Описание уже есть? Вставьте его здесь!'}, ),
+        widget=forms.Textarea(attrs={'class': 'reg_form_text', 'placeholder': 'Описание уже есть? Вставьте его здесь!'}, ),
         label='')
 
 

@@ -42,13 +42,13 @@ class FreelanceForm2(forms.Form):
 
 class FreelanceForm3(forms.Form):
     bio = forms.CharField(label='', required=False,
-                          widget=forms.Textarea(attrs={'class': 'reg_form',
+                          widget=forms.Textarea(attrs={'class': 'reg_form_text',
                                                        'placeholder': 'Расскажите о своих основных навыках, опыте и интересах'}))
 
 
 class EducationForm(forms.Form):
     LEVEL = (('', ''),
-        ('secondary', 'Среднее'),
+             ('secondary', 'Среднее'),
              ('special_secondary', 'Среднее специальное'),
              ('unfinished_higher', 'Неоконченное высшее'),
              ('higher', 'Высшее'),
@@ -88,6 +88,7 @@ class LanguageForm(forms.Form):
     language = forms.ChoiceField(choices=LANGUAGE, label='Язык', widget=forms.Select(attrs={'class': 'reg_form'}),
                                  required=False)
     level = forms.ChoiceField(choices=LEVEL, label='Мой уровень', widget=forms.Select(attrs={'class': 'reg_form'}),
+                              initial='',
                               required=False)
 
     def __init__(self, *args, **kwargs):
