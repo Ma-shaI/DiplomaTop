@@ -2,7 +2,7 @@ from django.db import models
 from users.models import Customer
 from talents.models import Skills
 from .utils import EXPERIENCE, AMOUNT_OF_WORK
-
+from talents.utils import CURRENCY
 
 class Budget(models.Model):
     NAME = (('hourly_rate', 'Почасовая ставка'), ('fix', 'Бюджет проекта'))
@@ -11,6 +11,7 @@ class Budget(models.Model):
     min_price = models.IntegerField(null=True, blank=True)
     max_price = models.IntegerField(null=True, blank=True)
     fix_price = models.IntegerField(null=True, blank=True)
+    currency = models.CharField(choices=CURRENCY, default='ruble', max_length=200)
 
     def __str__(self):
         return f'{self.owner.title}'

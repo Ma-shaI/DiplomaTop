@@ -1,0 +1,5 @@
+CURRENCY = (
+    ('ruble', '₽'),
+    ('dollar', '$'),
+    ('euro', '€')
+)

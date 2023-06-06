@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import Freelancer, Services
+from .utils import CURRENCY
 
 
 class Talent(models.Model):
@@ -15,6 +16,16 @@ class Talent(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class HourlyRate(models.Model):
+    owner = models.ForeignKey(Talent, on_delete=models.CASCADE)
+    rate = models.IntegerField()
+    currency = models.CharField(choices=CURRENCY, default='ruble', max_length=200)
+
+    def __str__(self):
+        return f'{self.owner}'
+
 
 class Skills(models.Model):
     title = models.CharField(max_length=255)

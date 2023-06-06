@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
 from phonenumber_field.modelfields import PhoneNumberField
-from .utils import LEVEL, LANGUAGE
+from .utils import LEVEL, LANGUAGE, MONTH
+
 
 class Role(models.Model):
     name = models.CharField(max_length=200)
@@ -51,7 +52,7 @@ class Education(models.Model):
              ('candidate', 'Кандидат наук'),
              ('doctor', 'Доктор наук'),)
     owner = models.ForeignKey("Freelancer", on_delete=models.CASCADE, null=True, blank=True)
-    level = models.CharField(choices=LEVEL,max_length=200, null=True, blank=True)
+    level = models.CharField(choices=LEVEL, max_length=200, null=True, blank=True)
     institution = models.CharField(max_length=500, blank=True, null=True)
     faculty = models.CharField(max_length=500, blank=True, null=True)
     major = models.CharField(max_length=500, blank=True, null=True)
@@ -83,14 +84,25 @@ class Experience(models.Model):
     organization = models.CharField(max_length=250)
     post = models.CharField(max_length=250)
     duties = models.TextField(null=True, blank=True)
-    start_work = models.IntegerField(null=True)
-    end_work = models.IntegerField(null=True)
+    work_here = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.post}'
 
-class Language(models.Model):
 
+class StartWork(models.Model):
+    work = models.ForeignKey(Experience, on_delete=models.CASCADE)
+    month = models.CharField(max_length=200, choices=MONTH)
+    year = models.IntegerField()
+
+
+class EndWork(models.Model):
+    work = models.ForeignKey(Experience, on_delete=models.CASCADE)
+    month = models.CharField(max_length=200, choices=MONTH)
+    year = models.IntegerField()
+
+
+class Language(models.Model):
     owner = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
     language = models.CharField(max_length=200, choices=LANGUAGE, blank=True, null=True)
     level = models.CharField(max_length=200, choices=LEVEL, blank=True, null=True)
