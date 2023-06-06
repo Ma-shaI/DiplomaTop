@@ -86,6 +86,8 @@ class Experience(models.Model):
     start_work = models.IntegerField(null=True)
     end_work = models.IntegerField(null=True)
 
+    def __str__(self):
+        return f'{self.post}'
 
 class Language(models.Model):
 
@@ -99,3 +101,6 @@ class Language(models.Model):
 
 class Customer(models.Model):
     owner = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.owner}'

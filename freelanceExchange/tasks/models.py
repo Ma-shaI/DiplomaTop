@@ -13,7 +13,7 @@ class Budget(models.Model):
     fix_price = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.owner.title}'
 
 
 class Task(models.Model):

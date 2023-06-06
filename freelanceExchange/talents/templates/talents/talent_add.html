@@ -1,23 +1,32 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<form method="POST" action="{% url 'talent_add' %}">
-    {% csrf_token %}
-    {% for field in form %}
-    {% if field.label == 'Skills'%}
-    <div class="form__field">
-        <label>{{ field.label }} </label>
-        {{field}}
-        <input type="text" name="new_skills" placeholder="Введите свое значение через запятую">
-    </div>
-    {% else %}
-    <div class="form__field">
-        <label>{{ field.label }} </label>
-        {{field}}
-    </div>
-    {% endif %}
-    {% endfor %}
-    <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit"/>
-</form>
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <h3>Опишите свой талант</h3>
+            <form method="POST" class="form" action="{% url 'talent_add' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                {% if field.label == 'Выберите свои навыки и опыт'%}
+                <div class="form__field">
+                    <label>{{ field.label }} </label>
+<!--                    {{field}}-->
+                    <input type="text" name="new_skills" placeholder="Введите свое значение через запятую"
+                           class="reg_form">
 
+                </div>
+                {% else %}
+                <div class="form__field">
+                    <label>{{ field.label }} </label>
+                    {{field}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="div_btn">
+                    <input class="btn" type="submit" value="Добавить"/></div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

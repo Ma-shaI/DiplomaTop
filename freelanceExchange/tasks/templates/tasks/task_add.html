@@ -2,29 +2,43 @@
 {% load i18n %}
 
 {% block content %}
-<p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
-<form action="" method="post">
-    {% csrf_token %}
-    <table>
-        {{ wizard.management_form }}
-        {% if wizard.form.forms %}
-        {{ wizard.form.management_form }}
-        {% for form in wizard.form.forms %}
-        {{ form.as_table }}
-        {% endfor %}
-        {% else %}
-        {{ wizard.form }}
-        {% endif %}
-        {% if wizard.form.errors %}
-        <div class="alert alert-danger">
-            {{ wizard.form.non_field_errors.as_text }}
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            {% if wizard.steps.step1 == 1 %}
+            <h3>Напишите заголовок для объявления о вакансии</h3>
+            {% elif wizard.steps.step1 == 2 %}
+            <h3>Какие основные навыки необходимы для вашей работы?</h3>
+            {% elif wizard.steps.step1 == 4 %}
+            <h3>Опишите свою работу</h3>
+            {% endif %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {{ wizard.management_form }}
+                    {% if wizard.form.forms %}
+                    {{ wizard.form.management_form }}
+                    {% for form in wizard.form.forms %}
+                    {{ form.as_table }}
+                    {% endfor %}
+                    {% else %}
+                    {{ wizard.form }}
+                    {% endif %}
+                    {% if wizard.form.errors %}
+                    <div class="alert alert-danger">
+                        {{ wizard.form.non_field_errors.as_text }}
+                    </div>
+                    {%endif%}
+                </table>
+                {% if wizard.steps.prev %}
+<div class="div_btn">
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn">Предыдущий шаг
+                </button>
+                {% endif %}
+
+                    <input type="submit" value="{% translate 'Отправить' %}" class="btn"/></div>
+            </form>
         </div>
-        {%endif%}
-    </table>
-    {% if wizard.steps.prev %}
-    <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">{% translate "first step" %}</button>
-    <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% translate "prev step" %}</button>
-    {% endif %}
-    <input type="submit" value="{% translate " submit" %}"/>
-</form>
+    </div>
+</div>
 {% endblock %}

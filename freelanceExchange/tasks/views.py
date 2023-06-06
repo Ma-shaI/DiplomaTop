@@ -31,15 +31,13 @@ def task_budget(request, pk):
     task = Task.objects.get(id=pk)
     form = BudgetForm()
     if request.method == 'POST':
-        print('method.POST true')
+       
         form = BudgetForm(request.POST)
         if form.is_valid():
-            print('not true')
             budget = form.save(commit=False)
             budget.owner = task
-            print('budget')
             budget.save()
             return redirect('profile_update')
-    print('why')
+    
     context = {'form': form, 'task': task}
     return render(request, 'tasks/task_budget_form.html', context)

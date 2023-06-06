@@ -7,7 +7,7 @@ def talent_add(request):
     user = request.user.profile.freelancer
     if request.method == 'POST':
         new_skills = request.POST.get('new_skills').replace(',', ' ').split()
-        print(new_skills)
+       
         form = TalentForm(request.POST)
 
         if form.is_valid():

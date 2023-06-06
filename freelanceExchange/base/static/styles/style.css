@@ -1,6 +1,7 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: aliceblue;
 }
 
 .header {
@@ -8,7 +9,7 @@ body {
 }
 
 .container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
   box-sizing: border-box;
@@ -61,22 +62,6 @@ span {
   border: 1px solid #080808;
 }
 
-/* button {
-  height: 26px;
-  width: 26px;
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #f15b42;
-  cursor: pointer;
-}
-button:before {
-  content: '\f105';
-  font-family: FontAwesome;
-  color: #f9f0da;
-  font-size: 20px;
-  font-weight: bold;
-} */
 .header__nav {
   display: flex;
   flex-direction: row;
@@ -155,6 +140,7 @@ button:before {
   transform: rotateX(0deg);
   visibility: visible;
   opacity: 1;
+  /* left: 50%; */
 }
 
 /* Register_user */
@@ -167,31 +153,157 @@ button:before {
   justify-content: center;
   align-items: center;
 }
-.register__btns {
+
+p {
+  margin: 0;
+}
+
+.register,
+.card {
+  padding: 60px;
+  border-radius: 25px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.role,
+.freelance_experience {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   gap: 60px;
 }
-.btn__box {
-  padding: 20px;
-  border-radius: 10px;
+.role div,
+.freelance_experience div {
   border: 1px solid gray;
-  width: 250px;
+  padding: 35px;
+  border-radius: 20px;
 }
-.btn__box input {
-  display: flex;
-  justify-content: flex-end;
+.role input[type='radio'],
+.freelance_experience input[type='radio'] {
+  margin-left: 20px;
+  float: right;
+  margin-top: -15px;
 }
 
-.register__btn {
-  margin-top: 40px;
+.role label,
+.freelance_experience label {
+  display: inline-block;
+  width: 150px;
+}
+
+.btn_subnav {
+  display: block;
+  margin: 0 auto;
+}
+
+.reg_form {
+  padding: 15px;
+  width: 315px;
+  border-radius: 10px;
+}
+.form__field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.form__field label {
+  margin-right: 1rem;
+}
+
+.form__field input[type='checkbox'] {
+  width: 100%;
+}
+.form__field select {
+  width: 348px;
+}
+.reg_menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: none;
+}
+
+.reg_menu:hover .active_reg {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+.hidden input {
+  margin-bottom: 10px;
+}
+
+/* Serves_add */
+.register_serves h3,
+.register_serves h5 {
+  text-align: center;
+}
+.serves_nav {
+  background-color: rgb(163, 189, 211);
+  border-radius: 7px;
+  max-width: 400px;
+}
+
+.serves_menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.serves_menu li {
+  position: relative;
+  padding: 5px;
+}
+
+.serves_submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  min-width: 400px;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  background-color: rgb(163, 189, 211);
+  border-radius: 7px;
+}
+
+.serves_menu li:hover > .serves_submenu {
+  display: block;
+}
+
+.serves_menu li label {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+
+.serves_submenu li label {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  cursor: pointer;
+}
+.div_btn {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
 }
-
-p {
-  margin: 0;
+.btn {
+  background-color: rgba(32, 65, 125, 0.235);
+  padding: 10px 25px;
+  margin: 15px 10px;
+  border-radius: 10px;
+  display: inline-block;
 }

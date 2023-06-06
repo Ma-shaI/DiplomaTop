@@ -3,46 +3,47 @@
 {% block content %}
 
 <div class="auth">
-    <div class="card">
-        <div class="auth__header text-center">
+    <div class="container">
+        <div class="card">
+            <div class="auth__header text-center">
 
-            <h3>Account Login</h3>
-            <p>Hello Developer, Welcome Back!</p>
-        </div>
-
-        <form action="{% url 'login_user' %}" method="post" class="form auth__form">
-            {% csrf_token %}
-            <!-- Input:Email -->
-            <div class="form__field">
-                <label for="formInput#text">Email: </label>
-                <input
-                        class="input input--text"
-                        id="formInput#text"
-                        type="text"
-                        name="username"
-                        placeholder="Enter your username..."
-                />
+                <h3>Авторизоваться</h3>
             </div>
 
-            <!-- Input:Password -->
-            <div class="form__field">
-                <label for="formInput#password">Password: </label>
-                <input
-                        class="input input--password"
-                        id="formInput#password"
-                        type="password"
-                        name="password"
-                        placeholder="••••••••"
-                />
+            <form action="{% url 'login_user' %}" method="post">
+                {% csrf_token %}
+                <!-- Input:Email -->
+                <div class="form__field">
+                    <input
+
+                            id="formInput#text"
+                            type="text"
+                            name="username"
+                            placeholder="Введите адрес электронной почты"
+                            class="reg_form"
+                    />
+                </div>
+
+                <!-- Input:Password -->
+                <div class="form__field">
+
+                    <input
+                            class="reg_form"
+                            id="formInput#password"
+                            type="password"
+                            name="password"
+                            placeholder="Пароль"
+                    />
+                </div>
+                <div class="div_btn">
+                    <input class="btn" type="submit" value="Войти"/>
+
+                </div>
+            </form>
+            <div class="auth__alternative">
+                <p>У вас нет аккаунта?</p>
+                <a href="{% url 'register' %}">Зарегистрироваться</a>
             </div>
-            <div class="auth__actions">
-                <input class="btn btn--sub btn--lg" type="submit" value="Log In"/>
-                <a href="forgetpassword.html">Forget Password?</a>
-            </div>
-        </form>
-        <div class="auth__alternative">
-            <p>Don’t have an Account?</p>
-            <a href="{% url 'register' %}">Sign Up</a>
         </div>
     </div>
 </div>

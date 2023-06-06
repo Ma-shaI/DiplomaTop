@@ -1,8 +1,11 @@
 {% extends 'base/base.html'%}
 
 {% block content%}
-
- <form action="{% url 'profile_update' %}" method="post" enctype="multipart/form-data">
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <h3>Заполните свои персональные данные</h3>
+            <form action="{% url 'profile_update' %}" method="post" enctype="multipart/form-data">
                 {% csrf_token%}
                 <!-- Input:Text -->
                 {% for field in form %}
@@ -12,7 +15,11 @@
                 </div>
                 {% endfor%}
 
-
-                <input type="submit" value="Submit"/>
+                <div class="div_btn">
+                    <input type="submit" value="Заполнить" class="btn"/>
+                </div>
             </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

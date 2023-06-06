@@ -6,7 +6,6 @@ from .models import Profile, Role
 
 @receiver(post_save, sender=User)
 def profile_update(sender, instance, created, **kwargs):
-    print('Profile signal')
     if created:
         user = instance
         role = Role.objects.get(id=1)
@@ -16,13 +15,13 @@ def profile_update(sender, instance, created, **kwargs):
             email=user.email,
             first_name=user.first_name,
             last_name=user.last_name,
-            role = role
+            role=role
         )
 
 
 @receiver(post_save, sender=Profile)
 def update_user(sender, instance, created, **kwargs):
-    # print('update_user', **kwargs)
+    
     profile = instance
     user = profile.user
     user.first_name = profile.first_name
@@ -35,4 +34,3 @@ def update_user(sender, instance, created, **kwargs):
 def delete_user(sender, instance, **kwargs):
     user = instance.user
     user.delete()
-    print('Deleting user...')

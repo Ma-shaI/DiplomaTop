@@ -9,6 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 
+
 class MyStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
         parts = name.split('.')
@@ -21,13 +22,12 @@ class MyStorage(FileSystemStorage):
         return name
 
 
-# Create your views here.
 def index(request):
     try:
         freelancer = request.user.profile.freelancer
     except:
         freelancer = request.user
-        print(freelancer)
+        
 
     return render(request, 'users/index.html', {'user': request.user, 'freelancer': freelancer})
 
@@ -45,14 +45,16 @@ class RegisterWizard(SessionWizardView):
         email = form_list[1].cleaned_data['email']
         password = form_list[1].cleaned_data['password1']
 
+     
         # complete the registration process
-        user = User.objects.create_user(username, email, password)
-        user.first_name = first_name
-        user.last_name = last_name
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+
         user.save()
+      
         login(self.request, user)
         profile = self.request.user.profile
         profile.role = Role.objects.get(name=form_list[0].cleaned_data['role'])
+     
         profile.save()
         if form_list[0].cleaned_data['role'] == 'freelancer':
             freelancer = Freelancer.objects.create(owner=profile)
@@ -146,14 +148,16 @@ def serves_add(request):
 
 def profile_update(request):
     profile = request.user.profile
-    print(profile)
+ 
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
-        print('POST true')
+   
         if form.is_valid():
-            print('is valid')
+ 
             form.save()
             return redirect('index')
+        else:
+            messages.error(request, form.errors)
     context = {'form': form}
     return render(request, 'users/profile_form.html', context)

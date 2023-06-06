@@ -1,18 +1,38 @@
 {% extends 'base/base.html'%}
 
 {% block content%}
-
- <form action="{% url 'task_budget' task.id %}" method="post" enctype="multipart/form-data">
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <form action="{% url 'task_budget' task.id %}" method="post" enctype="multipart/form-data" id="budget_form">
                 {% csrf_token%}
                 <!-- Input:Text -->
                 {% for field in form %}
+                {% if field.label == 'Какой будет бюджет' %}
                 <div class="form__field">
                     <label> {{ field.label }}</label>
-                    {{ field}}
+                    {{ field }}
                 </div>
+                {% else %}
+                <div class="hidden" id="hourly_rate">
+                    {% if field.label == 'От' or field.label == 'До' %}
+                    <label> {{ field.label }}</label>
+                    {{ field }}
+                    {%endif%}
+                </div>
+                <div class="hidden" id="fix">
+                    {% if field.label == 'Максимальный бюджет проекта' %}
+                    <label> {{ field.label }}</label>
+                    {{ field }}
+                    {%endif%}
+                </div>
+                {% endif %}
                 {% endfor%}
 
-
-                <input type="submit" value="Submit"/>
+                <div class="div_btn">
+                    <input type="submit" value="Submit" class="btn"/></div>
             </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
