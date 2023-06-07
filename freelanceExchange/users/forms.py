@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.forms import ModelForm
-from .utils import LANGUAGE, LEVEL
+from .utils import LANGUAGE, LEVEL, MONTH
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberInternationalFallbackWidget
 
@@ -73,15 +73,23 @@ class EducationForm(forms.Form):
 
 class ExperienceForm(forms.Form):
     organization = forms.CharField(max_length=250, label='Огранизация',
-                                   widget=forms.TextInput(attrs={'class': 'reg_form'}), required=False)
+                                   widget=forms.TextInput(attrs={'class': 'reg_form'}))
     post = forms.CharField(max_length=250, label='Должность', widget=forms.TextInput(attrs={'class': 'reg_form'}),
-                           required=False)
+                           )
     duties = forms.CharField(label='Рабочие обязанности', widget=forms.Textarea(attrs={'class': 'reg_form'}),
-                             required=False)
-    start_work = forms.IntegerField(label='Дата начала', widget=forms.TextInput(attrs={'class': 'reg_form'}),
-                                    required=False)
-    end_work = forms.IntegerField(label='Дата окончания', widget=forms.TextInput(attrs={'class': 'reg_form'}),
-                                  required=False)
+                             )
+    start_work_month = forms.ChoiceField(choices=MONTH, label='start_month',
+                                         widget=forms.Select(attrs={'class': 'reg_form work'}),
+                                         )
+    start_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work'}),
+                                         label='start')
+    work_here = forms.BooleanField(label='Работаю здесь',
+                                   widget=forms.CheckboxInput(attrs={'class': 'work_here'}), initial=True,
+                                   required=False)
+    end_work_month = forms.ChoiceField(choices=MONTH, label='end_month', required=False,
+                                       widget=forms.Select(attrs={'class': 'reg_form work'}))
+    end_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work'}),
+                                       label='end', required=False)
 
 
 class LanguageForm(forms.Form):

@@ -84,7 +84,7 @@ class Experience(models.Model):
     organization = models.CharField(max_length=250)
     post = models.CharField(max_length=250)
     duties = models.TextField(null=True, blank=True)
-    work_here = models.BooleanField(default=False)
+    work_here = models.BooleanField(default=True)
 
     def __str__(self):
         return f'{self.post}'
@@ -95,11 +95,17 @@ class StartWork(models.Model):
     month = models.CharField(max_length=200, choices=MONTH)
     year = models.IntegerField()
 
+    def __str__(self):
+        return f'{self.work}'
+
 
 class EndWork(models.Model):
     work = models.ForeignKey(Experience, on_delete=models.CASCADE)
     month = models.CharField(max_length=200, choices=MONTH)
     year = models.IntegerField()
+
+    def __str__(self):
+        return f'{self.work}'
 
 
 class Language(models.Model):

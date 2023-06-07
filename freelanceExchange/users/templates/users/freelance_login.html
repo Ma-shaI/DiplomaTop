@@ -9,15 +9,16 @@
             <h3>Ответьте на несколько коротких вопросов. Вы раньше работали фрилансером?</h3>
             {% elif wizard.steps.step1 == 2 %}
             <h3>Если у вас есть резюме, вы можете его загрузить</h3>
-             {% elif wizard.steps.step1 == 3 %}
+            {% elif wizard.steps.step1 == 3 %}
             <h3>На каких языках вы говорите</h3>
-             {% elif wizard.steps.step1 == 4 %}
+            {% elif wizard.steps.step1 == 4 %}
             <h3>Расскажите о своем образовании </h3>
-             {% elif wizard.steps.step1 == 5 %}
+            {% elif wizard.steps.step1 == 5 %}
             <h3>Расскажите о своем опыте работы</h3>
-             {% elif wizard.steps.step1 == 6 %}
+            {% elif wizard.steps.step1 == 6 %}
             <h3>Теперь напишите биографию, чтобы рассказать о себе</h3>
-            <p>Помогите клиентам узнать о вас получше. В какой работе вы лучше всего разбираетесь? Вы всегда можете отредактировать позже</p>
+            <p>Помогите клиентам узнать о вас получше. В какой работе вы лучше всего разбираетесь? Вы всегда можете
+                отредактировать позже</p>
             {% endif %}
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
@@ -29,7 +30,38 @@
                     {{ form.as_table }}
                     {% endfor %}
                     {% else %}
-                    {{ wizard.form }}
+                    {% for field in wizard.form %}
+                    {% if field.label in 'start_month' %}
+                    {% if field.label == 'start_month' %}
+                     <div class="start_work">
+                         <label>Начало работы</label>
+                        {{ field }}
+                    </div>
+                    {% else %}
+                    <div class="start_work">
+
+                        {{ field }}
+                    </div>{% endif %}
+                    {% elif field.label in 'end_month' %}
+                    {% if field.label == 'end_month' %}
+                     <div class="end_work">
+                         <label>Окончание работы</label>
+                        {{ field }}
+                    </div>
+                    {% else %}
+                    <div class="end_work">
+                        {{ field }}
+                    </div>
+                    {% endif %}
+                    {%else %}
+                    <div class="form__field">
+
+                        <label> {{ field.label }}</label>
+                        {{ field}}
+                    </div>
+                    {% endif %}
+
+                    {% endfor %}
                     {% endif %}
                     {% if wizard.form.errors %}
                     <div class="alert alert-danger">
@@ -38,10 +70,11 @@
                     {%endif%}
                 </table>
                 {% if wizard.steps.prev %}
-<div class="div_btn">
-                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}"  class="btn">Предыдущий шаг
-                </button>
-                {% endif %}
+                <div class="div_btn">
+                    <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn">Предыдущий
+                        шаг
+                    </button>
+                    {% endif %}
 
                     <input type="submit" value="{% translate 'Отправить' %}" class="btn"/></div>
             </form>

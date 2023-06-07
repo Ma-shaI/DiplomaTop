@@ -3,9 +3,11 @@ from .forms import *
 from .models import *
 from formtools.wizard.views import SessionWizardView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class TaskWizard(SessionWizardView):
+class TaskWizard(LoginRequiredMixin, SessionWizardView):
     template_name = 'tasks/task_add.html'
     done_template = 'users/index.html'
     success_url = reverse_lazy('index')
@@ -27,17 +29,18 @@ class TaskWizard(SessionWizardView):
         return redirect('task_budget', pk=task.id)
 
 
+@login_required(login_url='login')
 def task_budget(request, pk):
     task = Task.objects.get(id=pk)
     form = BudgetForm()
     if request.method == 'POST':
-       
+
         form = BudgetForm(request.POST)
         if form.is_valid():
             budget = form.save(commit=False)
             budget.owner = task
             budget.save()
             return redirect('profile_update')
-    
+
     context = {'form': form, 'task': task}
     return render(request, 'tasks/task_budget_form.html', context)

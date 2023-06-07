@@ -1,18 +1,19 @@
 from django.shortcuts import render, redirect
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='login')
 def talent_add(request):
     form = TalentForm()
     user = request.user.profile.freelancer
     if request.method == 'POST':
         new_skills = request.POST.get('new_skills').replace(',', ' ').split()
-       
+
         form = TalentForm(request.POST)
 
         if form.is_valid():
             for skill in new_skills:
-
                 skill, created = Skills.objects.get_or_create(title=skill)
             talent = form.save(commit=False)
             talent.owner = user

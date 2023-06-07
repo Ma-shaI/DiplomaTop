@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
@@ -8,6 +8,7 @@ from django.contrib.auth import logout, login, authenticate
 from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class MyStorage(FileSystemStorage):
@@ -27,7 +28,6 @@ def index(request):
         freelancer = request.user.profile.freelancer
     except:
         freelancer = request.user
-        
 
     return render(request, 'users/index.html', {'user': request.user, 'freelancer': freelancer})
 
@@ -45,16 +45,16 @@ class RegisterWizard(SessionWizardView):
         email = form_list[1].cleaned_data['email']
         password = form_list[1].cleaned_data['password1']
 
-     
         # complete the registration process
-        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email,
+                                   password=password)
 
         user.save()
-      
+
         login(self.request, user)
         profile = self.request.user.profile
         profile.role = Role.objects.get(name=form_list[0].cleaned_data['role'])
-     
+
         profile.save()
         if form_list[0].cleaned_data['role'] == 'freelancer':
             freelancer = Freelancer.objects.create(owner=profile)
@@ -67,7 +67,7 @@ class RegisterWizard(SessionWizardView):
         return redirect('index')
 
 
-class FreelanceLogin(SessionWizardView):
+class FreelanceLogin(LoginRequiredMixin, SessionWizardView):
     template_name = 'users/freelance_login.html'
     done_template = 'users/index.html'
     success_url = reverse_lazy('index')
@@ -97,10 +97,22 @@ class FreelanceLogin(SessionWizardView):
             organization=form_list[4].cleaned_data['organization'],
             post=form_list[4].cleaned_data['post'],
             duties=form_list[4].cleaned_data['duties'],
-            start_work=form_list[4].cleaned_data['start_work'],
-            end_work=form_list[4].cleaned_data['end_work']
+            work_here=form_list[4].cleaned_data['work_here']
         )
         experience.save()
+        start_work = StartWork(
+            work=experience,
+            month=form_list[4].cleaned_data['start_work_month'],
+            year=form_list[4].cleaned_data['start_work_year']
+        )
+        start_work.save()
+        if experience.work_here == False:
+            end_work = EndWork(
+                work=experience,
+                month=form_list[4].cleaned_data['end_work_month'],
+                year=form_list[4].cleaned_data['end_work_year']
+            )
+            end_work.save()
         user.experiences_for_freelance = form_list[0].cleaned_data['experiences_for_freelance']
         user.bio = form_list[5].cleaned_data['bio']
         user.resume = form_list[1].cleaned_data['resume']
@@ -136,6 +148,7 @@ def logout_user(request):
     return redirect('index')
 
 
+@login_required(login_url='login')
 def serves_add(request):
     user = request.user.profile.freelancer
     if request.method == 'POST':
@@ -146,15 +159,16 @@ def serves_add(request):
     return render(request, 'users/serves_add.html', context)
 
 
+@login_required(login_url='login')
 def profile_update(request):
     profile = request.user.profile
- 
+
     form = ProfileForm(instance=profile)
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.FILES, instance=profile)
-   
+
         if form.is_valid():
- 
+
             form.save()
             return redirect('index')
         else:

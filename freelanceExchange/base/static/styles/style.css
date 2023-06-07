@@ -317,3 +317,14 @@ p {
   width: 800px;
   height: 400px;
 }
+.work {
+  width: 200px;
+  margin-right: 20px;
+}
+.start_work {
+  display: inline-block;
+}
+
+.end_work {
+  display: none;
+}
