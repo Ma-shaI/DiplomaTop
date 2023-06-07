@@ -8,13 +8,21 @@
             <form method="POST" class="form" action="{% url 'talent_add' %}">
                 {% csrf_token %}
                 {% for field in form %}
-                {% if field.label == 'Выберите свои навыки и опыт'%}
+                {% if field.label == 'Добавьте свои навыки'%}
                 <div class="form__field">
                     <label>{{ field.label }} </label>
 <!--                    {{field}}-->
                     <input type="text" name="new_skills" placeholder="Введите свое значение через запятую"
                            class="reg_form">
-
+                </div>
+                {% elif field.label == 'Почасовая ставка' %}
+                <div class="rate_form">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+                {% elif field.label == 'Валюта' %}
+                <div class="rate_form">
+                     {{ field }}
                 </div>
                 {% else %}
                 <div class="form__field">

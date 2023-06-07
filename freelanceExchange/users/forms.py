@@ -57,7 +57,7 @@ class EducationForm(forms.Form):
              ('candidate', 'Кандидат наук'),
              ('doctor', 'Доктор наук'),)
     level = forms.ChoiceField(choices=LEVEL, label='Уровень',
-                              widget=forms.Select(attrs={'class': 'reg_form'}), initial='',
+                              widget=forms.Select(attrs={'class': 'form_select'}), initial='',
                               required=False)
     institution = forms.CharField(max_length=300, label='Учебное заведение',
                                   widget=forms.TextInput(attrs={'class': 'reg_form'}), required=False)
@@ -93,9 +93,9 @@ class ExperienceForm(forms.Form):
 
 
 class LanguageForm(forms.Form):
-    language = forms.ChoiceField(choices=LANGUAGE, label='Язык', widget=forms.Select(attrs={'class': 'reg_form'}),
+    language = forms.ChoiceField(choices=LANGUAGE, label='Язык', widget=forms.Select(attrs={'class': 'form_select'}),
                                  required=False)
-    level = forms.ChoiceField(choices=LEVEL, label='Мой уровень', widget=forms.Select(attrs={'class': 'reg_form'}),
+    level = forms.ChoiceField(choices=LEVEL, label='Мой уровень', widget=forms.Select(attrs={'class': 'form_select'}),
                               initial='',
                               required=False)
 

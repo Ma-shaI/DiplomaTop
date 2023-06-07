@@ -4,6 +4,7 @@ from talents.models import Skills
 from .utils import EXPERIENCE, AMOUNT_OF_WORK
 from talents.utils import CURRENCY
 
+
 class Budget(models.Model):
     NAME = (('hourly_rate', 'Почасовая ставка'), ('fix', 'Бюджет проекта'))
     owner = models.ForeignKey('Task', on_delete=models.CASCADE)

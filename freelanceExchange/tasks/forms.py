@@ -15,9 +15,9 @@ class TaskSkillForm(forms.Form):
 
 
 class AmountOfWorkForm(forms.Form):
-    amount = forms.ChoiceField(choices=AMOUNT_OF_WORK, widget=forms.Select(attrs={'class': 'reg_form'}),
+    amount = forms.ChoiceField(choices=AMOUNT_OF_WORK, widget=forms.Select(attrs={'class': 'form_select'}),
                                label='Оцените объем своей работы')
-    experience = forms.ChoiceField(choices=EXPERIENCE, widget=forms.Select(attrs={'class': 'reg_form'}),
+    experience = forms.ChoiceField(choices=EXPERIENCE, widget=forms.Select(attrs={'class': 'form_select'}),
                                    label='Какой уровень работы для этого требуется?')
     contract_work = forms.BooleanField(required=False, label='Является ли эта работа возможностью найма по контракту?')
 
@@ -32,12 +32,12 @@ class BudgetForm(ModelForm):
     class Meta:
         model = Budget
         fields = '__all__'
-        exclude = ['owner']
+        exclude = ['owner', 'currency']
         labels = {
             'name': 'Какой будет бюджет',
             'min_price': 'От',
             'max_price': 'До',
-            'fix_price': 'Максимальный бюджет проекта'
+            'fix_price': 'Максимальный бюджет проекта',
         }
 
     def __init__(self, *args, **kwargs):

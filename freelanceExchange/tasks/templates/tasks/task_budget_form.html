@@ -18,12 +18,24 @@
                     {% if field.label == 'От' or field.label == 'До' %}
                     <label> {{ field.label }}</label>
                     {{ field }}
+                    <select name="select_{{ field.name }}" class="reg_form_currency" id="id-{{field.name}}">
+                        <option value="ruble" selected="">₽</option>
+                        <option value="dollar">$</option>
+                        <option value="euro">€</option>
+
+                    </select>
                     {%endif%}
                 </div>
                 <div class="hidden" id="fix">
                     {% if field.label == 'Максимальный бюджет проекта' %}
                     <label> {{ field.label }}</label>
                     {{ field }}
+                    <select name="select_{{ field.name }}" class="reg_form_currency" id="id-{{field.name}}">
+                        <option value="ruble" selected="">₽</option>
+                        <option value="dollar">$</option>
+                        <option value="euro">€</option>
+
+                    </select>
                     {%endif%}
                 </div>
                 {% endif %}

@@ -226,7 +226,9 @@ p {
 .form__field input[type='checkbox'] {
   width: 100%;
 }
-.form__field select {
+.form_select {
+  padding: 15px;
+  border-radius: 10px;
   width: 348px;
 }
 .reg_menu {
@@ -321,10 +323,22 @@ p {
   width: 200px;
   margin-right: 20px;
 }
-.start_work {
+.start_work,
+.rate_form {
   display: inline-block;
 }
 
 .end_work {
   display: none;
+}
+.reg_form_rate {
+  margin-left: 73px;
+  padding: 15px;
+  border-radius: 10px;
+  width: 100px;
+}
+.reg_form_currency {
+  padding: 15px;
+  border-radius: 10px;
+  width: 80px;
 }

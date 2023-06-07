@@ -5,6 +5,7 @@ from formtools.wizard.views import SessionWizardView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
@@ -33,14 +34,24 @@ class TaskWizard(LoginRequiredMixin, SessionWizardView):
 def task_budget(request, pk):
     task = Task.objects.get(id=pk)
     form = BudgetForm()
+    context = {'form': form, 'task': task}
     if request.method == 'POST':
+        currency = ''
+        if request.POST['select_min_price'] == request.POST['select_max_price']:
+            currency = request.POST['select_min_price']
+        else:
+            messages.error(request, 'Валюта должна быть одинаковой')
 
+            return render(request, 'tasks/task_budget_form.html',context)
         form = BudgetForm(request.POST)
         if form.is_valid():
             budget = form.save(commit=False)
             budget.owner = task
+            if budget.name == 'hourly_rate':
+                budget.currency = currency
+            else:
+                budget.currency = request.POST['select_fix_price']
             budget.save()
             return redirect('profile_update')
 
-    context = {'form': form, 'task': task}
     return render(request, 'tasks/task_budget_form.html', context)

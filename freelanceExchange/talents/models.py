@@ -8,14 +8,13 @@ class Talent(models.Model):
     service = models.ForeignKey(Services, on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=250)
     descriptions = models.TextField()
-    hourly_rate = models.IntegerField()
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
     skills = models.ManyToManyField('Skills', blank=True)
-    is_published = models.BooleanField(default=True)
+    is_published = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return f"{self.title}"
 
 
 class HourlyRate(models.Model):
