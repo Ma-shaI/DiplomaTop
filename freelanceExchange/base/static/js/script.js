@@ -1,17 +1,9 @@
-console.log('JavaScript code is loaded!');
 document.addEventListener('DOMContentLoaded', () => {
   const checkbox = document.getElementById('id_4-work_here');
-
-  // get a reference to the end_work div
   const endWorkDiv = document.querySelectorAll('.end_work');
-
-  // hide the end_work div by default
-
-  // add a change event listener to the checkbox
   if (checkbox) {
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) {
-        // if the checkbox is checked, hide the end_work div
         endWorkDiv.forEach((div) => {
           div.style.display = 'none';
         });
@@ -21,8 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
     });
-  } else {
-    console.log('hi');
   }
 });
 document.addEventListener('DOMContentLoaded', () => {
@@ -39,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
-  } else {
-    console.error('Form element not found');
   }
 });
 
@@ -60,6 +48,25 @@ document.addEventListener('DOMContentLoaded', function (event) {
       menus.forEach((m) => {
         m.style.display = 'none';
       });
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const checkboxes = document.querySelectorAll('input[name="service"]');
+  const chosenEl = document.querySelector('.chosen_el');
+
+  checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('change', () => {
+      let selected = [];
+
+      checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+          selected.push(checkbox.nextSibling.textContent.trim());
+        }
+      });
+
+      chosenEl.innerHTML = selected.join(', ');
     });
   });
 });

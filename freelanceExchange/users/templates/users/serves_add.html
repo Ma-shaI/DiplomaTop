@@ -7,7 +7,9 @@
         <div class="register_serves">
             <h3>Какие основные услуги вы предлагаете? </h3>
             <h5>Выберите хотя бы одну услугу, которая лучше всего описывает тип вашей работы.</h5>
-            <form method="post">
+            <div class="chosen_el"></div>
+
+            <form method="post" class="form_serves">
                 {% csrf_token %}
                 <div class="serves_nav">
                     <ul class="serves_menu">
@@ -31,6 +33,7 @@
                 <div class="div_btn">
                     <input type="submit" value="Выбрать" class="btn"></div>
             </form>
+
         </div>
     </div>
 </div>
