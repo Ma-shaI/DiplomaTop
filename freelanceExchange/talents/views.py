@@ -9,6 +9,8 @@ from django.utils.datastructures import MultiValueDictKeyError
 def talent_add(request):
     form = TalentForm()
     user = request.user.profile.freelancer
+    talents = Talent.objects.all()
+    context = {'form': form, 'talents': talents}
     if request.method == 'POST':
         new_skills = request.POST.get('new_skills').replace(',', ' ').split()
         title = request.POST['title']
@@ -40,6 +42,6 @@ def talent_add(request):
             currency=currency
         )
         rate.save()
-        return redirect('profile_update')
-    context = {'form': form}
+        render(request, 'talents/talent_add.html', context)
+
     return render(request, 'talents/talent_add.html', context)
