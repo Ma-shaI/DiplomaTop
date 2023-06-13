@@ -1,0 +1,12 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<form action="{% url 'talent_update %}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form__field">
+        <label>{{ field.label }} </label>
+        {{field}}
+    </div>
+    {% endfor %}
+</form>
+{% block content %}
