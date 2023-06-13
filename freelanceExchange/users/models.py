@@ -81,7 +81,7 @@ class Freelancer(models.Model):
 
 class Experience(models.Model):
     owner = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
-    organization = models.CharField(max_length=250)
+    organization = models.CharField(max_length=250, verbose_name='Организация')
     post = models.CharField(max_length=250)
     duties = models.TextField(null=True, blank=True)
     work_here = models.BooleanField(default=True)

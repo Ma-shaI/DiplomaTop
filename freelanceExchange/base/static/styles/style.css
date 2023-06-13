@@ -217,6 +217,7 @@ p {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .form__field label {
@@ -302,18 +303,16 @@ p {
   color: #333;
   cursor: pointer;
 }
+
 .div_btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  overflow: auto;
 }
 .btn {
   background-color: rgba(32, 65, 125, 0.235);
   padding: 10px 25px;
   margin: 15px 10px;
   border-radius: 10px;
-  display: inline-block;
+  float: right;
 }
 .reg_form_text {
   width: 800px;
@@ -335,24 +334,34 @@ p {
   margin-left: 73px;
   padding: 15px;
   border-radius: 10px;
-  width: 100px;
+  /* width: 100px; */
 }
 .reg_form_currency {
   padding: 15px;
   border-radius: 10px;
   width: 80px;
 }
-
-.chosen_el {
-  margin: 15px;
-  padding: 15px;
-  /* background-color: rgb(163, 189, 211); */
-  border-radius: 10px;
-  border: 3px solid rgb(163, 189, 211);
+.register h3 {
+  text-align: center;
+  margin-bottom: 20px;
 }
-@media (min-width: 576px) {
+.chosen_el {
+  border-radius: 20px;
+  border: 3px solid rgb(163, 189, 211);
+  margin: 10px 0;
+  padding: 20px;
+}
+
+@media (min-width: 800px) {
   .modal-dialog {
-    max-width: 700px;
+    max-width: 800px;
     margin: 1.75rem auto;
   }
+}
+.modal-footer > button {
+  display: inline-block;
+}
+
+.inline {
+  display: inline-block;
 }

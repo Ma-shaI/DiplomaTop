@@ -1,10 +1,29 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ wizard.management_form }}
-    {{ wizard.form.as_p }}
-    <input type="submit" value="Submit">
-</form>
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <h3>Расскажите о своем образовании </h3>
+            <form method="post" enctype="multipart/form-data" action="{% url 'freelancer_login' %}">
+                {% csrf_token %}
+                {{ wizard.management_form }}
+                {% for field in wizard.form %}
+                <div class="form__field">
+
+                    <label> {{ field.label }}</label>
+                    {{ field}}
+                </div>
+                {% endfor %}
+
+                <div class="div_btn">
+                    <button type="submit" value="{{ wizard.steps.next }}" class="btn">Дальше</button>
+                    <button type="submit" value="{{ wizard.steps.prev }}" name="wizard_goto_step" class="btn">Предыдущий
+                        шаг
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

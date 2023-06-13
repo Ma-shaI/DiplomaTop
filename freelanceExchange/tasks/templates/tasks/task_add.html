@@ -30,13 +30,15 @@
                     </div>
                     {%endif%}
                 </table>
-                {% if wizard.steps.prev %}
+
 <div class="div_btn">
+    <button type="submit" value="{% translate 'Отправить' %}" class="btn">Отправить</button>
+    {% if wizard.steps.prev %}
                 <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn">Предыдущий шаг
                 </button>
                 {% endif %}
 
-                    <input type="submit" value="{% translate 'Отправить' %}" class="btn"/></div>
+    </div>
             </form>
         </div>
     </div>

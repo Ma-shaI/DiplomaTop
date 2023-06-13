@@ -26,7 +26,7 @@ class RegisterForm2(forms.Form):
                                     attrs={'class': 'reg_form', 'placeholder': 'Повторите пароль'}))
 
 
-class FreelanceForm1(forms.Form):
+class LevelForm(forms.Form):
     EXPERIENCE = (
         ('junior', 'Я новичок'),
         ('middle', 'У меня есть некоторый опыт'),
@@ -36,11 +36,11 @@ class FreelanceForm1(forms.Form):
                                                   widget=forms.RadioSelect(attrs={'class': 'freelance_experience'}))
 
 
-class FreelanceForm2(forms.Form):
+class ResumeForm(forms.Form):
     resume = forms.FileField(widget=forms.ClearableFileInput(), required=False, label='')
 
 
-class FreelanceForm3(forms.Form):
+class BioForm(forms.Form):
     bio = forms.CharField(label='', required=False,
                           widget=forms.Textarea(attrs={'class': 'reg_form_text',
                                                        'placeholder': 'Расскажите о своих основных навыках, опыте и интересах'}))
@@ -72,23 +72,26 @@ class EducationForm(forms.Form):
 
 
 class ExperienceForm(forms.Form):
-    organization = forms.CharField(max_length=250, label='Огранизация',
+    organization = forms.CharField(max_length=250, label='Огранизация', required=False,
                                    widget=forms.TextInput(attrs={'class': 'reg_form'}))
-    post = forms.CharField(max_length=250, label='Должность', widget=forms.TextInput(attrs={'class': 'reg_form'}),
+    post = forms.CharField(max_length=250, label='Должность', widget=forms.TextInput(attrs={'class': 'reg_form exp'}),
+                           required=False
                            )
-    duties = forms.CharField(label='Рабочие обязанности', widget=forms.Textarea(attrs={'class': 'reg_form'}),
+    duties = forms.CharField(label='Рабочие обязанности', widget=forms.Textarea(attrs={'class': 'reg_form exp'}),
+                             required=False
                              )
-    start_work_month = forms.ChoiceField(choices=MONTH, label='start_month',
-                                         widget=forms.Select(attrs={'class': 'reg_form work'}),
+    start_work_month = forms.ChoiceField(choices=MONTH, label='start_month', initial='',
+                                         widget=forms.Select(attrs={'class': 'reg_form work exp'}), required=False
                                          )
-    start_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work'}),
+    start_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work exp', 'placeholder': 'Год'}),
+                                         required=False,
                                          label='start')
     work_here = forms.BooleanField(label='Работаю здесь',
                                    widget=forms.CheckboxInput(attrs={'class': 'work_here'}), initial=True,
                                    required=False)
-    end_work_month = forms.ChoiceField(choices=MONTH, label='end_month', required=False,
+    end_work_month = forms.ChoiceField(choices=MONTH, label='end_month', required=False, initial='',
                                        widget=forms.Select(attrs={'class': 'reg_form work'}))
-    end_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work'}),
+    end_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work', 'placeholder': 'Год'}),
                                        label='end', required=False)
 
 
@@ -126,3 +129,9 @@ class ProfileForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'reg_form'})
+
+
+class NextForm(forms.Form):
+    next = forms.BooleanField(label='Пропустить', widget=forms.CheckboxInput(attrs={'class': 'work_here'}),
+                              initial=True,
+                              required=False)

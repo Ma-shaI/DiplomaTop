@@ -6,19 +6,24 @@
         <div class="register">
             <h3>Здесь вы можете создать один или несколько ваших выдающихся специализации, в направлении которых вы
                 хотите получать задачи</h3>
-            {% for talent in talents %}
-            <p>{{talent}}</p>
-            {% endfor %}
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Открыть
-                форму
+            <div class="talents">
+                {% for talent in talents %}
+                <p>{{talent}}</p>
+
+                <a href="{% url 'talent_update' talent.id %}"> Изменить</a>
+                <a href="{% url 'talent_delete' talent.id %}">Удалить</a>
+                {% endfor %}
+            </div>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Добавить
             </button>
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog ">
                     <div class="modal-content">
 
-                        <form method="POST" class="form" action="{% url 'talent_add' %}">
+                        <form method="POST" class="form" action="{% url 'talent_add' %}" autocomplete="off">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Моя форма</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Добавить специализацию</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -58,8 +63,11 @@
                     </div>
                 </div>
             </div>
-            <a href="{% url 'profile_update' %}" class="btn">Пропустить</a>
+            <div class="inline">
+                <a href="{% url 'profile_update' %}">Дальше</a></div>
         </div>
     </div>
 </div>
 {% endblock %}
+
+

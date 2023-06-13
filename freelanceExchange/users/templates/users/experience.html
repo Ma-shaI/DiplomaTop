@@ -1,10 +1,54 @@
 {% extends 'base/base.html' %}
 
 {% block content %}
-  <form method="post"  enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ wizard.management_form }}
-    {{ wizard.form.as_p }}
-    <input type="submit" value="Submit">
-  </form>
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <h3>Расскажите о своем опыте работы</h3>
+
+            <form action="" method="post" enctype="multipart/form-data" class="form">
+                {% csrf_token %}
+                {{ wizard.management_form }}
+                {% for field in wizard.form %}
+                {% if field.label in 'start_month' %}
+                {% if field.label == 'start_month' %}
+                <div class="start_work">
+                    <label>Начало работы</label>
+                    {{ field }}
+                </div>
+                {% else %}
+                <div class="start_work">
+
+                    {{ field }}
+                </div>
+                {% endif %}
+                {% elif field.label in 'end_month' %}
+                {% if field.label == 'end_month' %}
+                <div class="end_work">
+                    <label>Окончание работы</label>
+                    {{ field }}
+                </div>
+                {% else %}
+                <div class="end_work">
+                    {{ field }}
+                </div>
+                {% endif %}
+                {%else %}
+                <div class="form__field">
+                    <label> {{ field.label }}</label>
+                    {{ field}}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="div_btn">
+                    <input type="submit" value="Отправить" class="btn" id="experience_btn"/>
+
+                    <button type="submit" value="{{ wizard.steps.next }}" class="btn">Следующий шаг</button>
+                    <button type="submit" value="{{ wizard.steps.prev }}"  name="wizard_goto_step" class="btn">Предыдущий шаг</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

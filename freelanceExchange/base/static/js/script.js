@@ -65,8 +65,36 @@ document.addEventListener('DOMContentLoaded', () => {
           selected.push(checkbox.nextSibling.textContent.trim());
         }
       });
-
-      chosenEl.innerHTML = selected.join(', ');
+      if (selected.length > 0) {
+        chosenEl.innerHTML = selected.join(', ');
+      } else {
+        chosenEl.innerHTML = 'Здесь будут отображены, выбранные вами услуги';
+      }
     });
   });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const formFields = document.querySelectorAll('.exp');
+  const submitButton = document.querySelector('#experience_btn');
+  function checkFormFields() {
+    var isValid = true;
+    for (var i = 0; i < formFields.length; i++) {
+      if (formFields[i].value === '') {
+        isValid = false;
+        break;
+      }
+    }
+    return isValid;
+  }
+  for (var i = 0; i < formFields.length; i++) {
+    formFields[i].addEventListener('change', function () {
+      if (checkFormFields()) {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
+    });
+  }
+  submitButton.disabled = true;
 });
