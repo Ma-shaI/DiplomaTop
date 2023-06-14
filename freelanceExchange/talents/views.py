@@ -67,7 +67,6 @@ def talent_update(request, pk):
                 skill, created = Skills.objects.get_or_create(title=skill)
                 talent.skills.add(skill.id)
 
-
             rate_form.save()
             return redirect('index')
 
@@ -77,6 +76,7 @@ def talent_update(request, pk):
 
 
 def talent_delete(request, pk):
+
     user = request.user.profile.freelancer
     talent = user.talent_set.get(id=pk)
     talent.delete()

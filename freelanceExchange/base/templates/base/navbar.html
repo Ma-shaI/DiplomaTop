@@ -26,14 +26,15 @@
 
             </form>
             <ul class="header__menu__right">
-<!--                <li class="header__menuItem">-->
+                <!--                <li class="header__menuItem">-->
 
-<!--                    <ul class="header__menuUl">-->
-<!--                        <li class="header__menuItem"><a href="#">Найти талант</a></li>-->
-<!--                        <li class="header__menuItem"><a href="#">Найти работу</a></li>-->
-<!--                    </ul>-->
-<!--                </li>-->
+                <!--                    <ul class="header__menuUl">-->
+                <!--                        <li class="header__menuItem"><a href="#">Найти талант</a></li>-->
+                <!--                        <li class="header__menuItem"><a href="#">Найти работу</a></li>-->
+                <!--                    </ul>-->
+                <!--                </li>-->
                 {% if request.user.is_authenticated%}
+                <li class="header__menuItem"><a href="{% url 'profile' request.user.id %}">{{ request.user.first_name }}</a></li>
                 <li class="header__menuItem"><a href="{% url 'logout' %}">Выйти</a></li>
 
                 {% else %}

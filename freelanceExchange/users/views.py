@@ -9,7 +9,7 @@ from django.core.files.storage import FileSystemStorage
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from talents.models import *
 
 class MyStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
@@ -200,3 +200,18 @@ def profile_update(request):
             messages.error(request, form.errors)
     context = {'form': form}
     return render(request, 'users/profile_form.html', context)
+
+
+def profile(request, pk):
+
+    user = Profile.objects.get(id=pk)
+    s = user.freelancer.talent_set.all()[0].id
+    if request.GET.get('s'):
+        s = request.GET.get('s')
+    talent = Talent.objects.get(id=s)
+    try:
+        role = user.freelancer
+    except:
+        role = user.customer
+    context = {'user': user, 'role': role, 'talent':talent}
+    return render(request, 'users/profile.html', context)

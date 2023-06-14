@@ -98,3 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   submitButton.disabled = true;
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  const items = this.document.querySelectorAll('.btn_service');
+  items.forEach((item) => {
+    item.addEventListener('mouseenter', function () {
+      item.classList.add('active');
+    });
+  });
+});

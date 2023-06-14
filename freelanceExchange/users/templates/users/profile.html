@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% include 'base/navbar.html'%}
+
+<div class="profile_block">
+    <div class="container">
+        <div class="profile">
+            <div class="profile_info">
+                <div class="profile__pAbout">
+                    <div class="profile_photo">
+                        <img src="{{user.photo.url}}" alt=""/>
+                    </div>
+                    <div class="profile_about">
+                        <h4>{{ user.first_name }} {{ user.last_name }}</h4>
+                        <p>{{ user.city }}, {{ user.country }}</p>
+                    </div>
+                </div>
+                {% if user.username == request.user.username %}
+                <div class="profile_settings">
+                    <p class="profile_btn"><a href="{% url 'profile_update' %}">Настройки профиля</a></p>
+                </div>
+                {% endif %}
+            </div>
+            <hr>
+            <div class="profile_base">
+                <div class="profile_left">
+                    <div class="div_talent">
+                        {% for service in role.talent_set.all %}
+
+                        <p class="btn_service"><a href="?s={{ service.id }}">{{ service }}</a></p>
+
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="profile_right">
+                    <div class="profile_title">
+                        <h4>{{ talent.title}}</h4>
+                        <h4>
+                            {{ talent.hourlyrate_set.first.rate }} {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
+                    </div>
+                    <p>{{ talent.descriptions }}</p>
+                    <hr>
+                    <div class="profile_skills">
+                        <h5>Навыки</h5>
+
+                        <div class="skill_list">
+                            {% for skill in talent.skills.all %}
+                            <p>{{ skill }}</p>{% endfor %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
