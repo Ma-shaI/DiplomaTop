@@ -82,3 +82,25 @@ def find_work(request):
             return JsonResponse(response_data)
 
     return render(request, 'tasks/find_work.html', context)
+
+
+@login_required(login_url='login')
+def saved_tasks(request):
+    profile = request.user.profile
+    tasks = Task.objects.filter(freelancer_saved__owner=profile)
+    context = {'tasks': tasks}
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        if task_id:
+            task = Task.objects.get(id=task_id)
+            if request.user.profile.freelancer in task.freelancer_saved.all():
+                task.freelancer_saved.remove(request.user.profile.freelancer)
+                task.save()
+            else:
+                task.freelancer_saved.add(request.user.profile.freelancer)
+                task.save()
+        return render(request, 'tasks/saved_tasks.html', context)
+
+    return render(request, 'tasks/saved_tasks.html', context)
+
+

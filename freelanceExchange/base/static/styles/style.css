@@ -529,3 +529,25 @@ p {
   border: none; /* Убираем рамку */
   background: url('../icons/magnifying-glass.png') no-repeat 50% 50%; /* Параметры фона */
 }
+
+.form__search__navbar {
+  border: 1px solid grey; /* Параметры рамки */
+  border-radius: 30px;
+  padding: 5px;
+  display: flex;
+}
+.form__search__navbar input[type='search'] {
+  background-color: aliceblue;
+  border: none; /* Убираем рамку */
+  outline: none; /* Убираем свечение в Chrome и Safari */
+  -webkit-appearance: none; /* Убираем рамку в Chrome и Safari */
+  width: 95%; /* Ширина поля */
+  vertical-align: middle; /* Выравнивание по середине */
+}
+
+/* saved_tasks.html */
+.save_task__box {
+  padding: 30px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}
