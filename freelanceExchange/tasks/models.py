@@ -1,7 +1,6 @@
 from django.db import models
 from users.models import Customer, Freelancer
 from talents.models import Skills
-from .utils import EXPERIENCE, AMOUNT_OF_WORK
 from talents.utils import CURRENCY
 
 
@@ -19,6 +18,19 @@ class Budget(models.Model):
 
 
 class Task(models.Model):
+    EXPERIENCE = (
+        ('junior', 'Начальный уровень'),
+        ('middle', 'Средний уровень'),
+        ('senior', 'Эксперт')
+    )
+
+    AMOUNT_OF_WORK = (
+        ('tiny', 'Менее 1 месяца'),
+        ('little', 'От 1 до 3 месяцев'),
+        ('medium', 'От 3 до 6 месяцев'),
+        ('big', 'Более 6 месяцев')
+    )
+
     owner = models.ForeignKey(Customer, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     experiences = models.CharField(max_length=200, choices=EXPERIENCE)

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
-from django.views.decorators.csrf import csrf_exempt
+from .utils import search_tasks
 
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
@@ -60,8 +60,8 @@ def task_budget(request, pk):
 
 
 def find_work(request):
-    tasks = Task.objects.all()
-    context = {'tasks': tasks}
+    tasks, search_query = search_tasks(request)
+    context = {'tasks': tasks, 'search_query': search_query}
     if request.GET.get('save'):
         profile = request.user.profile
         tasks = Task.objects.filter(freelancer_saved__owner=profile)
@@ -78,7 +78,6 @@ def find_work(request):
                 task.freelancer_saved.add(request.user.profile.freelancer)
                 task.save()
 
-            # Формирование ответа сервера в формате JSON
             response_data = {'result': 'success'}
             return JsonResponse(response_data)
 

@@ -1,7 +1,7 @@
 from django import forms
 from .models import *
 from django.forms import ModelForm
-from .utils import EXPERIENCE, AMOUNT_OF_WORK
+
 
 
 class TaskTitleForm(forms.Form):
@@ -15,6 +15,18 @@ class TaskSkillForm(forms.Form):
 
 
 class AmountOfWorkForm(forms.Form):
+    EXPERIENCE = (
+        ('junior', 'Начальный уровень'),
+        ('middle', 'Средний уровень'),
+        ('senior', 'Эксперт')
+    )
+    AMOUNT_OF_WORK = (
+        ('tiny', 'Менее 1 месяца'),
+        ('little', 'От 1 до 3 месяцев'),
+        ('medium', 'От 3 до 6 месяцев'),
+        ('big', 'Более 6 месяцев')
+    )
+
     amount = forms.ChoiceField(choices=AMOUNT_OF_WORK, widget=forms.Select(attrs={'class': 'form_select'}),
                                label='Оцените объем своей работы')
     experience = forms.ChoiceField(choices=EXPERIENCE, widget=forms.Select(attrs={'class': 'form_select'}),
