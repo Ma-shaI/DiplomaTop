@@ -1,6 +1,6 @@
 EXPERIENCE = (
-    ('junior', 'Новичок'),
-    ('middle', 'Средний'),
+    ('junior', 'Начальный уровень'),
+    ('middle', 'Средний уровень'),
     ('senior', 'Эксперт')
 )
 AMOUNT_OF_WORK = (

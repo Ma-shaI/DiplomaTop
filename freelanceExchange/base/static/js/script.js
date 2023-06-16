@@ -107,3 +107,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  let likeBtns = document.querySelectorAll('.like-btn');
+
+  likeBtns.forEach(function (likeBtn) {
+    likeBtn.addEventListener('click', function () {
+      likeBtn.classList.toggle('liked');
+    });
+  });
+});

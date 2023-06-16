@@ -1,12 +1,12 @@
 from django.db import models
-from users.models import Customer
+from users.models import Customer, Freelancer
 from talents.models import Skills
 from .utils import EXPERIENCE, AMOUNT_OF_WORK
 from talents.utils import CURRENCY
 
 
 class Budget(models.Model):
-    NAME = (('hourly_rate', 'Почасовая ставка'), ('fix', 'Бюджет проекта'))
+    NAME = (('hourly_rate', 'Почасовая ставка'), ('fix', 'Фиксированная цена'))
     owner = models.ForeignKey('Task', on_delete=models.CASCADE)
     name = models.CharField(max_length=250, choices=NAME)
     min_price = models.IntegerField(null=True, blank=True)
@@ -29,6 +29,7 @@ class Task(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
+    freelancer_saved = models.ManyToManyField(Freelancer, blank=True)
 
     def __str__(self):
         return f'{self.title}'

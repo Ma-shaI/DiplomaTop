@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from .forms import *
 from .models import *
 from formtools.wizard.views import SessionWizardView
@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
@@ -42,7 +44,7 @@ def task_budget(request, pk):
         else:
             messages.error(request, 'Валюта должна быть одинаковой')
 
-            return render(request, 'tasks/task_budget_form.html',context)
+            return render(request, 'tasks/task_budget_form.html', context)
         form = BudgetForm(request.POST)
         if form.is_valid():
             budget = form.save(commit=False)
@@ -55,3 +57,42 @@ def task_budget(request, pk):
             return redirect('profile_update')
 
     return render(request, 'tasks/task_budget_form.html', context)
+
+
+def find_work(request):
+    tasks = Task.objects.all()
+    context = {'tasks': tasks}
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        if task_id:
+            task = Task.objects.get(id=task_id)
+            if request.user.profile.freelancer in task.freelancer_saved.all():
+                task.freelancer_saved.remove(request.user.profile.freelancer)
+                task.save()
+            else:
+                task.freelancer_saved.add(request.user.profile.freelancer)
+                task.save()
+
+            # Формирование ответа сервера в формате JSON
+            response_data = {'result': 'success'}
+            return JsonResponse(response_data)
+
+    return render(request, 'tasks/find_work.html', context)
+
+
+# def like_task(request):
+#     if request.method == 'POST':
+#         task_id = request.POST.get('task_id')
+#         if task_id:
+#             task = Task.objects.get(id=task_id)
+#             if request.user.profile.freelancer in task.freelancer_saved.all():
+#                 task.freelancer_saved.remove(request.user.profile.freelancer)
+#                 task.save()
+#             else:
+#                 task.freelancer_saved.add(request.user.profile.freelancer)
+#                 task.save()
+#
+#             # Формирование ответа сервера
+#             response_data = {'success': True, 'message': 'Данные успешно обработаны'}
+#             return JsonResponse(response_data)
+#     return JsonResponse({'success': False, 'message': 'Ошибка: неверный метод запроса'})

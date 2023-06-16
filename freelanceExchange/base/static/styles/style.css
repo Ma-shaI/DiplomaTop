@@ -457,3 +457,75 @@ p {
   background-color: rgba(32, 65, 125, 0.336);
   color: #0b0b0b;
 }
+
+/* find_work.html */
+.find-work__block {
+  border: 1px solid gray;
+  border-radius: 20px;
+  margin-top: 40px;
+  padding: 20px;
+}
+.find-work__filter ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none; /* Для списка убираем маркеры */
+  margin-top: 10px; /* Нет отступов вокруг */
+  padding: 0; /* Убираем поля вокруг текста */
+  font-size: 16px; /* Размер названий в пункте меню */
+  gap: 20px;
+}
+.find-work__filter a {
+  padding: 0;
+}
+.like-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: aliceblue;
+  background-image: url('../icons/heart-shape.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.like-btn.liked {
+  background-image: url('../icons/heart.png');
+}
+.task_title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.task_title h5 {
+  font-size: 20px;
+}
+.tasks__info {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  gap: 7px;
+}
+.find-work__tasks h6 {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.form__search {
+  width: 100%; /* Ширина поля с кнопкой */
+  border: 1px solid #000; /* Параметры рамки */
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+}
+.form__search input[type='search'] {
+  background-color: aliceblue;
+  border: none; /* Убираем рамку */
+  outline: none; /* Убираем свечение в Chrome и Safari */
+  -webkit-appearance: none; /* Убираем рамку в Chrome и Safari */
+  width: 95%; /* Ширина поля */
+  vertical-align: middle; /* Выравнивание по середине */
+}
+.form__search input[type='submit'] {
+  width: 32px; /* Ширина кнопки */
+  height: 32px; /* Высота кнопки */
+  border: none; /* Убираем рамку */
+  background: url('../icons/magnifying-glass.png') no-repeat 50% 50%; /* Параметры фона */
+}

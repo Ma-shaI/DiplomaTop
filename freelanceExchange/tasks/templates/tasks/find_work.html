@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %} {% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% block content %}
+{% include 'base/navbar.html'%}
+<div class="find-work">
+    <div class="container">
+        <div class="find-work__box">
+            <div class="find-work__search">
+                <form action="" method="get">
+                    <div class="form__search">
+                        <input type="search" placeholder="Поиск работы"/>
+                        <input type="submit" value=""/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="find-work__block">
+            <h4>Вакансии, которые могут вам понравиться</h4>
+            <div class="find-work__filter">
+                <ul>
+                    <li><a href="">Все вакансии</a></li>
+                    <li><a href="">Сохраненное</a></li>
+                </ul>
+                <hr/>
+            </div>
+            <div class="find-work__results">
+                {% for task in tasks %}
+                <div class="find-work__tasks">
+                    <div class="task_title">
+                        <h5>{{ task.title }}</h5>
+                        <form action="{% url 'find_work' %}" method="post" class="my-form">
+                            {% csrf_token %}
+                            {% if request.user.profile.freelancer in task.freelancer_saved.all %}
+                             <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button type="submit" class="like-btn liked"></button>
+                            {% else %}
+                               <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button type="submit" class="like-btn"></button>
+                            {% endif %}
+                        </form>
+                    </div>
+                    <div class="tasks__info">
+                        <p>{{ task.budget_set.first.get_name_display }}</p>
+                        {% if task.budget_set.first.name == 'hourly_rate' %}
+                        <p>
+                            : {{ task.budget_set.first.min_price }}-{{ task.budget_set.first.max_price }}{{ task.budget_set.first.get_currency_display }}
+                        </p>
+                        {% elif task.budget_set.first.name == 'fix' %}
+                        <p>
+                            Бюджет: {{ task.budget_set.first.get_currency_display }} {{ task.budget_set.first.fix_price}}
+                        </p>
+                        {% endif %}
+                        <p> {{ task.get_experiences_display }}</p>
+                        <p>Время: {{ task.get_amount_of_work_display }}</p>
+                        <p>Опубликовано: {{ task.time_updated }}</p>
+                    </div>
+                    <h6>{{ task.description }}</h6>
+                    <div class="skill_list">
+                        {% for skill in task.skills.all %}
+                        <p>{{ skill }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <hr/>
+                {% endfor %}
+                <div id="success-message" style="display: none; color: green;">Данные успешно сохранены!
+                </div>
+                <div id="error-message" style="display: none; color: red;">Произошла ошибка.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+
+   $('.my-form').submit(function (event) {
+
+     event.preventDefault();
+     var form = $(this);
+     var url = form.attr('action');
+     var csrf_token = $('input[name="csrfmiddlewaretoken"]', form).val();
+     var task_id = $('input[name="task_id"]', form).val();
+     var button = $(event.target);
+     var action = button.attr('name') + '=' + button.attr('value');
+     $.ajax({
+      type: 'POST',
+      url: url,
+      headers: { 'X-CSRFToken': csrf_token },
+       data: {'task_id': task_id, 'action': action},
+       success: function (response) { console.log('OK');
+      },
+       error: function (xhr, errmsg, err) { console.log(xhr.status + ': ' + xhr.responseText); } }); }); });
+</script>
+{% endblock %}

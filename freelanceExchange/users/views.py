@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from talents.models import *
 
+
 class MyStorage(FileSystemStorage):
     def get_available_name(self, name, max_length=None):
         parts = name.split('.')
@@ -203,15 +204,17 @@ def profile_update(request):
 
 
 def profile(request, pk):
-
-    user = Profile.objects.get(id=pk)
-    s = user.freelancer.talent_set.all()[0].id
-    if request.GET.get('s'):
-        s = request.GET.get('s')
-    talent = Talent.objects.get(id=s)
+    profile = Profile.objects.get(id=pk)
     try:
-        role = user.freelancer
+        s = profile.freelancer.talent_set.all()[0].id
+        if request.GET.get('s'):
+            s = request.GET.get('s')
+        talent = Talent.objects.get(id=s)
+
+        role = profile.freelancer
+
+        context = {'profile': profile, 'role': role, 'talent': talent}
+        return render(request, 'users/profile.html', context)
     except:
-        role = user.customer
-    context = {'user': user, 'role': role, 'talent':talent}
-    return render(request, 'users/profile.html', context)
+        context = {'profile': profile}
+        return render(request, 'users/profile.html', context)

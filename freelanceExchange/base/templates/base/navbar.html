@@ -5,19 +5,44 @@
             <a href="#" class="header__logo">
                 <img src="#" alt="DevSearch Logo"/>
             </a>
+
             <ul class="header__menu__left">
-                <li class="header__menuItem"><a href="#">Найти талант</a>
+                {% if user.is_authenticated %}
+                {% if user.profile.freelancer %}
+                <li class="header__menuItem">Найти работу
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="{% url 'find_work' %}">Найти работу</a></li>
+                        <li class="header__menuItem"><a href="#">Сохраненные задания</a></li>
+                        <li class="header__menuItem"><a href="#">Предложения</a></li>
+                        <li class="header__menuItem"><a href="#">Панель управления моими проектами</a></li>
+                    </ul>
+                </li>
+                <li class="header__menuItem">Мои работы
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="#">Мои работы</a></li>
+                        <li class="header__menuItem"><a href="#">Все контракты</a></li>
+                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>
+                    </ul>
+                </li>
+                <li class="header__menuItem">Сообщения</li>
+                {% elif user.profile.customer %}
+                <li class="header__menuItem"><a href="#">Найти талант</a></li>
+                {% endif %}
+                {% else %}
+
+                <li class="header__menuItem">Найти талант
                     <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="#">Разместить вакансию</a></li>
                         <li class="header__menuItem"><a href="#">Рынок талантов</a></li>
                     </ul>
                 </li>
-                <li class="header__menuItem"><a href="#">Найти работу</a>
+                <li class="header__menuItem">Найти работу
                     <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="#">Разместить талант</a></li>
                         <li class="header__menuItem"><a href="#">Рынок вакансий</a></li>
                     </ul>
                 </li>
+                {% endif %}
             </ul>
         </div>
         <nav class="header__nav">
@@ -34,7 +59,8 @@
                 <!--                    </ul>-->
                 <!--                </li>-->
                 {% if request.user.is_authenticated%}
-                <li class="header__menuItem"><a href="{% url 'profile' request.user.id %}">{{ request.user.first_name }}</a></li>
+                <li class="header__menuItem"><a href="{% url 'profile' request.user.id %}">{{ request.user.first_name}}
+                </a></li>
                 <li class="header__menuItem"><a href="{% url 'logout' %}">Выйти</a></li>
 
                 {% else %}
