@@ -62,6 +62,11 @@ def task_budget(request, pk):
 def find_work(request):
     tasks = Task.objects.all()
     context = {'tasks': tasks}
+    if request.GET.get('save'):
+        profile = request.user.profile
+        tasks = Task.objects.filter(freelancer_saved__owner=profile)
+        context = {'tasks': tasks}
+        return render(request, 'tasks/find_work.html', context)
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         if task_id:
@@ -78,21 +83,3 @@ def find_work(request):
             return JsonResponse(response_data)
 
     return render(request, 'tasks/find_work.html', context)
-
-
-# def like_task(request):
-#     if request.method == 'POST':
-#         task_id = request.POST.get('task_id')
-#         if task_id:
-#             task = Task.objects.get(id=task_id)
-#             if request.user.profile.freelancer in task.freelancer_saved.all():
-#                 task.freelancer_saved.remove(request.user.profile.freelancer)
-#                 task.save()
-#             else:
-#                 task.freelancer_saved.add(request.user.profile.freelancer)
-#                 task.save()
-#
-#             # Формирование ответа сервера
-#             response_data = {'success': True, 'message': 'Данные успешно обработаны'}
-#             return JsonResponse(response_data)
-#     return JsonResponse({'success': False, 'message': 'Ошибка: неверный метод запроса'})
