@@ -8,51 +8,7 @@
         <div class="save_task__box">
             <h5>Сохраненные вакансии ({{ tasks.count }})</h5>
             <hr>
-            {% if tasks %}
-            <div class="find-work__results">
-                {% for task in tasks %}
-                <div class="find-work__tasks">
-                    <div class="task_title">
-                        <h5>{{ task.title }}</h5>
-                        <form action="{% url 'saved_tasks' %}" method="post" class="my-form">
-                            {% csrf_token %}
-                            {% if request.user.profile.freelancer in task.freelancer_saved.all %}
-                             <input type="hidden" name="task_id" value="{{task.id}}">
-                            <button type="submit" class="like-btn liked"></button>
-                            {% else %}
-                               <input type="hidden" name="task_id" value="{{task.id}}">
-                            <button type="submit" class="like-btn"></button>
-                            {% endif %}
-                        </form>
-                    </div>
-                    <div class="tasks__info">
-                        <p>{{ task.budget_set.first.get_name_display }}</p>
-                        {% if task.budget_set.first.name == 'hourly_rate' %}
-                        <p>
-                            : {{ task.budget_set.first.min_price }}-{{ task.budget_set.first.max_price }}{{ task.budget_set.first.get_currency_display }}
-                        </p>
-                        {% elif task.budget_set.first.name == 'fix' %}
-                        <p>
-                            Бюджет: {{ task.budget_set.first.get_currency_display }} {{ task.budget_set.first.fix_price}}
-                        </p>
-                        {% endif %}
-                        <p> {{ task.get_experiences_display }}</p>
-                        <p>Время: {{ task.get_amount_of_work_display }}</p>
-                        <p>Опубликовано: {{ task.time_updated }}</p>
-                    </div>
-                    <h6>{{ task.description }}</h6>
-                    <div class="skill_list">
-                        {% for skill in task.skills.all %}
-                        <p>{{ skill }}</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <hr/>
-                {% endfor %}
-            {% else %}
-            <h3>Следите за интересующими вас вакансиями</h3>
-            <h4>Нажимайте на значок сердца в объявлении о вакансии, чтобы сохранить его на потом.</h4>
-            {% endif %}
+            {% include 'tasks/liked_task.html' %}
         </div>
     </div>
 </div>

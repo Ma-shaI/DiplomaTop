@@ -85,7 +85,7 @@ def find_work(request):
 
 
 @login_required(login_url='login')
-def saved_tasks(request):
+def liked_tasks(request):
     profile = request.user.profile
     tasks = Task.objects.filter(freelancer_saved__owner=profile)
     context = {'tasks': tasks}
@@ -101,7 +101,7 @@ def saved_tasks(request):
                 task.save()
         return render(request, 'tasks/saved_tasks.html', context)
 
-    return render(request, 'tasks/saved_tasks.html', context)
+    return render(request, 'tasks/liked_task.html', context)
 
 
 def task(request, pk):
@@ -110,3 +110,10 @@ def task(request, pk):
     tasks = Task.objects.filter(owner=customer)
     context = {'task': job, 'customer': customer, 'tasks': tasks}
     return render(request, 'tasks/task.html', context)
+
+
+def saved_tasks(request):
+    profile = request.user.profile
+    tasks = Task.objects.filter(freelancer_saved__owner=profile)
+    context = {'tasks': tasks}
+    return render(request, 'tasks/saved_tasks.html', context)
