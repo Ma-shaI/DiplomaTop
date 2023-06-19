@@ -551,3 +551,56 @@ p {
   border: 1px solid gray;
   border-radius: 20px;
 }
+
+/* tast.html */
+
+.task__content {
+  display: flex;
+  flex-direction: row;
+
+  padding: 40px 30px;
+  border: 1px solid gray;
+  border-radius: 20px;
+  margin: 30px 0;
+}
+.task__info h5 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.task__info p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.task__details {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+}
+.task__info {
+  flex: 3;
+}
+.task__customer {
+  flex: 1;
+}
+.task__amount,
+.task__experience {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+.task__amount img,
+.task__experience img {
+  width: 16px;
+  height: 16px;
+}
+.task__btns {
+  display: flex;
+  flex-direction: column;
+}
+.customer_another_tasks {
+  padding: 30px 20px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}

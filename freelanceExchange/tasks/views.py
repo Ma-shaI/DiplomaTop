@@ -104,3 +104,9 @@ def saved_tasks(request):
     return render(request, 'tasks/saved_tasks.html', context)
 
 
+def task(request, pk):
+    job = Task.objects.get(id=pk)
+    customer = job.owner
+    tasks = Task.objects.filter(owner=customer)
+    context = {'task': job, 'customer': customer, 'tasks': tasks}
+    return render(request, 'tasks/task.html', context)

@@ -27,7 +27,7 @@
                 {% for task in tasks %}
                 <div class="find-work__tasks">
                     <div class="task_title">
-                        <h5>{{ task.title }}</h5>
+                        <h5><a href="{% url 'task' task.id %}">{{ task.title }}</a> </h5>
                         <form action="{% url 'find_work' %}" method="post" class="my-form">
                             {% csrf_token %}
                             {% if request.user.profile.freelancer in task.freelancer_saved.all %}

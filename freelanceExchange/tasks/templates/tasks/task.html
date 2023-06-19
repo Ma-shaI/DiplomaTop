@@ -1,0 +1,67 @@
+{% extends 'base/base.html'%}
+{% load static %}
+{% block content %}
+{% include 'base/navbar.html'%}
+
+<div class="task">
+    <div class="container">
+        <div class="task__block">
+
+            <h4>Детали работы</h4>
+            <div class="task__content">
+                <div class="task__info">
+                    <h5>{{ task.title }}</h5>
+                    <p>Опубликовано {{ task.time_updated }}</p>
+                    <hr>
+                    <p> {{ task.description }} </p>
+                    <hr>
+                    <div class="task__details">
+                        <div class="task__amount">
+                            <img src="{% static 'icons/get-money.png' %}" alt="">
+                            <div class="task__amount-text">
+                            <p>{{ task.get_amount_of_work_display }}</p>
+                            <p>{{ task.budget_set.first.get_name_display }}</p></div>
+                        </div>
+                        <div class="task__experience">
+                            <img src="{% static 'icons/experience.png' %}" alt="">
+                            <div class="task__experience-text">
+                                <p>{{ task.get_experiences_display }}</p></div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h6>Навыки и опыт</h6>
+                    <div class="skill_list">
+                        {% for skill in task.skills.all %}
+                        <p>{{ skill }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="task__customer">
+                    <div class="task__btns">
+                    <button class="btn">Откликнуться</button>
+                    <button class="btn">Сохранить</button>
+                    </div>
+                    <hr>
+                    <div class="customer__info">
+                        <h5>О клиенте</h5>
+                        <div class="customer__scores">
+                            <p>Здесь будут звезды оценок</p>
+                        </div>
+                        <hr>
+                        <p>{{ customer.owner.country }}, {{ customer.owner.city }} </p>
+                    </div>
+                </div>
+            </div>
+            <div class="customer_another_tasks">
+                <h4>
+                    Другие открытые вакансии этого заказчика ({{ tasks.count }})
+                </h4>
+                {% for job in tasks %}
+                <p><a href="{% url 'task' job.id %}">{{ job.title }}</a>  {{ job.budget_set.first.get_name_display }}</p>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
