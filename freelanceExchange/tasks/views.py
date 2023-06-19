@@ -125,3 +125,7 @@ def saved_tasks(request):
     tasks = Task.objects.filter(freelancer_saved__owner=profile)
     context = {'tasks': tasks}
     return render(request, 'tasks/saved_tasks.html', context)
+
+
+def offers(request):
+    return render(request, 'tasks/offers_page.html')
