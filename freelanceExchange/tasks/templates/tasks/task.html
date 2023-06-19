@@ -1,5 +1,6 @@
 {% extends 'base/base.html'%}
 {% load static %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% block content %}
 {% include 'base/navbar.html'%}
 
@@ -19,8 +20,8 @@
                         <div class="task__amount">
                             <img src="{% static 'icons/get-money.png' %}" alt="">
                             <div class="task__amount-text">
-                            <p>{{ task.get_amount_of_work_display }}</p>
-                            <p>{{ task.budget_set.first.get_name_display }}</p></div>
+                                <p>{{ task.get_amount_of_work_display }}</p>
+                                <p>{{ task.budget_set.first.get_name_display }}</p></div>
                         </div>
                         <div class="task__experience">
                             <img src="{% static 'icons/experience.png' %}" alt="">
@@ -38,8 +39,26 @@
                 </div>
                 <div class="task__customer">
                     <div class="task__btns">
-                    <button class="btn">Откликнуться</button>
-                    <button class="btn">Сохранить</button>
+                        <form action="{% url 'task' task.id %}" method="post">
+                            {% csrf_token %}
+                            {% if request.user.profile.freelancer in task.freelancer_responded.all %}
+
+                            <p class="respond-btn responded">Вы откликнулись</p>
+                            {% else %}
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+                            <button type="submit" class="respond-btn ">Откликнуться</button>
+                            {% endif %}
+                        </form>
+                        <form action="{% url 'liked_task' %}" method="post" class="my-form">
+                            {% csrf_token %}
+                            {% if request.user.profile.freelancer in task.freelancer_saved.all %}
+                            <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button type="submit" class="liked-btn like">Сохранено</button>
+                            {% else %}
+                            <input type="hidden" name="task_id" value="{{task.id}}">
+                            <button type="submit" class="liked-btn">Сохранить</button>
+                            {% endif %}
+                        </form>
                     </div>
                     <hr>
                     <div class="customer__info">
@@ -57,11 +76,15 @@
                     Другие открытые вакансии этого заказчика ({{ tasks.count }})
                 </h4>
                 {% for job in tasks %}
-                <p><a href="{% url 'task' job.id %}">{{ job.title }}</a>  {{ job.budget_set.first.get_name_display }}</p>
+                <p><a href="{% url 'task' job.id %}">{{ job.title }}</a> {{ job.budget_set.first.get_name_display }}</p>
                 {% endfor %}
             </div>
         </div>
 
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/liked_jquery.js' %}">
+
+</script>
 {% endblock %}

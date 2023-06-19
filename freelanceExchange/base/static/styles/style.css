@@ -604,3 +604,18 @@ p {
   border: 1px solid gray;
   border-radius: 20px;
 }
+
+.respond-btn,
+.liked-btn {
+  padding: 10px;
+  background-color: rgba(32, 65, 125, 0.575);
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  border: none;
+  margin-bottom: 15px;
+}
+.respond-btn.responded,
+.liked-btn.like {
+  background-color: rgba(32, 65, 125, 0.336);
+}

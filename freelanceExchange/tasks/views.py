@@ -108,7 +108,15 @@ def task(request, pk):
     job = Task.objects.get(id=pk)
     customer = job.owner
     tasks = Task.objects.filter(owner=customer)
+
     context = {'task': job, 'customer': customer, 'tasks': tasks}
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        if task_id:
+            task = Task.objects.get(id=task_id)
+            task.freelancer_responded.add(request.user.profile.freelancer)
+            task.save()
+        return render(request, 'tasks/task.html', context, )
     return render(request, 'tasks/task.html', context)
 
 
