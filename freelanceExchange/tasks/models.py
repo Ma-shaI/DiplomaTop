@@ -41,8 +41,8 @@ class Task(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     time_updated = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=False)
-    freelancer_saved = models.ManyToManyField(Freelancer, blank=True,related_name='saved_tasks' )
-    freelancer_responded =models.ManyToManyField(Freelancer, blank=True,  related_name='responded_tasks')
+    freelancer_saved = models.ManyToManyField(Freelancer, blank=True, related_name='saved_tasks')
+    freelancer_responded = models.ManyToManyField(Freelancer, blank=True, related_name='responded_tasks')
 
     def __str__(self):
         return f'{self.title}'

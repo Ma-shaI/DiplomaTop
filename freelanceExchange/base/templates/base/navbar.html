@@ -26,7 +26,21 @@
                 </li>
                 <li class="header__menuItem">Сообщения</li>
                 {% elif user.profile.customer %}
-                <li class="header__menuItem"><a href="#">Найти талант</a></li>
+                <li class="header__menuItem">Найти талант
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="#">Найти талант</a></li>
+                        <li class="header__menuItem"><a href="#">Мои сотрудники</a></li>
+                        <li class="header__menuItem"><a href="#">Сохраненные таланты</a></li>
+                    </ul>
+                </li>
+                <li class="header__menuItem">Мои задачи
+                <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="{% url 'task_add' %}">Разместить вакансию</a></li>
+                        <li class="header__menuItem"><a href="#">Мои задачи</a></li>
+                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>
+                    </ul>
+                </li>
+                <li class="header__menuItem"><a href="#">Сообщения</a></li>
                 {% endif %}
                 {% else %}
 
@@ -48,9 +62,9 @@
         <nav class="header__nav">
             <form action="" method="get">
                 <div class="form__search__navbar">
-                        <input type="search" placeholder="Поиск работы"/>
+                    <input type="search" placeholder="Поиск работы"/>
 
-                    </div>
+                </div>
 
             </form>
             <ul class="header__menu__right">
