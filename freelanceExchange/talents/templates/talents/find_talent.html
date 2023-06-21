@@ -49,7 +49,7 @@
                         <form action="{% url 'find_talent' %}" method="post">
                             {% csrf_token %}
                             {% if request.user.profile.customer in talent.customer_invited.all %}
-                            <p class="respond-btn responded">Вы уже пригласили</p>
+                            <p class="respond-btn responded invite">Вы уже пригласили</p>
                             {% else %}
                             <input type="hidden" name="talent_id" value="{{ talent.id }}">
                             <button type="submit" class="respond-btn invite">Пригласить на интервью</button>

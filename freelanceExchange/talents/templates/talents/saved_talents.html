@@ -1,0 +1,80 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% block content %}
+{% include 'base/navbar.html' %}
+<div class="save_talents">
+    <div class="container">
+        <div class="save_talents__box">
+            <h5>Сохраненные таланты ({{ talents.count }})</h5>
+            <hr>
+            <div class="talents__block">
+                {% if talents %}
+                <div class="save_talents__block">
+                    {% for talent in talents %}
+                    <div class="talent_box">
+                        <div class="find-talent__talent">
+                            <div class="talent__title">
+                                <div class="profile_photo">
+                                    <img src="{{ talent.owner.owner.photo.url }}" alt="">
+                                </div>
+                                <div class="profile__info">
+                                    <p>
+                                        <a href="{% url 'profile' talent.owner.owner.id %}">
+                                            {{ talent.owner.owner.first_name }}
+                                        </a>{{ talent.id }}</p>
+
+                                    <p>{{ talent.owner.owner.country}}, {{ talent.owner.owner.city }}</p>
+                                </div>
+                                <div class="profile__btns">
+                                    <form action="{% url 'liked_talent' talent.id %}" method="post" class="my-form">
+                                        {% csrf_token %}
+                                        {% if request.user.profile.customer in talent.customer_saved.all %}
+                                        <input type="hidden" name="task_id" value="{{talent.id}}">
+                                        <button type="submit" class="like-btn liked"></button>
+                                        {% else %}
+                                        <input type="hidden" name="task_id" value="{{talent.id}}">
+                                        <button type="submit" class="like-btn"></button>
+                                        {% endif %}
+                                    </form>
+                                    <form action="{% url 'find_talent' %}" method="post">
+                                        {% csrf_token %}
+                                        {% if request.user.profile.customer in talent.customer_invited.all %}
+                                        <p class="respond-btn responded invite">Вы уже пригласили</p>
+                                        {% else %}
+                                        <input type="hidden" name="talent_id" value="{{ talent.id }}">
+                                        <button type="submit" class="respond-btn invite">Пригласить на интервью</button>
+                                        {% endif %}
+                                    </form>
+                                </div>
+
+                            </div>
+                            <div class="talent__description">
+                                <div class="talent_amount">
+                                    <p>{{ talent.hourlyrate_set.first.get_currency_display }}
+                                        {{ talent.hourlyrate_set.first.rate }}/час</p>
+                                </div>
+                                <div class="talent__descriptions">
+                                    <p>{{ talent.owner.bio|truncatechars:260 }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    {% else %}
+                    <h1>Тут будет список талантов которые вам понравились</h1>
+                    <h3>Следите за интересующими вас талантами</h3>
+                    <h4>Нажимайте на значок сердца в объявлении о таланте, чтобы сохранить его на потом.</h4>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/liked_jquery.js' %}"></script>
+{% endblock%}

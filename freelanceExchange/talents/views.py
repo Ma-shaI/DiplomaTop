@@ -114,3 +114,10 @@ def find_talent(request):
             talent.save()
         return render(request, 'talents/find_talent.html', context)
     return render(request, 'talents/find_talent.html', context)
+
+
+def saved_talents(request):
+    profile = request.user.profile
+    talents = Talent.objects.filter(customer_saved__owner=profile)
+    context = {'talents': talents}
+    return render(request, 'talents/saved_talents.html', context)

@@ -654,3 +654,11 @@ p {
 .invite {
   width: 250px;
 }
+
+/* saved_talents.html */
+
+.talents__block {
+  padding: 20px;
+  border: 1px solid gray;
+  border-radius: 20px;
+}

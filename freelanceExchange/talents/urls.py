@@ -7,4 +7,5 @@ urlpatterns = [
     path('talent_delete/<str:pk>/', views.talent_delete, name='talent_delete'),
     path('find_talent/', views.find_talent, name='find_talent'),
     path('liked_talent/<str:pk>/', views.liked_talent, name='liked_talent'),
+    path('saved_talents/', views.saved_talents, name='saved_talents')
 ]
