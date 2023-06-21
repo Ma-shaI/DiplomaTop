@@ -76,9 +76,41 @@ def talent_update(request, pk):
 
 
 def talent_delete(request, pk):
-
     user = request.user.profile.freelancer
     talent = user.talent_set.get(id=pk)
     talent.delete()
     return redirect('talent_add')
 
+
+def liked_talent(request, pk):
+    profile = request.user.profile
+    talents = Talent.objects.filter(customer_saved__owner=profile)
+    context = {'talents': talents}
+    if request.method == 'POST':
+        talent_id = request.POST.get('task_id')
+
+        if talent_id:
+            talent = Talent.objects.get(id=talent_id)
+            if request.user.profile.customer in talent.customer_saved.all():
+
+                talent.customer_saved.remove(profile.customer)
+                talent.save()
+            else:
+
+                talent.customer_saved.add(profile.customer)
+                talent.save()
+        return render(request, 'talents/find_talent.html', context)
+    return render(request, 'talents/liked_talent.html', context)
+
+
+def find_talent(request):
+    talents = Talent.objects.all()
+    context = {'talents': talents}
+    if request.method == 'POST':
+        talent_id = request.POST.get('talent_id')
+        if talent_id:
+            talent = Talent.objects.get(id=talent_id)
+            talent.customer_invited.add(request.user.profile.customer)
+            talent.save()
+        return render(request, 'talents/find_talent.html', context)
+    return render(request, 'talents/find_talent.html', context)

@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Freelancer, Services
+from users.models import Freelancer, Services, Customer
 from .utils import CURRENCY
 
 
@@ -12,6 +12,8 @@ class Talent(models.Model):
     time_updated = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     skills = models.ManyToManyField('Skills', blank=True, verbose_name='Навыки')
     is_published = models.BooleanField(default=False, verbose_name='Опубликовать')
+    customer_saved = models.ManyToManyField(Customer, blank=True, related_name='saved_talent')
+    customer_invited = models.ManyToManyField(Customer, blank=True, related_name='invited_talent')
 
     def __str__(self):
         return f"{self.title}"

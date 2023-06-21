@@ -619,3 +619,38 @@ p {
 .liked-btn.like {
   background-color: rgba(32, 65, 125, 0.336);
 }
+
+/* find_talent.html */
+.find-talent__block {
+  padding: 20px;
+  margin-top: 25px;
+  border: 1px solid grey;
+  border-radius: 20px;
+}
+.talent__title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.profile__serves {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.profile_photo {
+  flex: 1;
+}
+.profile__info {
+  flex: 5;
+}
+.profile__btns {
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+.invite {
+  width: 250px;
+}

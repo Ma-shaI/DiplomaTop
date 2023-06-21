@@ -1,0 +1,81 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% block content %}
+{% include 'base/navbar.html' %}
+
+<div class="find-talent">
+    <div class="container">
+        <div class="find-talent__box">
+            <div class="find-talent__search">
+                <form action="" method="get">
+                    <div class="form__search">
+                        <input type="search" placeholder="Поиск таланта" name="search_query" value="{{search_query}}"/>
+                        <input type="submit" value=""/>
+                    </div>
+                </form>
+            </div>
+            <div class="find-talent__block">
+                {% for talent in talents %}
+                <div class="talent_box">
+                <div class="find-talent__talent">
+                    <div class="talent__title">
+                        <div class="profile_photo">
+                            <img src="{{ talent.owner.owner.photo.url }}" alt="">
+                        </div>
+                        <div class="profile__info">
+                            <p>
+                                <a href="{% url 'profile' talent.owner.owner.id %}">{{ talent.owner.owner.first_name }}
+                                </a>{{ talent.id }}</p>
+                            <div class="profile__serves">
+                                {% for serve in talent.owner.serves.all %}
+                                <p>{{ serve }}</p>
+                                {% endfor %}
+                            </div>
+                            <p>{{ talent.owner.owner.country}}, {{ talent.owner.owner.city }}</p>
+                        </div>
+                        <div class="profile__btns">
+                        <form action="{% url 'liked_talent' talent.id %}" method="post" class="my-form">
+                            {% csrf_token %}
+                            {% if request.user.profile.customer in talent.customer_saved.all %}
+                            <input type="hidden" name="task_id" value="{{talent.id}}">
+                            <button type="submit" class="like-btn liked"></button>
+                            {% else %}
+                            <input type="hidden" name="task_id" value="{{talent.id}}">
+                            <button type="submit" class="like-btn"></button>
+                            {% endif %}
+                        </form>
+                        <form action="{% url 'find_talent' %}" method="post">
+                            {% csrf_token %}
+                            {% if request.user.profile.customer in talent.customer_invited.all %}
+                            <p class="respond-btn responded">Вы уже пригласили</p>
+                            {% else %}
+                            <input type="hidden" name="talent_id" value="{{ talent.id }}">
+                            <button type="submit" class="respond-btn invite">Пригласить на интервью</button>
+                            {% endif %}
+                        </form>
+                        </div>
+
+                    </div>
+                    <div class="talent_info"></div>
+                </div>
+                <div class="talent__description">
+                    <div class="talent_amount">
+                        <p>{{ talent.hourlyrate_set.first.get_currency_display }}
+                        {{ talent.hourlyrate_set.first.rate }}/час</p>
+                    </div>
+                    <div class="talent__descriptions">
+                        <p>{{ talent.owner.bio|truncatechars:260 }}</p>
+                    </div>
+                </div></div>
+                <hr>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/liked_jquery.js' %}"></script>
+{% endblock%}
