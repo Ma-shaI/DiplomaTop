@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% include 'base/navbar.html'%}
+<div class="my-tasks">
+    <div class="container">
+        <div class="my-tasks__box">
+            <div class="my-tasks__title">
+            <h3>Пубикации о вакансиях</h3>
+            <p><a href="{% url 'task_add' %}">Опубликовать новую вакансию</a></p></div>
+            <div class="my-tasks__block">
+                {% if tasks %}
+                {% for task in tasks %}
+                <div class="task">
+                    <div class="task__about">
+                        <h5>{{ task.title }}</h5>
+                        <p>Создано {{ task.time_created }}</p>
+                        {% if is_published %}
+                        <p>Сохранено {{ task.time_updated }}</p>
+                        {% else %}
+                        <p>Черновик - Сохранено {{ task.time_updated }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="task_btns">
+                        <p><a href="{% url 'task_add' %}">Изменить черновик</a></p>
+                        <ul>
+                            <li class="header__menuItem">...
+                                <ul class="header__menuUl">
+                                    <li class="header__menuItem"><a href="{% url 'task_add' %}">Изменить</a></li>
+                                    <li class="header__menuItem"><a href="{% url 'login_user' %}">Удалить</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+                {% else %}
+                <h4>Тут будут располагаться ваши вакансии</h4>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

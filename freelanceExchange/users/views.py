@@ -46,10 +46,9 @@ class RegisterWizard(SessionWizardView):
         email = form_list[1].cleaned_data['email']
         password = form_list[1].cleaned_data['password1']
 
-        # complete the registration process
         user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email,
                                    password=password)
-
+        user.set_password(password)
         user.save()
 
         login(self.request, user)

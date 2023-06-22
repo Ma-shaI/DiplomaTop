@@ -129,3 +129,11 @@ def saved_tasks(request):
 
 def offers(request):
     return render(request, 'tasks/offers_page.html')
+
+
+
+def my_tasks(request):
+    profile = request.user.profile.customer
+    tasks = Task.objects.filter(owner=profile)
+    contex = {'tasks': tasks}
+    return render(request, 'tasks/my_tasks.html', contex)
