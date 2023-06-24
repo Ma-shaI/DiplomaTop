@@ -5,8 +5,8 @@
     <div class="container">
         <div class="my-tasks__box">
             <div class="my-tasks__title">
-            <h3>Пубикации о вакансиях</h3>
-            <p><a href="{% url 'task_add' %}">Опубликовать новую вакансию</a></p></div>
+                <h3>Пубикации о вакансиях</h3>
+                <p><a href="{% url 'task_add' %}">Опубликовать новую вакансию</a></p></div>
             <div class="my-tasks__block">
                 {% if tasks %}
                 {% for task in tasks %}
@@ -21,15 +21,45 @@
                         {% endif %}
                     </div>
                     <div class="task_btns">
-                        <p><a href="{% url 'task_add' %}">Изменить черновик</a></p>
+                        <p><a href="{% url 'update_task' task.id %}">Изменить черновик</a></p>
                         <ul>
                             <li class="header__menuItem">...
                                 <ul class="header__menuUl">
-                                    <li class="header__menuItem"><a href="{% url 'task_add' %}">Изменить</a></li>
-                                    <li class="header__menuItem"><a href="{% url 'login_user' %}">Удалить</a></li>
+                                    <li class="header__menuItem"><a href="{% url 'update_task' task.id %}">Изменить</a></li>
+                                    <li class="header__menuItem">
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#myModal">Удалить
+                                        </button>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
+                    </div>
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog ">
+                            <div class="modal-content">
+
+                                <form method="POST" class="form" action="{% url 'delete_task' task.id %}"
+                                      autocomplete="off">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Вы действительно хотите удалить
+                                            {{ task.title }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    {% csrf_token %}
+                                    <button type="submit">Да</button>
+                                    <a href="{% url 'my_tasks' %}">Нет</a>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Отправить</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                            Закрыть
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <hr>

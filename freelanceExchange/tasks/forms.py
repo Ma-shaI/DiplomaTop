@@ -3,7 +3,6 @@ from .models import *
 from django.forms import ModelForm
 
 
-
 class TaskTitleForm(forms.Form):
     title = forms.CharField(max_length=200, label='', widget=forms.TextInput(attrs={'class': 'reg_form'}))
 
@@ -36,7 +35,8 @@ class AmountOfWorkForm(forms.Form):
 
 class DescriptionForm(forms.Form):
     description = forms.CharField(
-        widget=forms.Textarea(attrs={'class': 'reg_form_text', 'placeholder': 'Описание уже есть? Вставьте его здесь!'}, ),
+        widget=forms.Textarea(
+            attrs={'class': 'reg_form_text', 'placeholder': 'Описание уже есть? Вставьте его здесь!'}, ),
         label='')
 
 
@@ -51,6 +51,19 @@ class BudgetForm(ModelForm):
             'max_price': 'До',
             'fix_price': 'Максимальный бюджет проекта',
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for name, field in self.fields.items():
+            field.widget.attrs.update({'class': 'reg_form'})
+
+
+class TaskForm(ModelForm):
+    class Meta:
+        model = Task
+        fields = '__all__'
+        exclude = ['owner', 'freelancer_responded', 'freelancer_saved', 'is_published']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

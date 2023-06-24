@@ -131,9 +131,47 @@ def offers(request):
     return render(request, 'tasks/offers_page.html')
 
 
-
 def my_tasks(request):
     profile = request.user.profile.customer
     tasks = Task.objects.filter(owner=profile)
     contex = {'tasks': tasks}
     return render(request, 'tasks/my_tasks.html', contex)
+
+
+def delete_task(request, pk):
+    task = Task.objects.get(id=pk)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('my_tasks')
+
+
+def update_task(request, pk):
+    profile = request.user.profile.customer
+    task = profile.tasks.get(id=pk)
+    budget = task.budget_set.get(owner=task)
+    form_task = TaskForm(instance=task)
+    form_budget = BudgetForm(instance=budget)
+    context = {'task': task, 'form_task': form_task, 'form_budget': form_budget}
+
+    if request.method == 'POST':
+        currency = ''
+        if request.POST['select_min_price'] == request.POST['select_max_price']:
+            currency = request.POST['select_min_price']
+        else:
+            messages.error(request, 'Валюта должна быть одинаковой')
+            return render(request, 'tasks/update_task.html', context)
+        form_task = TaskForm(request.POST, instance=task)
+        form_budget = BudgetForm(request.POST, instance=budget)
+
+        if form_task.is_valid() and form_budget.is_valid():
+            form_task.save()
+            budget = form_budget.save(commit=False)
+            budget.owner = task
+            if budget.name == 'hourly_rate':
+                budget.currency = currency
+            else:
+                budget.currency = request.POST['select_fix_price']
+            budget.save()
+            return redirect('index')
+
+    return render(request, 'tasks/update_task.html', context)

@@ -118,7 +118,7 @@ class Language(models.Model):
 
 
 class Customer(models.Model):
-    owner = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    owner = models.OneToOneField(Profile, on_delete=models.CASCADE, related_name='customer')
 
     def __str__(self):
         return f'{self.owner}'
