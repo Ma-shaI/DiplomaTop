@@ -104,8 +104,9 @@ def liked_talent(request, pk):
 
 
 def find_talent(request):
-    talents = Talent.objects.all()
-    context = {'talents': talents}
+
+    freelancers = Freelancer.objects.all()
+    context = {'freelancers': freelancers}
     if request.method == 'POST':
         talent_id = request.POST.get('talent_id')
         if talent_id:

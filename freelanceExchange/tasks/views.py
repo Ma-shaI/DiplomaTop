@@ -54,7 +54,7 @@ def task_budget(request, pk):
             else:
                 budget.currency = request.POST['select_fix_price']
             budget.save()
-            return redirect('profile_update')
+            return redirect('my_tasks')
 
     return render(request, 'tasks/task_budget_form.html', context)
 
