@@ -28,7 +28,7 @@
                                     <p>{{ talent.owner.owner.country}}, {{ talent.owner.owner.city }}</p>
                                 </div>
                                 <div class="profile__btns">
-                                    <form action="{% url 'liked_talent' talent.id %}" method="post" class="my-form">
+                                    <form action="{% url 'like_talent' talent.id %}" method="post" class="my-form">
                                         {% csrf_token %}
                                         {% if request.user.profile.customer in talent.customer_saved.all %}
                                         <input type="hidden" name="task_id" value="{{talent.id}}">

@@ -82,7 +82,7 @@ def talent_delete(request, pk):
     return redirect('talent_add')
 
 
-def liked_talent(request, pk):
+def like_talent(request, pk):
     profile = request.user.profile
     talents = Talent.objects.filter(customer_saved__owner=profile)
     context = {'talents': talents}
@@ -100,7 +100,7 @@ def liked_talent(request, pk):
                 talent.customer_saved.add(profile.customer)
                 talent.save()
         return render(request, 'talents/find_talent.html', context)
-    return render(request, 'talents/liked_talent.html', context)
+    return render(request, 'talents/like_talent.html', context)
 
 
 def find_talent(request):

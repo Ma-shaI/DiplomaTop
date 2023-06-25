@@ -85,7 +85,7 @@ def find_work(request):
 
 
 @login_required(login_url='login')
-def liked_tasks(request):
+def like_task(request):
     profile = request.user.profile
     tasks = Task.objects.filter(freelancer_saved__owner=profile)
     context = {'tasks': tasks}
@@ -101,7 +101,7 @@ def liked_tasks(request):
                 task.save()
         return render(request, 'tasks/saved_tasks.html', context)
 
-    return render(request, 'tasks/liked_task.html', context)
+    return render(request, 'tasks/like_task.html', context)
 
 
 def task(request, pk):

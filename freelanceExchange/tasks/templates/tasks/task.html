@@ -49,7 +49,7 @@
                             <button type="submit" class="respond-btn ">Откликнуться</button>
                             {% endif %}
                         </form>
-                        <form action="{% url 'liked_task' %}" method="post" class="my-form">
+                        <form action="{% url 'like_task' %}" method="post" class="my-form">
                             {% csrf_token %}
                             {% if request.user.profile.freelancer in task.freelancer_saved.all %}
                             <input type="hidden" name="task_id" value="{{task.id}}">
