@@ -122,3 +122,18 @@ class Customer(models.Model):
 
     def __str__(self):
         return f'{self.owner}'
+
+
+class Message(models.Model):
+    sender = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name='sender', null=True, blank=True)
+    recipient = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name='recipient', null=True, blank=True)
+    subject = models.CharField(max_length=300, null=True, blank=True)
+    body = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.subject}'
+
+    class Meta:
+        ordering = ['is_read', '-created']
