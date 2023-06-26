@@ -129,6 +129,7 @@ class Message(models.Model):
     recipient = models.ForeignKey(Profile, on_delete=models.SET_NULL, related_name='recipient', null=True, blank=True)
     subject = models.CharField(max_length=300, null=True, blank=True)
     body = models.TextField()
+    task = models.ForeignKey('tasks.Task', on_delete=models.SET_NULL, null=True, blank=True)
     is_read = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 

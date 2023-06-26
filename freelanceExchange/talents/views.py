@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
+from users.models import Message
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
+from tasks.models import Task
 
 
 @login_required(login_url='login')
@@ -103,22 +105,57 @@ def like_talent(request, pk):
     return render(request, 'talents/like_talent.html', context)
 
 
-def find_talent(request):
-
+def invite_freelancer(request):
     freelancers = Freelancer.objects.all()
     context = {'freelancers': freelancers}
     if request.method == 'POST':
         talent_id = request.POST.get('talent_id')
+        print(talent_id)
         if talent_id:
             talent = Talent.objects.get(id=talent_id)
             talent.customer_invited.add(request.user.profile.customer)
             talent.save()
-        return render(request, 'talents/find_talent.html', context)
+            message = Message.objects.create(
+                sender=request.user.profile,
+                recipient=talent.owner.owner,
+                subject='invitation to an interview',
+                body=f'Приглашаю Вас на интервью',
+            )
+            message.save()
+        return redirect(request.POST.get('return_url'))
+    return render(request, 'talents/like_talent.html', context)
+
+
+def find_talent(request):
+    freelancers = Freelancer.objects.all()
+    tasks = Task.objects.filter(owner=request.user.profile.customer)
+    context = {'freelancers': freelancers, 'tasks':tasks}
     return render(request, 'talents/find_talent.html', context)
 
 
 def saved_talents(request):
     profile = request.user.profile
     talents = Talent.objects.filter(customer_saved__owner=profile)
-    context = {'talents': talents}
+    context = {'talents': talents, 'tasks': Task.objects.filter(owner=profile.customer)}
     return render(request, 'talents/saved_talents.html', context)
+
+
+def choice_task(request):
+    if request.method == 'POST':
+        selected_choice = request.POST.get('choice_task')
+        talent_id = request.POST.get('talent_id')
+        if talent_id and selected_choice:
+            talent = Talent.objects.get(id=talent_id)
+            talent.customer_invited.add(request.user.profile.customer)
+            talent.save()
+            message = Message.objects.create(
+                sender=request.user.profile,
+                recipient=talent.owner.owner,
+                subject='invitation to an interview',
+                body=f'Приглашаю Вас на интервью, по поводу вакансии',
+                task=Task.objects.get(id=selected_choice)
+            )
+            message.save()
+
+        return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))
