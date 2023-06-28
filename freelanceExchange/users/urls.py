@@ -10,5 +10,6 @@ urlpatterns = [
     path('serves_add/', views.serves_add, name='serves_add'),
     path('profile_update/', views.profile_update, name='profile_update'),
     path('login/', views.login_user, name='login_user'),
-    path('profile/<str:pk>/', views.profile, name='profile')
+    path('profile/<str:pk>/', views.profile, name='profile'),
+    path('all_messages/', views.all_messages, name='all_messages')
 ]

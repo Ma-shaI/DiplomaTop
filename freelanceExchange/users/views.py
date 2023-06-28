@@ -10,6 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from talents.models import *
+from itertools import groupby
 
 
 class MyStorage(FileSystemStorage):
@@ -217,3 +218,17 @@ def profile(request, pk):
     except:
         context = {'profile': profile}
         return render(request, 'users/profile.html', context)
+
+
+def all_messages(request):
+    user = request.user.profile
+
+    send_messages = Message.objects.filter(sender=user)
+    received_messages = Message.objects.filter(recipient=user)
+    unread_count = send_messages.filter(is_read=False).count()
+    context = {
+        'send_messages': send_messages,
+        'unread_count': unread_count,
+        'received_messages': received_messages,
+    }
+    return render(request, 'users/all_messages.html', context)

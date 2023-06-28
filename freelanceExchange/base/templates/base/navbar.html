@@ -24,7 +24,7 @@
                         <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>
                     </ul>
                 </li>
-                <li class="header__menuItem">Сообщения</li>
+                <li class="header__menuItem"><a href="{% url 'all_messages' %}"></a>Сообщения</li>
                 {% elif user.profile.customer %}
                 <li class="header__menuItem">Найти талант
                     <ul class="header__menuUl">
@@ -40,7 +40,7 @@
                         <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>
                     </ul>
                 </li>
-                <li class="header__menuItem"><a href="#">Сообщения</a></li>
+                <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения</a></li>
                 {% endif %}
                 {% else %}
 
