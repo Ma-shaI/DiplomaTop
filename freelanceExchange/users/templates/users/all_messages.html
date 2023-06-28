@@ -1,0 +1,43 @@
+{% extends 'base/base.html' %}
+{% load filter %}
+{% block content %}
+{% include 'base/navbar.html' %}
+<div class="messages">
+    <div class="container">
+        <div class="messages__box">
+            <h3 class="inbox__title">New Messages(<span>{{unread_count}}</span>)</h3>
+
+            <ul class="messages__ul">
+                {% for message in send_messages %}
+                {% ifchanged message.recipient %}
+                {% if message.is_read %}
+                <li class="msg">
+                    {% else %}
+                <li class="msg msg--unread">
+                    {% endif %}
+                    <a href="">
+                        <span class="msg__author">{{ message.recipient.first_name }} {{message.recipient.last_name }}</span>
+                        <span class="msg__date">{{ message.created }}</span></a>
+                </li>
+                {% endifchanged %}
+                {% endfor %}
+                {% for message in received_messages %}
+                {% ifchanged message.recipient %}
+                {% if message.is_read %}
+                <li class="msg">
+                    {% else %}
+                <li class="msg msg--unread">
+                    {% endif %}
+                    <a href="">
+                        <span class="msg__author">{{ message.recipient.first_name }} {{message.recipient.last_name }}</span>
+                        <span class="msg__date">{{ message.created }}</span></a>
+                </li>
+                {% endifchanged %}
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
