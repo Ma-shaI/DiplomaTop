@@ -240,7 +240,7 @@ def all_messages(request):
                         .order_by('other_user')
                         )
     print(grouped_messages)
-    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages])
+    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read', '-created')
     received_messages = Message.objects.filter(recipient=user)
     unread_count = received_messages.filter(is_read=False).count()
 
