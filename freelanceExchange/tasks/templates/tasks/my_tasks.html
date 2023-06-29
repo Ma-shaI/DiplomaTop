@@ -15,14 +15,18 @@
                     <div class="task__about">
                         <h5>{{ task.title }}</h5>
                         <p>Создано {{ task.time_created }}</p>
-                        {% if is_published %}
+                        {% if task.is_published %}
                         <p>Сохранено {{ task.time_updated }}</p>
                         {% else %}
                         <p>Черновик - Сохранено {{ task.time_updated }}</p>
                         {% endif %}
                     </div>
                     <div class="task_btns">
-                        <p class="btns__my-task"><a href="{% url 'update_task' task.id %}">Изменить черновик</a></p>
+                         {% if not task.is_published %}
+                        <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить черновик</a></p>
+                         {% else %}
+                          <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить</a></p>
+                         {% endif %}
                         <ul class="menu-dots__ul">
                             <li class="header__menuItem"><img src="{% static 'icons/free-icon-font-menu-dots.png' %}" alt="">
                                 <ul class="header__menuUl btns__box">

@@ -63,7 +63,7 @@ class TaskForm(ModelForm):
     class Meta:
         model = Task
         fields = '__all__'
-        exclude = ['owner', 'freelancer_responded', 'freelancer_saved', 'is_published']
+        exclude = ['owner', 'freelancer_responded', 'freelancer_saved']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

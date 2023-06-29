@@ -690,11 +690,16 @@ p {
   justify-content: space-between;
   margin-bottom: 20px;
 }
-.btns__my-task {
+.btns__my-task,
+.btns__my-task-change {
   width: auto;
   padding: 10px 20px;
   border-radius: 20px;
   background-color: rgba(32, 65, 125, 0.336);
+}
+.btns__my-task-change {
+  width: 200px;
+  text-align: center;
 }
 .my-tasks a {
   text-decoration: none;
