@@ -19,8 +19,8 @@
             <p>{{ task.budget_set.first.get_name_display }}</p>
             {% if task.budget_set.first.name == 'hourly_rate' %}
             <p>
-                : {{ task.budget_set.first.min_price }}-{{ task.budget_set.first.max_price }}{{
-                task.budget_set.first.get_currency_display }}
+                : {{ task.budget_set.first.min_price }}-{{ task.budget_set.first.max_price }}
+                {{ task.budget_set.first.get_currency_display }}
             </p>
             {% elif task.budget_set.first.name == 'fix' %}
             <p>
