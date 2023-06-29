@@ -10,7 +10,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from talents.models import *
-from itertools import groupby
+from django.db.models import Q
+from django.db.models import Max, Count, Case, When, F, Value, CharField, IntegerField
 
 
 class MyStorage(FileSystemStorage):
@@ -222,13 +223,56 @@ def profile(request, pk):
 
 def all_messages(request):
     user = request.user.profile
-
-    send_messages = Message.objects.filter(sender=user)
+    grouped_messages = (Message.objects
+                        .filter(Q(sender=user) | Q(recipient=user))
+                        .annotate(
+        other_user=Case(
+            When(sender=user, then=F('recipient')),
+            default=F('sender'),
+            output_field=IntegerField()
+        )
+    )
+                        .values('other_user')
+                        .annotate(
+       pk=Max('pk')
+    )
+                        .values('other_user', 'pk')
+                        .order_by('other_user')
+                        )
+    print(grouped_messages)
+    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages])
     received_messages = Message.objects.filter(recipient=user)
-    unread_count = send_messages.filter(is_read=False).count()
+    unread_count = received_messages.filter(is_read=False).count()
+
     context = {
         'send_messages': send_messages,
         'unread_count': unread_count,
         'received_messages': received_messages,
     }
+
     return render(request, 'users/all_messages.html', context)
+
+
+def chat(request, pk):
+    user = request.user.profile
+    interlocutor = Profile.objects.get(id=pk)
+    conversation = Message.objects.filter(
+        (Q(sender=user) & Q(recipient=interlocutor)) | (Q(sender=interlocutor) & Q(recipient=user)))
+    messages = Message.objects.filter((Q(sender=interlocutor) & Q(recipient=user)))
+    for msg in messages:
+        if msg.is_read is False:
+            msg.is_read = True
+            msg.save()
+    context = {
+        'conversation': conversation, 'id': pk
+    }
+    if request.method == 'POST':
+        msg = request.POST.get('msg')
+        new_msg = Message(
+            sender=user,
+            recipient=interlocutor,
+            body=msg
+        )
+        new_msg.save()
+        return render(request, 'users/chat.html', context)
+    return render(request, 'users/chat.html', context)

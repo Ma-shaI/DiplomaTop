@@ -11,5 +11,6 @@ urlpatterns = [
     path('profile_update/', views.profile_update, name='profile_update'),
     path('login/', views.login_user, name='login_user'),
     path('profile/<str:pk>/', views.profile, name='profile'),
-    path('all_messages/', views.all_messages, name='all_messages')
+    path('all_messages/', views.all_messages, name='all_messages'),
+    path('chat/<str:pk>/', views.chat, name='chat'),
 ]

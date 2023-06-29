@@ -5,34 +5,25 @@
     <div class="container">
         <div class="messages__box">
             <h3 class="inbox__title">New Messages(<span>{{unread_count}}</span>)</h3>
-
             <ul class="messages__ul">
                 {% for message in send_messages %}
-                {% ifchanged message.recipient %}
                 {% if message.is_read %}
                 <li class="msg">
                     {% else %}
                 <li class="msg msg--unread">
                     {% endif %}
-                    <a href="">
-                        <span class="msg__author">{{ message.recipient.first_name }} {{message.recipient.last_name }}</span>
+                {% if message.recipient != request.user.profile  %}
+                    <a href="{% url 'chat' message.recipient.id %}">
+                        <span class="msg__author">{{ message.recipient.first_name }} </span>
                         <span class="msg__date">{{ message.created }}</span></a>
-                </li>
-                {% endifchanged %}
-                {% endfor %}
-                {% for message in received_messages %}
-                {% ifchanged message.recipient %}
-                {% if message.is_read %}
-                <li class="msg">
-                    {% else %}
-                <li class="msg msg--unread">
-                    {% endif %}
-                    <a href="">
-                        <span class="msg__author">{{ message.recipient.first_name }} {{message.recipient.last_name }}</span>
+                {% elif message.sender != request.user.profile %}
+                 <a href="{% url 'chat' message.sender.id %}">
+                        <span class="msg__author">{{ message.sender.first_name }} </span>
                         <span class="msg__date">{{ message.created }}</span></a>
+                {% endif %}
                 </li>
-                {% endifchanged %}
-                {% endfor %}
+
+               {% endfor %}
             </ul>
 
         </div>

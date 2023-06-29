@@ -18,6 +18,10 @@ class FreelancerAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
 
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('sender', 'recipient', 'body')
+
+
 admin.site.register(Role)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Experience)
@@ -28,4 +32,4 @@ admin.site.register(Customer)
 admin.site.register(StartWork)
 admin.site.register(EndWork)
 admin.site.register(Services, MenuItemMPTTModelAdmin)
-admin.site.register(Message)
+admin.site.register(Message, MessageAdmin)

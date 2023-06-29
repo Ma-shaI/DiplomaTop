@@ -740,3 +740,87 @@ li {
   text-decoration: none;
   font-size: 20px;
 }
+
+/* all_messages.html */
+.messages__ul {
+  list-style: none;
+  background: lavender;
+  padding: 0.5rem 3rem;
+  border: 2px solid lavender;
+  border-radius: 0.7rem;
+}
+
+.msg {
+  padding: 0.5rem 0;
+}
+
+.msg > a span {
+  font-size: 1.45rem;
+  font-weight: 500;
+}
+
+.msg.msg--unread a span {
+  font-weight: 700;
+  color: rebeccapurple;
+}
+
+.msg:not(:last-child) {
+  border-bottom: 2px solid blue;
+}
+
+.msg > a {
+  display: flex;
+  gap: 1rem;
+}
+
+.msg__author,
+.msg__date {
+  flex-basis: 25%;
+}
+
+.msg__date {
+  text-align: right;
+}
+
+/* chat.html */
+
+.msg__sender {
+  display: flex;
+
+  justify-content: flex-start;
+}
+
+.msg__recipient {
+  display: flex;
+
+  justify-content: flex-end;
+}
+.chat__msg-recipient,
+.chat__msg-sender {
+  padding: 0.5rem;
+  max-width: 80%;
+  border: 1px solid lavender;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
+.chat__msg-recipient {
+  background-color: rgba(127, 255, 212, 0.336);
+}
+.chat__msg-sender {
+  background-color: lavender;
+}
+
+.new-msg {
+  border: 1px solid grey; /* Параметры рамки */
+  border-radius: 30px;
+  padding: 15px;
+  display: flex;
+}
+.new-msg input[type='text'] {
+  background-color: aliceblue;
+  border: none; /* Убираем рамку */
+  outline: none; /* Убираем свечение в Chrome и Safari */
+  -webkit-appearance: none; /* Убираем рамку в Chrome и Safari */
+  width: 95%; /* Ширина поля */
+  vertical-align: middle; /* Выравнивание по середине */
+}

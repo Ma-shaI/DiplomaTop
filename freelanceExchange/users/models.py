@@ -134,7 +134,7 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.subject}'
+        return f'{self.sender}'
 
     class Meta:
-        ordering = ['is_read', '-created']
+        ordering = ['is_read', 'created']
