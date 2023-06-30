@@ -240,7 +240,7 @@ def all_messages(request):
                         .order_by('other_user')
                         )
     print(grouped_messages)
-    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read', '-created')
+    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by('-created')
     received_messages = Message.objects.filter(recipient=user)
     unread_count = received_messages.filter(is_read=False).count()
 
@@ -257,7 +257,7 @@ def chat(request, pk):
     user = request.user.profile
     interlocutor = Profile.objects.get(id=pk)
     conversation = Message.objects.filter(
-        (Q(sender=user) & Q(recipient=interlocutor)) | (Q(sender=interlocutor) & Q(recipient=user)))
+        (Q(sender=user) & Q(recipient=interlocutor)) | (Q(sender=interlocutor) & Q(recipient=user))).order_by('is_read').order_by('created')
     messages = Message.objects.filter((Q(sender=interlocutor) & Q(recipient=user)))
     for msg in messages:
         if msg.is_read is False:

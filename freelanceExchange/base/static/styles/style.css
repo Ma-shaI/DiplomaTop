@@ -815,6 +815,11 @@ li {
   background-color: lavender;
 }
 
+.chat__block {
+  max-height: 65vh;
+  overflow: auto;
+}
+
 .new-msg {
   border: 1px solid grey; /* Параметры рамки */
   border-radius: 30px;

@@ -7,23 +7,23 @@
             <h3 class="inbox__title">New Messages(<span>{{unread_count}}</span>)</h3>
             <ul class="messages__ul">
                 {% for message in send_messages %}
-                {% if message.is_read %}
-                <li class="msg">
-                    {% else %}
+                {% if not message.is_read and message.recipient == request.user.profile %}
                 <li class="msg msg--unread">
+                    {% else %}
+                <li class="msg ">
                     {% endif %}
-                {% if message.recipient != request.user.profile  %}
+                    {% if message.recipient != request.user.profile %}
                     <a href="{% url 'chat' message.recipient.id %}">
                         <span class="msg__author">{{ message.recipient.first_name }} </span>
                         <span class="msg__date">{{ message.created }}</span></a>
-                {% elif message.sender != request.user.profile %}
-                 <a href="{% url 'chat' message.sender.id %}">
+                    {% elif message.sender != request.user.profile %}
+                    <a href="{% url 'chat' message.sender.id %}">
                         <span class="msg__author">{{ message.sender.first_name }} </span>
                         <span class="msg__date">{{ message.created }}</span></a>
-                {% endif %}
+                    {% endif %}
                 </li>
 
-               {% endfor %}
+                {% endfor %}
             </ul>
 
         </div>

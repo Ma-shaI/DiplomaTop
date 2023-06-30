@@ -136,5 +136,5 @@ class Message(models.Model):
     def __str__(self):
         return f'{self.sender}'
 
-    class Meta:
-        ordering = ['is_read', 'created']
+    # class Meta:
+    #     ordering = ['is_read', 'created']

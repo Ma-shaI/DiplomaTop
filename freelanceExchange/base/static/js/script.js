@@ -132,3 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 });
+
+
+var lastMessage = document.querySelector('.chat__block').lastElementChild;
+lastMessage.scrollIntoView();
