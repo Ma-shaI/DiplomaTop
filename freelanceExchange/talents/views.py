@@ -129,7 +129,23 @@ def invite_freelancer(request):
 def find_talent(request):
     freelancers = Freelancer.objects.all()
     tasks = Task.objects.filter(owner=request.user.profile.customer)
-    context = {'freelancers': freelancers, 'tasks':tasks}
+    context = {'freelancers': freelancers, 'tasks': tasks}
+
+    if request.method == 'POST':
+        talent_id = request.POST.get('talent_id')
+        print(talent_id)
+        if talent_id:
+            talent = Talent.objects.get(id=talent_id)
+            talent.customer_invited.add(request.user.profile.customer)
+            talent.save()
+            message = Message.objects.create(
+                sender=request.user.profile,
+                recipient=talent.owner.owner,
+                subject='invitation to an interview',
+                body=f'Приглашаю Вас на интервью',
+            )
+            message.save()
+        return redirect(request.POST.get('return_url'))
     return render(request, 'talents/find_talent.html', context)
 
 

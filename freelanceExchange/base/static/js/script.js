@@ -133,6 +133,15 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-
 var lastMessage = document.querySelector('.chat__block').lastElementChild;
 lastMessage.scrollIntoView();
+
+function showPopup(freelancerId) {
+  var popupDiv = document.querySelector('#popup-' + freelancerId);
+  popupDiv.style.display = 'block';
+}
+
+function closePopup(freelancerId) {
+  var popupDiv = document.querySelector('#popup-' + freelancerId);
+  popupDiv.style.display = 'none';
+}

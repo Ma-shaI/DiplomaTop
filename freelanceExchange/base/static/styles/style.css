@@ -632,12 +632,12 @@ p {
   flex-direction: row;
   align-items: center;
 }
-.profile__serves {
+/* .profile__serves {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 10px;
-}
+} */
 .profile_photo {
   flex: 1;
 }
@@ -833,4 +833,26 @@ li {
   -webkit-appearance: none; /* Убираем рамку в Chrome и Safari */
   width: 95%; /* Ширина поля */
   vertical-align: middle; /* Выравнивание по середине */
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 30px;
+  background-color: white;
+  display: none;
+  z-index: 1;
+}
+
+.popup h5 {
+  padding-bottom: 20px;
+}
+.invite__task {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
 }

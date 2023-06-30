@@ -28,7 +28,7 @@
                             <div class="profile__info">
                                 <p>
                                     <a href="{% url 'profile' freelancer.owner.id %}">{{ freelancer.owner.first_name }}
-                                    </a>{{ freelancer.id }}</p>
+                                    </a></p>
                                 <div class="profile__serves">
                                     {% for serve in freelancer.serves.all %}
                                     <p>{{ serve }}</p>

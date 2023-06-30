@@ -1,33 +1,20 @@
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Пригласить на интервью
-</button>
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
+<button onclick="showPopup('{{ freelancer.id }}')" class="btn invite">Пригласить на интервью</button>
+<div id="popup-{{ freelancer.id }}" class="popup">
+    <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы хотите предложить
+        фрилансеру</h5>
+    <form action="{% url 'choice_task' %}" method="post">
+        {% csrf_token %}
+        {% for task in tasks %}
+        <div class="invite__task">
+        <label>
+            <input type="hidden" name="return_url" value="{{ request.path }}">
+            <input type="hidden" name="talent_id" value="{{talent.id}}">
+            <input type="radio" name="choice_task" value="{{ task.id }}">
+            {{ task.title }}
+        </label></div>
+        {% endfor %}
+        <button onclick="closePopup('{{ freelancer.id }}')" class="btn">Закрыть окно</button>
+        <button type="submit" class="btn">Выбрать</button>
+    </form>
 
-            <form method="POST" class="form" action="{% url 'choice_task' %}" autocomplete="off">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы хотите предложить
-                        фрилансеру</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                </div>
-                {% csrf_token %}
-                <div class="modal-body">
-                    {% for task in tasks %}
-                    <label>
-                         <input type="hidden" name="return_url" value="{{ request.path }}"/>
-                        <input type="hidden" name="talent_id" value="{{ talent.id }}">
-                        <input type="radio" name="choice_task" value="{{ task.id }}">
-                        {{ task.title }}
-                    </label>
-                    {% endfor %}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Выбрать</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                </div>
-            </form>
-        </div>
-    </div>
 </div>
