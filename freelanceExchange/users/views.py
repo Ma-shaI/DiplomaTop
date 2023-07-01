@@ -206,6 +206,7 @@ def profile_update(request):
 
 def profile(request, pk):
     profile = Profile.objects.get(id=pk)
+    feedbacks = profile.owner.all()
     try:
         s = profile.freelancer.talent_set.all()[0].id
         if request.GET.get('s'):
@@ -214,10 +215,10 @@ def profile(request, pk):
 
         role = profile.freelancer
 
-        context = {'profile': profile, 'role': role, 'talent': talent}
+        context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks':feedbacks}
         return render(request, 'users/profile.html', context)
     except:
-        context = {'profile': profile}
+        context = {'profile': profile, 'feedbacks': feedbacks}
         return render(request, 'users/profile.html', context)
 
 
@@ -294,5 +295,5 @@ def leave_review(request, pk):
                 body=text
             )
             feedback.save()
-        return render(request, 'users/leave_review.html')
-    return render(request, 'users/leave_review.html')
+        return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))

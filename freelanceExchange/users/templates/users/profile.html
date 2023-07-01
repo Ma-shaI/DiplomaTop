@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load my_tags %}
 {% block content %}
 {% include 'base/navbar.html'%}
 
@@ -19,6 +20,8 @@
                 <div class="profile_settings">
                     <p class="profile_btn"><a href="{% url 'profile_update' %}">Настройки профиля</a></p>
                 </div>
+                {% else %}
+                {% include 'users/leave_review.html' %}
                 {% endif %}
             </div>
             <hr>
@@ -36,7 +39,8 @@
                     <div class="profile_title">
                         <h4>{{ talent.title}}</h4>
                         <h4>
-                            {{ talent.hourlyrate_set.first.rate }} {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
+                            {{ talent.hourlyrate_set.first.rate }}
+                            {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
                     </div>
                     <p>{{ talent.descriptions }}</p>
                     <hr>
@@ -49,6 +53,23 @@
                             {% endfor %}
                         </div>
 
+                    </div>
+                    <div class="profile_feedbacks">
+                        <h5>Отзывы ({{ feedbacks|average_rating }}) </h5>
+
+                        {% if feedbacks %}
+                        {% for feedback in feedbacks %}
+                        <div class="profile__feedback">
+                            <div class="feedback__stars">
+                                {{ feedback.rating|default_if_none:"0"|rating_stars }} {{ feedback.created }}
+                            </div>
+                            <p>{{ feedback.body }}</p>
+                        </div>
+                        <hr>
+                        {% endfor %}
+                        {% else %}
+                        <h6>Отзывов пока нет</h6>
+                        {% endif %}
                     </div>
                 </div>
             </div>

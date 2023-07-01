@@ -23,6 +23,7 @@ class Migration(migrations.Migration):
                 ('rating', models.IntegerField(blank=True, default=0, null=True, validators=[django.core.validators.MaxValueValidator(5), django.core.validators.MinValueValidator(1)])),
                 ('body', models.TextField(blank=True, null=True)),
                 ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.profile')),
+                ('created', models.DateTimeField(auto_now_add=True)),
             ],
         ),
     ]

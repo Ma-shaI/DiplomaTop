@@ -145,6 +145,7 @@ class Feedback(models.Model):
     rating = models.IntegerField(default=0, blank=True, null=True,
                                  validators=[MaxValueValidator(5), MinValueValidator(1)])
     body = models.TextField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.owner}'

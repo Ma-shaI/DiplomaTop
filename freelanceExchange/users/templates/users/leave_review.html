@@ -1,27 +1,42 @@
-{% extends 'base/base.html' %}
-{% block content %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Оставить отзыв
+</button>
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
 
-<div class="feedback">
-    <form action="{% url 'leave_review' 1 %}" method="post">
-        {% csrf_token %}
+            <form method="POST" class="form" action="{% url 'leave_review' 1  %}" autocomplete="off">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Оставьте свой отзыв</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="feedback__block">
+                        <div class="rating-area">
+                            <input type="radio" id="star-5" name="rating" value="5">
+                            <label for="star-5" title="Оценка «5»"></label>
+                            <input type="radio" id="star-4" name="rating" value="4">
+                            <label for="star-4" title="Оценка «4»"></label>
+                            <input type="radio" id="star-3" name="rating" value="3">
+                            <label for="star-3" title="Оценка «3»"></label>
+                            <input type="radio" id="star-2" name="rating" value="2">
+                            <label for="star-2" title="Оценка «2»"></label>
+                            <input type="radio" id="star-1" name="rating" value="1">
+                            <label for="star-1" title="Оценка «1»"></label>
+                        </div>
+                        <input type="hidden" name="return_url" value="{{ request.path }}"/>
+                        <textarea placeholder="Напишите свой отзыв" class="reg_form rating" name="text"></textarea>
 
-        <div class="feedback__block">
-            <div class="rating-area">
-                <input type="radio" id="star-5" name="rating" value="5">
-                <label for="star-5" title="Оценка «5»"></label>
-                <input type="radio" id="star-4" name="rating" value="4">
-                <label for="star-4" title="Оценка «4»"></label>
-                <input type="radio" id="star-3" name="rating" value="3">
-                <label for="star-3" title="Оценка «3»"></label>
-                <input type="radio" id="star-2" name="rating" value="2">
-                <label for="star-2" title="Оценка «2»"></label>
-                <input type="radio" id="star-1" name="rating" value="1">
-                <label for="star-1" title="Оценка «1»"></label>
-            </div>
-            <textarea placeholder="Напишите свой отзыв" class="reg_form rating" name="text">
-            </textarea>
-            <button type="submit" class="btn ">Отправить отзыв</button>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 </div>
-{% endblock %}
+
+

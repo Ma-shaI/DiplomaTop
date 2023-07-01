@@ -901,7 +901,7 @@ li {
 }
 
 .feedback__block {
-  max-width: 60%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -909,4 +909,5 @@ li {
 
 .rating {
   width: 100%;
+  margin-top: 20px;
 }
