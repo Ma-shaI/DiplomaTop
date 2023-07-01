@@ -1,7 +1,12 @@
 from django.db import models
 from users.models import Customer, Freelancer
 from talents.models import Skills
-from talents.utils import CURRENCY
+
+CURRENCY = (
+    ('ruble', '₽'),
+    ('dollar', '$'),
+    ('euro', '€')
+)
 
 
 class Budget(models.Model):

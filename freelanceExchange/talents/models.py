@@ -1,6 +1,11 @@
 from django.db import models
 from users.models import Freelancer, Services, Customer
-from .utils import CURRENCY
+
+CURRENCY = (
+    ('ruble', '₽'),
+    ('dollar', '$'),
+    ('euro', '€')
+)
 
 
 class Talent(models.Model):

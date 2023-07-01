@@ -1,7 +1,12 @@
 from django.forms import ModelForm
 from .models import *
 from django import forms
-from .utils import CURRENCY
+
+CURRENCY = (
+    ('ruble', '₽'),
+    ('dollar', '$'),
+    ('euro', '€')
+)
 
 
 class TalentForm(forms.Form):
@@ -39,6 +44,7 @@ class RateForm(ModelForm):
                               required=False)
     currency = forms.ChoiceField(widget=forms.Select(attrs={'class': 'reg_form_currency'}), choices=CURRENCY,
                                  label='Валюта', required=False, )
+
     class Meta:
         model = HourlyRate
         fields = '__all__'
@@ -46,4 +52,3 @@ class RateForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-

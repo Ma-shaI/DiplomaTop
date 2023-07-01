@@ -5,6 +5,7 @@ from users.models import Message
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
+from .utils import search_talent
 
 
 @login_required(login_url='login')
@@ -127,7 +128,8 @@ def invite_freelancer(request):
 
 
 def find_talent(request):
-    freelancers = Freelancer.objects.all()
+    freelancers, search_query = search_talent(request)
+
     tasks = Task.objects.filter(owner=request.user.profile.customer)
     context = {'freelancers': freelancers, 'tasks': tasks}
 

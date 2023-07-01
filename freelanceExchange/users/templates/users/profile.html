@@ -55,9 +55,10 @@
 
                     </div>
                     <div class="profile_feedbacks">
+                        {% if feedbacks %}
                         <h5>Отзывы ({{ feedbacks|average_rating }}) </h5>
 
-                        {% if feedbacks %}
+
                         {% for feedback in feedbacks %}
                         <div class="profile__feedback">
                             <div class="feedback__stars">
