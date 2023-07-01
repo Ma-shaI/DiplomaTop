@@ -234,13 +234,14 @@ def all_messages(request):
     )
                         .values('other_user')
                         .annotate(
-       pk=Max('pk')
+        pk=Max('pk')
     )
                         .values('other_user', 'pk')
                         .order_by('other_user')
                         )
     print(grouped_messages)
-    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by('-created')
+    send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by(
+        '-created')
     received_messages = Message.objects.filter(recipient=user)
     unread_count = received_messages.filter(is_read=False).count()
 
@@ -257,7 +258,8 @@ def chat(request, pk):
     user = request.user.profile
     interlocutor = Profile.objects.get(id=pk)
     conversation = Message.objects.filter(
-        (Q(sender=user) & Q(recipient=interlocutor)) | (Q(sender=interlocutor) & Q(recipient=user))).order_by('is_read').order_by('created')
+        (Q(sender=user) & Q(recipient=interlocutor)) | (Q(sender=interlocutor) & Q(recipient=user))).order_by(
+        'is_read').order_by('created')
     messages = Message.objects.filter((Q(sender=interlocutor) & Q(recipient=user)))
     for msg in messages:
         if msg.is_read is False:
@@ -276,3 +278,21 @@ def chat(request, pk):
         new_msg.save()
         return render(request, 'users/chat.html', context)
     return render(request, 'users/chat.html', context)
+
+
+def leave_review(request, pk):
+    user = request.user.profile
+    profile = Profile.objects.get(id=pk)
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        text = request.POST.get('text')
+        if rating and text:
+            feedback = Feedback(
+                owner=profile,
+                sender=user,
+                rating=rating,
+                body=text
+            )
+            feedback.save()
+        return render(request, 'users/leave_review.html')
+    return render(request, 'users/leave_review.html')

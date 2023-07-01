@@ -13,4 +13,5 @@ urlpatterns = [
     path('profile/<str:pk>/', views.profile, name='profile'),
     path('all_messages/', views.all_messages, name='all_messages'),
     path('chat/<str:pk>/', views.chat, name='chat'),
+    path('leave_review/<str:pk>/', views.leave_review, name='leave_review')
 ]

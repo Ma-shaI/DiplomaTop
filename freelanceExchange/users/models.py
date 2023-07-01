@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
@@ -136,5 +137,14 @@ class Message(models.Model):
     def __str__(self):
         return f'{self.sender}'
 
-    # class Meta:
-    #     ordering = ['is_read', 'created']
+
+class Feedback(models.Model):
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='owner')
+    sender = models.ForeignKey(Profile, on_delete=models.SET_NULL, null=True, blank=True,
+                               related_name='sender_feedback')
+    rating = models.IntegerField(default=0, blank=True, null=True,
+                                 validators=[MaxValueValidator(5), MinValueValidator(1)])
+    body = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.owner}'
