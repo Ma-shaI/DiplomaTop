@@ -419,6 +419,7 @@ p {
 .profile_right {
   flex: 3;
 }
+
 .btn_service {
   display: flex;
   background-color: rgba(32, 65, 125, 0.235);
@@ -445,6 +446,11 @@ p {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+.title_hourlyrate {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .skill_list {
   display: flex;

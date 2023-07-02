@@ -35,15 +35,18 @@
                         {% endfor %}
                     </div>
                 </div>
-                {% if profile.username == request.user.username and request.user.profile.freelancer %}
+
                 <div class="profile_right">
-                    {% include 'talents/change-del_talent.html' %}
-                    {% endif %}
+
                     <div class="profile_title">
                         <h4>{{ talent.title}}</h4>
+                        <div class="title_hourlyrate">
                         <h4>
                             {{ talent.hourlyrate_set.first.rate }}
                             {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
+                        {% if profile.username == request.user.username and request.user.profile.freelancer %}
+                        {% include 'talents/change-del_talent.html' %}
+                        {% endif %}</div>
                     </div>
                     <p>{{ talent.descriptions }}</p>
                     <hr>
@@ -76,6 +79,8 @@
                         {% endif %}
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
