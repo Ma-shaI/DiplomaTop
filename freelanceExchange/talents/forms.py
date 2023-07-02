@@ -31,7 +31,7 @@ class TalentUpdateForm(ModelForm):
     class Meta:
         model = Talent
         fields = '__all__'
-        exclude = ['owner', ]
+        exclude = ['owner', 'customer_saved', 'customer_invited']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

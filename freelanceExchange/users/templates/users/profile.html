@@ -35,7 +35,10 @@
                         {% endfor %}
                     </div>
                 </div>
+                {% if profile.username == request.user.username and request.user.profile.freelancer %}
                 <div class="profile_right">
+                    {% include 'talents/change-del_talent.html' %}
+                    {% endif %}
                     <div class="profile_title">
                         <h4>{{ talent.title}}</h4>
                         <h4>

@@ -363,7 +363,8 @@ p {
 }
 
 .inline {
-  display: inline-block;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* Profile */
@@ -910,4 +911,16 @@ li {
 .rating {
   width: 100%;
   margin-top: 20px;
+}
+
+/* talent_add */
+
+.talents__talent {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.talents__talent p {
+  font-size: 20px;
 }

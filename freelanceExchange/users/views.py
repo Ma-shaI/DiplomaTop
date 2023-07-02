@@ -287,7 +287,7 @@ def leave_review(request, pk):
     if request.method == 'POST':
         rating = request.POST.get('rating')
         text = request.POST.get('text')
-        if rating and text:
+        if rating:
             feedback = Feedback(
                 owner=profile,
                 sender=user,

@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block content %}
 <div class="register_block">
     <div class="container">
@@ -9,9 +10,9 @@
                 {% if field.label == 'Навыки'%}
                 <div class="form__field">
                     <label>{{ field.label }} </label>
-                    <!--                    {{field}}-->
+<!--                                        {{field}}-->
                     <input type="text" name="new_skills"
-                           placeholder="Введите свое значение через запятую"
+                           placeholder="{{ skills|join:', ' }}"
                            class="reg_form">
                 </div>
                 {% elif field.label == 'Почасовая ставка' %}
@@ -49,11 +50,9 @@
                     <input type="submit" value="Внести изменения" class="btn"></div>
             </form>
 
-            {% for skill in skills %}
 
-            <p>{{skill}}</p>
-            {% endfor %}
         </div>
     </div>
 </div>
+
 {% endblock %}

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
 from .utils import search_talent
+from django.http import JsonResponse
 
 
 @login_required(login_url='login')
@@ -62,7 +63,7 @@ def talent_update(request, pk):
         talent_form = TalentUpdateForm(request.POST, instance=talent)
         rate_form = RateForm(request.POST, instance=rate)
         new_skills = request.POST.get('new_skills').replace(',', ' ').split()
-        print(new_skills)
+
         if talent_form.is_valid() and rate_form.is_valid():
             talent_form.save()
 
@@ -71,7 +72,7 @@ def talent_update(request, pk):
                 talent.skills.add(skill.id)
 
             rate_form.save()
-            return redirect('index')
+            return redirect('profile', pk=request.user.id)
 
     context = {'talent_form': talent_form, 'rate_form': rate_form, 'talent': talent, 'skills': talent.skills.all()}
 

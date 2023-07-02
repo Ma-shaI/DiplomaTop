@@ -8,10 +8,11 @@
                 хотите получать задачи</h3>
             <div class="talents">
                 {% for talent in talents %}
+                <div class="talents__talent">
                 <p>{{talent}}</p>
 
-                <a href="{% url 'talent_update' talent.id %}"> Изменить</a>
-                <a href="{% url 'talent_delete' talent.id %}">Удалить</a>
+                {% include 'talents/change-del_talent.html' %}
+                </div>
                 {% endfor %}
             </div>
 
@@ -63,8 +64,8 @@
                     </div>
                 </div>
             </div>
-            <div class="inline">
-                <a href="{% url 'profile_update' %}">Дальше</a></div>
+            <div class="div_btn">
+                <a href="{% url 'profile_update' %}" class="btn">Дальше</a></div>
         </div>
     </div>
 </div>

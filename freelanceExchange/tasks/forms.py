@@ -8,7 +8,7 @@ class TaskTitleForm(forms.Form):
 
 
 class TaskSkillForm(forms.Form):
-    skills = forms.ModelMultipleChoiceField(widget=forms.CheckboxSelectMultiple(),
+    skills = forms.ModelMultipleChoiceField(widget=forms.SelectMultiple(attrs={'class': 'reg_form'}),
                                             queryset=Skills.objects.all(),
                                             required=False, label='')
 
