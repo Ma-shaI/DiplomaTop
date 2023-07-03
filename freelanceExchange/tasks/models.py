@@ -51,3 +51,20 @@ class Task(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class Work(models.Model):
+    work = models.OneToOneField(Task, on_delete=models.CASCADE)
+    worker = models.ForeignKey(Freelancer, on_delete=models.CASCADE, related_name='worker')
+    time_start = models.DateTimeField()
+    time_end = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.work}'
+
+
+class StagesOfWork(models.Model):
+    owner = models.OneToOneField(Work, on_delete=models.CASCADE)
+    stage = models.TextField()
+    done = models.BooleanField(default=False)
+    max_term = models.DateTimeField()

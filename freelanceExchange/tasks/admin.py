@@ -9,3 +9,5 @@ class TaskAdmin(admin.ModelAdmin):
 
 admin.site.register(Budget)
 admin.site.register(Task, TaskAdmin)
+admin.site.register(Work)
+admin.site.register(StagesOfWork)
