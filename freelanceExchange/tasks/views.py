@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, redirect
 from .forms import *
 from .models import *
 from formtools.wizard.views import SessionWizardView
@@ -108,8 +108,8 @@ def task(request, pk):
     job = Task.objects.get(id=pk)
     customer = job.owner
     tasks = Task.objects.filter(owner=customer)
-
-    context = {'task': job, 'customer': customer, 'tasks': tasks}
+    feedbacks = customer.owner.owner.all()
+    context = {'task': job, 'customer': customer, 'tasks': tasks, 'feedbacks':feedbacks}
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         if task_id:

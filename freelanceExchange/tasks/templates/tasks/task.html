@@ -1,5 +1,6 @@
 {% extends 'base/base.html'%}
 {% load static %}
+{% load my_tags %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% block content %}
 {% include 'base/navbar.html'%}
@@ -64,7 +65,11 @@
                     <div class="customer__info">
                         <h5>О клиенте</h5>
                         <div class="customer__scores">
+                            {% if feedbacks %}
+                            <h5>Оценка ({{ feedbacks|average_rating}} из {{ feedbacks.count }} отзывов) </h5>
+                            {% else %}
                             <p>Здесь будут звезды оценок</p>
+                            {% endif %}
                         </div>
                         <hr>
                         <p>{{ customer.owner.country }}, {{ customer.owner.city }} </p>
