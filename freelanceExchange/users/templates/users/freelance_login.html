@@ -22,7 +22,7 @@
             {% endif %}
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <table>
+                <div>
                     {{ wizard.management_form }}
                     {% if wizard.form.forms %}
                     {{ wizard.form.management_form }}
@@ -68,7 +68,7 @@
                         {{ wizard.form.non_field_errors.as_text }}
                     </div>
                     {%endif%}
-                </table>
+                </div>
                 {% if wizard.steps.prev %}
                 <div class="div_btn">
                     <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn">Предыдущий
