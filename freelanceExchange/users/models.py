@@ -75,7 +75,8 @@ class Freelancer(models.Model):
     resume = models.FileField(upload_to='freelancers/resumes/%Y/%m/%d/', blank=True)
     bio = models.TextField(null=True, blank=True)
     serves = models.ManyToManyField(Services, blank=True)
-
+    customer_saved = models.ManyToManyField('Customer', blank=True, related_name='saved_talent')
+    customer_invited = models.ManyToManyField('Customer', blank=True, related_name='invited_talent')
     def __str__(self):
         return f'{self.owner}'
 

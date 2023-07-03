@@ -8,7 +8,7 @@
         <div class="invite__task">
         <label>
             <input type="hidden" name="return_url" value="{{ request.path }}">
-            <input type="hidden" name="talent_id" value="{{talent.id}}">
+            <input type="hidden" name="talent_id" value="{{ freelancer.id}}">
             <input type="radio" name="choice_task" value="{{ task.id }}">
             {{ task.title }}
         </label></div>

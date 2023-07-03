@@ -17,24 +17,25 @@
                         <div class="find-talent__talent">
                             <div class="talent__title">
                                 <div class="profile_photo">
-                                    <img src="{{ talent.owner.owner.photo.url }}" alt="">
+                                    <img src="{{ talent.owner.photo.url }}" alt="">
+
                                 </div>
                                 <div class="profile__info">
                                     <p>
-                                        <a href="{% url 'profile' talent.owner.owner.id %}">
-                                            {{ talent.owner.owner.first_name }}
+                                        <a href="{% url 'profile' talent.id %}">
+                                            {{ talent.owner.first_name }}
                                         </a>{{ talent.id }}</p>
 
-                                    <p>{{ talent.owner.owner.country}}, {{ talent.owner.owner.city }}</p>
+                                    <p>{{ talent.owner.country}}, {{ talent.owner.city }}</p>
                                 </div>
                                 <div class="profile__btns">
                                     <form action="{% url 'like_talent' talent.id %}" method="post" class="my-form">
                                         {% csrf_token %}
                                         {% if request.user.profile.customer in talent.customer_saved.all %}
-                                        <input type="hidden" name="task_id" value="{{talent.id}}">
+                                        <input type="hidden" name="task_id" value="{{ talent.id }}">
                                         <button type="submit" class="like-btn liked"></button>
                                         {% else %}
-                                        <input type="hidden" name="task_id" value="{{talent.id}}">
+                                        <input type="hidden" name="task_id" value="{{ talent.id }}">
                                         <button type="submit" class="like-btn"></button>
                                         {% endif %}
                                     </form>
@@ -48,8 +49,9 @@
                             </div>
                             <div class="talent__description">
                                 <div class="talent_amount">
-                                    <p>{{ talent.hourlyrate_set.first.get_currency_display }}
-                                        {{ talent.hourlyrate_set.first.rate }}/час</p>
+                                    <p>{{ talent.talent_set.first.hourlyrate_set.first.rate }}
+                                        {{ talent.talent_set.first.hourlyrate_set.first.get_currency_display }}
+                                        /час</p>
                                 </div>
                                 <div class="talent__descriptions">
                                     <p>{{ talent.owner.bio|truncatechars:260 }}</p>

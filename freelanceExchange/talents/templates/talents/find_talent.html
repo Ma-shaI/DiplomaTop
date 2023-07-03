@@ -41,21 +41,22 @@
                                 {% endif %}
                             </div>
                             <div class="profile__btns">
-                                <form action="{% url 'like_talent' talent.id %}" method="post" class="my-form">
+                                <form action="{% url 'like_talent' freelancer.id %}" method="post" class="my-form">
                                     {% csrf_token %}
-                                    {% if request.user.profile.customer in talent.customer_saved.all %}
-                                    <input type="hidden" name="task_id" value="{{talent.id}}">
+                                    {% if request.user.profile.customer in freelancer.customer_saved.all %}
+                                    <input type="hidden" name="task_id" value="{{ freelancer.id}}">
                                     <button type="submit" class="like-btn liked"></button>
                                     {% else %}
-                                    <input type="hidden" name="task_id" value="{{talent.id}}">
+                                    <input type="hidden" name="task_id" value="{{ freelancer.id}}">
                                     <button type="submit" class="like-btn"></button>
                                     {% endif %}
                                 </form>
 
-                                {% if request.user.profile.customer in talent.customer_invited.all %}
+                                {% if request.user.profile.customer in freelancer.customer_invited.all %}
                                 <p class="respond-btn responded invite">Вы уже пригласили</p>
                                 {% else %}
-                                {% include 'talents/invite_btn.html' %}{% endif %}
+                                {% include 'talents/invite_btn.html' %}
+                                {% endif %}
                             </div>
                         </div>
 

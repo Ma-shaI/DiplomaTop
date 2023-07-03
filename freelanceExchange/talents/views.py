@@ -88,73 +88,35 @@ def talent_delete(request, pk):
 
 def like_talent(request, pk):
     profile = request.user.profile
-    talents = Talent.objects.filter(customer_saved__owner=profile)
-    context = {'talents': talents}
-    if request.method == 'POST':
-        talent_id = request.POST.get('task_id')
-
-        if talent_id:
-            talent = Talent.objects.get(id=talent_id)
-            if request.user.profile.customer in talent.customer_saved.all():
-
-                talent.customer_saved.remove(profile.customer)
-                talent.save()
-            else:
-
-                talent.customer_saved.add(profile.customer)
-                talent.save()
-        return render(request, 'talents/find_talent.html', context)
-    return render(request, 'talents/like_talent.html', context)
-
-
-def invite_freelancer(request):
-    freelancers = Freelancer.objects.all()
+    freelancers = Freelancer.objects.filter(customer_saved__owner=profile)
     context = {'freelancers': freelancers}
     if request.method == 'POST':
-        talent_id = request.POST.get('talent_id')
-        print(talent_id)
-        if talent_id:
-            talent = Talent.objects.get(id=talent_id)
-            talent.customer_invited.add(request.user.profile.customer)
-            talent.save()
-            message = Message.objects.create(
-                sender=request.user.profile,
-                recipient=talent.owner.owner,
-                subject='invitation to an interview',
-                body=f'Приглашаю Вас на интервью',
-            )
-            message.save()
-        return redirect(request.POST.get('return_url'))
+        freelancer_id = request.POST.get('task_id')
+
+        if freelancer_id:
+            freelancer = Freelancer.objects.get(id=freelancer_id)
+            print(freelancer.customer_saved.all())
+            if request.user.profile.customer in freelancer.customer_saved.all():
+
+                freelancer.customer_saved.remove(profile.customer)
+                freelancer.save()
+            else:
+                freelancer.customer_saved.add(profile.customer)
+                freelancer.save()
+        return render(request, 'talents/find_talent.html', context)
     return render(request, 'talents/like_talent.html', context)
 
 
 def find_talent(request):
     freelancers, search_query = search_talent(request)
-
     tasks = Task.objects.filter(owner=request.user.profile.customer)
     context = {'freelancers': freelancers, 'tasks': tasks}
-
-    if request.method == 'POST':
-        talent_id = request.POST.get('talent_id')
-        print(talent_id)
-        if talent_id:
-            talent = Talent.objects.get(id=talent_id)
-            talent.customer_invited.add(request.user.profile.customer)
-            talent.save()
-            message = Message.objects.create(
-                sender=request.user.profile,
-                recipient=talent.owner.owner,
-                subject='invitation to an interview',
-                body=f'Приглашаю Вас на интервью',
-            )
-            message.save()
-        return redirect(request.POST.get('return_url'))
     return render(request, 'talents/find_talent.html', context)
 
 
 def saved_talents(request):
     profile = request.user.profile
-    talents = Talent.objects.filter(customer_saved__owner=profile)
+    talents = Freelancer.objects.filter(customer_saved__owner=profile)
     context = {'talents': talents, 'tasks': Task.objects.filter(owner=profile.customer)}
     return render(request, 'talents/saved_talents.html', context)
 
@@ -162,14 +124,14 @@ def saved_talents(request):
 def choice_task(request):
     if request.method == 'POST':
         selected_choice = request.POST.get('choice_task')
-        talent_id = request.POST.get('talent_id')
-        if talent_id and selected_choice:
-            talent = Talent.objects.get(id=talent_id)
-            talent.customer_invited.add(request.user.profile.customer)
-            talent.save()
+        freelancer_id = request.POST.get('talent_id')
+        if freelancer_id and selected_choice:
+            freelancer = Freelancer.objects.get(id=freelancer_id)
+            freelancer.customer_invited.add(request.user.profile.customer)
+            freelancer.save()
             message = Message.objects.create(
                 sender=request.user.profile,
-                recipient=talent.owner.owner,
+                recipient=freelancer.owner,
                 subject='invitation to an interview',
                 body=f'Приглашаю Вас на интервью, по поводу вакансии',
                 task=Task.objects.get(id=selected_choice)
