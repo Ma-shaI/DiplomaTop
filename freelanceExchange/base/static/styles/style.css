@@ -930,3 +930,21 @@ li {
 .talents__talent p {
   font-size: 20px;
 }
+
+.talents__btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  font-size: 20px;
+  padding: 5px 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.profile__all-btns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

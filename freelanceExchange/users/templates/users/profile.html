@@ -21,8 +21,10 @@
                     <p class="profile_btn"><a href="{% url 'profile_update' %}">Настройки профиля</a></p>
                 </div>
                 {% else %}
+                <div class="profile__all-btns">
                 {% include 'users/leave_review.html' %}
                 {% include 'talents/talents-btn.html' %}
+                </div>
                 {% endif %}
             </div>
             <hr>
@@ -64,8 +66,6 @@
                     <div class="profile_feedbacks">
                         {% if feedbacks %}
                         <h5>Отзывы ({{ feedbacks|average_rating }}) </h5>
-
-
                         {% for feedback in feedbacks %}
                         <div class="profile__feedback">
                             <div class="feedback__stars">
