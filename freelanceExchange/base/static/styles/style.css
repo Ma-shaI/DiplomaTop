@@ -948,3 +948,15 @@ li {
   flex-direction: row;
   align-items: center;
 }
+
+.offers_box {
+  border: 1px solid grey;
+  border-radius: 20px;
+  padding: 20px;
+}
+.offer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

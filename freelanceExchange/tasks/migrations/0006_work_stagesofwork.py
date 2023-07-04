@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
             name='Work',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time_start', models.DateTimeField()),
+                ('created', models.DateTimeField(auto_now_add=True)),
+                ('time_start', models.DateTimeField(blank=True, null=True)),
                 ('time_end', models.DateTimeField(blank=True, null=True)),
                 ('work', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='tasks.task')),
                 ('worker', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='worker', to='users.freelancer')),

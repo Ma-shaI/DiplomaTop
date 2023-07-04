@@ -56,7 +56,8 @@ class Task(models.Model):
 class Work(models.Model):
     work = models.OneToOneField(Task, on_delete=models.CASCADE)
     worker = models.ForeignKey(Freelancer, on_delete=models.CASCADE, related_name='worker')
-    time_start = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    time_start = models.DateTimeField(blank=True, null=True)
     time_end = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
@@ -69,9 +70,15 @@ class StagesOfWork(models.Model):
     done = models.BooleanField(default=False)
     max_term = models.DateTimeField()
 
+    def __str__(self):
+        return f'{self.stage}'
+
 
 class Offers(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.OneToOneField(Task, on_delete=models.CASCADE)
     prospective_employee = models.ForeignKey(Freelancer, on_delete=models.CASCADE, related_name='prospective_employee')
     request_date = models.DateTimeField(auto_now_add=True)
     at_work = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.task}'

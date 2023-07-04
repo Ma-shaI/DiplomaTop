@@ -127,8 +127,11 @@ def saved_tasks(request):
     return render(request, 'tasks/saved_tasks.html', context)
 
 
-def offers(request):
-    return render(request, 'tasks/offers_page.html')
+def my_offers(request):
+    user = request.user.profile.freelancer
+    offers = Offers.objects.filter(prospective_employee=user)
+    context = {'offers': offers}
+    return render(request, 'tasks/offers_page.html', context)
 
 
 def my_tasks(request):
@@ -194,3 +197,20 @@ def send_offer(request):
         return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))
 
+
+def accept_offer(request, pk):
+    user = request.user.profile.freelancer
+    offer = Offers.objects.get(id=pk)
+    if request.method == 'POST':
+        answer = request.POST.get('accept')
+        if answer == 'true':
+            offer.at_work = True
+            offer.save
+            work = Work(
+                work=offer.task,
+                worker=user
+            )
+            work.save()
+        elif answer == 'false':
+            offer.delete()
+    return redirect('offers')

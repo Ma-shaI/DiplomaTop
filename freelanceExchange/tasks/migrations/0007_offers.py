@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('request_date', models.DateTimeField(auto_now_add=True)),
                 ('at_work', models.BooleanField(default=False)),
                 ('prospective_employee', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='prospective_employee', to='users.freelancer')),
-                ('task', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task')),
+                ('task', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='tasks.task')),
             ],
         ),
     ]
