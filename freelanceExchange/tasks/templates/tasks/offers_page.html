@@ -20,10 +20,12 @@
                          aria-hidden="true">
                         <div class="modal-dialog ">
                             <div class="modal-content">
+                            <h3>Вы готовы принять предложение?</h3>
                                 <form action="{% url 'accept_offer' offer.id %}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" name="accept" value="true">Принять</button>
-                                    <button type="submit" name="accept" value="false">Отклонить</button>
+                                    <div class="offers-btns__modal">
+                                    <button type="submit" name="accept" value="true" class="btn">Принять</button>
+                                    <button type="submit" name="accept" value="false" class="btn">Отклонить</button></div>
                                 </form>
                             </div>
                         </div>
