@@ -1,0 +1,48 @@
+{% load static %}
+<div class="change_talent">
+    <ul class="menu-dots__ul">
+        <li class="header__menuItem"><img src="{% static 'icons/free-icon-font-menu-dots.png' %}"
+                                          alt="">
+            <ul class="header__menuUl btns__box">
+                <li class="header__menuItem">
+                    <button onclick="showPopup('{{ freelancer.id }}')">Пригласить на интервью</button>
+                </li>
+                <li class="header__menuItem">
+                    <button onclick="showSend('{{ freelancer.id }}')">Нанять</button>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <div id="popup-{{ freelancer.id }}" class="popup">
+        <p>{{ freelancer.id }}</p>
+        <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы хотите предложить
+            фрилансеру</h5>
+        <form action="{% url 'choice_task' %}" method="post">
+            {% csrf_token %}
+            {% with hidden_input_name="talent_id" %}
+            {% with hidden_input_value=freelancer.id %}
+            {% with radio_button_name="choice_task" %}
+            {% with close_popup_function="closePopup" %}
+            {% include 'talents/invite_btn.html' %}
+            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+        </form>
+
+    </div>
+    <div id="send-{{ freelancer.id }}" class="popup">
+        <p>{{ freelancer.id }}</p>
+        <h5 class="modal-title">Выберите ваше задание, которое вы хотите предложить
+            фрилансеру</h5>
+        <form action="{% url 'send_offer' %}" method="post">
+            {% csrf_token %}
+            {% with hidden_input_name="freelancer_id" %}
+            {% with hidden_input_value=freelancer.id%}
+            {% with radio_button_name="task_id" %}
+            {% with close_popup_function="closeSend" %}
+            {% include 'talents/invite_btn.html' %}
+            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+
+        </form>
+
+    </div>
+
+</div>

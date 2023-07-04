@@ -109,7 +109,7 @@ def task(request, pk):
     customer = job.owner
     tasks = Task.objects.filter(owner=customer)
     feedbacks = customer.owner.owner.all()
-    context = {'task': job, 'customer': customer, 'tasks': tasks, 'feedbacks':feedbacks}
+    context = {'task': job, 'customer': customer, 'tasks': tasks, 'feedbacks': feedbacks}
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         if task_id:
@@ -175,3 +175,22 @@ def update_task(request, pk):
             return redirect('my_tasks')
 
     return render(request, 'tasks/update_task.html', context)
+
+
+def send_offer(request):
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id')
+        freelancer_id = request.POST.get('freelancer_id')
+        print(task_id)
+        print(freelancer_id)
+        if task_id and freelancer_id:
+            freelancer = Freelancer.objects.get(id=freelancer_id)
+            task = Task.objects.get(id=task_id)
+            offer = Offers(
+                task=task,
+                prospective_employee=freelancer
+            )
+            offer.save()
+        return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))
+

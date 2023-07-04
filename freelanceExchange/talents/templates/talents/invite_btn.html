@@ -1,20 +1,13 @@
-<button onclick="showPopup('{{ freelancer.id }}')" class="btn invite">Пригласить на интервью</button>
-<div id="popup-{{ freelancer.id }}" class="popup">
-    <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы хотите предложить
-        фрилансеру</h5>
-    <form action="{% url 'choice_task' %}" method="post">
-        {% csrf_token %}
-        {% for task in tasks %}
-        <div class="invite__task">
-        <label>
-            <input type="hidden" name="return_url" value="{{ request.path }}">
-            <input type="hidden" name="talent_id" value="{{ freelancer.id}}">
-            <input type="radio" name="choice_task" value="{{ task.id }}">
-            {{ task.title }}
-        </label></div>
-        {% endfor %}
-        <button onclick="closePopup('{{ freelancer.id }}')" class="btn">Закрыть окно</button>
-        <button type="submit" class="btn">Выбрать</button>
-    </form>
-
+{% for task in tasks %}
+<div class="invite__task">
+    <label>
+        <input type="hidden" name="return_url" value="{{ request.path }}">
+        <input type="hidden" name="{{ hidden_input_name }}" value="{{ hidden_input_value }}">
+        <input type="radio" name="{{ radio_button_name }}" value="{{ task.id }}">
+        {{ task.title }}
+    </label>
 </div>
+{% endfor %}
+
+<button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">Закрыть окно</button>
+<button type="submit" class="btn">Выбрать</button>

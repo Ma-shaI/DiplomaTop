@@ -68,3 +68,10 @@ class StagesOfWork(models.Model):
     stage = models.TextField()
     done = models.BooleanField(default=False)
     max_term = models.DateTimeField()
+
+
+class Offers(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    prospective_employee = models.ForeignKey(Freelancer, on_delete=models.CASCADE, related_name='prospective_employee')
+    request_date = models.DateTimeField(auto_now_add=True)
+    at_work = models.BooleanField(default=False)

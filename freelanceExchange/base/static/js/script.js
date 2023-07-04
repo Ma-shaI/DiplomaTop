@@ -145,3 +145,13 @@ function closePopup(freelancerId) {
   var popupDiv = document.querySelector('#popup-' + freelancerId);
   popupDiv.style.display = 'none';
 }
+
+function showSend(freelancerId) {
+  var popupDiv = document.querySelector('#send-' + freelancerId);
+  popupDiv.style.display = 'block';
+}
+
+function closeSend(freelancerId) {
+  var popupDiv = document.querySelector('#send-' + freelancerId);
+  popupDiv.style.display = 'none';
+}

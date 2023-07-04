@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from talents.models import *
 from django.db.models import Q
 from django.db.models import Max, Count, Case, When, F, Value, CharField, IntegerField
+from tasks.models import Task
 
 
 class MyStorage(FileSystemStorage):
@@ -212,10 +213,11 @@ def profile(request, pk):
         if request.GET.get('s'):
             s = request.GET.get('s')
         talent = Talent.objects.get(id=s)
-
         role = profile.freelancer
-
-        context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks':feedbacks}
+        freelancer = profile.freelancer
+        tasks = Task.objects.filter(owner=profile.customer)
+        context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks': feedbacks, 'freelancer': freelancer,
+                   'tasks': tasks}
         return render(request, 'users/profile.html', context)
     except:
         context = {'profile': profile, 'feedbacks': feedbacks}
