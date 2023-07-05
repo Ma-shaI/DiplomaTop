@@ -43,7 +43,27 @@
                                     {% if request.user.profile.customer in talent.customer_invited.all %}
                                     <p class="respond-btn responded invite">Вы уже пригласили</p>
                                     {% else %}
-                                    {% include 'talents/invite_btn.html' %}{% endif %}
+                                    <button onclick="showPopup('{{ freelancer.id }}')" class="btn invite">Пригласить на
+                                        интервью
+                                    </button>
+                                    <div id="popup-{{ freelancer.id }}" class="popup">
+                                        <p>{{ freelancer.id }}</p>
+                                        <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы
+                                            хотите предложить
+                                            фрилансеру</h5>
+                                        <form action="{% url 'choice_task' %}" method="post">
+                                            {% csrf_token %}
+                                            {% with hidden_input_name="talent_id" %}
+                                            {% with hidden_input_value=freelancer.id %}
+                                            {% with radio_button_name="choice_task" %}
+                                            {% with close_popup_function="closePopup" %}
+                                            {% include 'talents/invite_btn.html' %}
+                                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+                                        </form>
+
+                                    </div>
+
+                                    {% endif %}
                                 </div>
 
                             </div>

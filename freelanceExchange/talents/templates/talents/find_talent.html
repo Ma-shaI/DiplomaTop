@@ -50,10 +50,10 @@
                                     <button type="submit" class="like-btn"></button>
                                     {% endif %}
                                 </form>
-
                                 {% if request.user.profile.customer in freelancer.customer_invited.all %}
                                 <p class="respond-btn responded invite">Вы уже пригласили</p>
                                 {% else %}
+                                {% if task %}
                                 <button onclick="showPopup('{{ freelancer.id }}')" class="btn invite">Пригласить на
                                     интервью
                                 </button>
@@ -73,6 +73,9 @@
                                     </form>
 
                                 </div>
+                                {% else %}
+                                <p class="btn"><a href="{% url 'my_tasks' %}">У вас нет открытых вакансий</a></p>
+                                {% endif %}
                                 {% endif %}
                             </div>
                         </div>

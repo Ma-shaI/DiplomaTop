@@ -136,7 +136,8 @@ def my_offers(request):
 
 def my_tasks(request):
     profile = request.user.profile.customer
-    tasks = Task.objects.filter(owner=profile)
+    task_in = Task.objects.filter(owner=profile)
+    tasks = task_in.exclude(offers__isnull=False)
     contex = {'tasks': tasks}
     return render(request, 'tasks/my_tasks.html', contex)
 

@@ -1,14 +1,14 @@
 {% for task in tasks %}
-{% if not task.offers.id %}
-<div class="invite__task">
+
+<div class="invite__task">{% if not task.offers.id %}
     <label>
         <input type="hidden" name="return_url" value="{{ request.path }}">
         <input type="hidden" name="{{ hidden_input_name }}" value="{{ hidden_input_value }}">
         <input type="radio" name="{{ radio_button_name }}" value="{{ task.id }}">
         {{ task.title }}
-    </label>
+    </label>{% endif %}
 </div>
-{% endif %}
+
 {% endfor %}
 
 <button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">Закрыть окно</button>

@@ -109,7 +109,7 @@ def like_talent(request, pk):
 
 def find_talent(request):
     freelancers, search_query = search_talent(request)
-    tasks = Task.objects.filter(owner=request.user.profile.customer)
+    tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     context = {'freelancers': freelancers, 'tasks': tasks}
     return render(request, 'talents/find_talent.html', context)
 
