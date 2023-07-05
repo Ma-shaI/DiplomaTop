@@ -16,4 +16,6 @@ urlpatterns = [
     path('send_offer/', views.send_offer, name='send_offer'),
     path('accept_offer/<str:pk>/', views.accept_offer, name='accept_offer'),
     path('my_staff/', views.my_staff, name='my_staff'),
+    path('work/<str:pk>/', views.work, name='work'),
+    path('add_stage/', views.add_stage, name='add_stage')
 ]

@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% include 'base/navbar.html'%}
+<div class="work-page">
+    <div class="container">
+        <div class="work-page__box">
+            <div class="work-page__title">
+                <h4>{{ work.work }}</h4>
+                <h6>Исполнитель: {{ work.worker.owner.first_name }} {{work.worker.owner.last_name }}</h6>
+            </div>
+            <div class="work-page__btns">
+                {% if work.worker == request.user.profile.freelancer %}
+
+                <p class="btn"><a href="{% url 'chat' work.work.owner.owner.id  %}">Открыть чат</a></p>
+                {% else %}
+                <p class="btn"><a href="{% url 'chat' work.worker.owner.id %}">Открыть чат</a></p>
+                {% endif %}
+            </div>
+            {% if work.worker == request.user.profile.freelancer %}
+            <div class="work-page__worker">
+                {% for stage in stages %}
+                <ul>
+                    <li>
+                        <div class="stage_info">
+                            <p>{{stage}}</p>
+                            <p>{{ stage.created }}</p>
+                            <p>{{ stage.max_term }}</p>
+                        </div>
+                    </li>
+                </ul>
+
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="work-page__customer">
+                {% for stage in stages %}
+                <ul>
+                    <li>
+                        <div class="stage_info">
+                            <p>{{stage}}</p>
+                            <p>Дата создания: {{ stage.created }}</p>
+                            <p>Максимальный срок исполнения:{{ stage.max_term }}</p>
+                        </div>
+                    </li>
+                </ul>
+                {% endfor %}
+            </div>
+            <div class="work-page__new-stage">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Добавить
+                </button>
+                <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog ">
+                        <div class="modal-content">
+
+                            <form method="POST" class="form" action="{% url 'add_stage' %}" autocomplete="off">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Добавить этап</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                {% csrf_token %}
+                                <div class="modal-body">
+                                     <input type="hidden" name="return_url" value="{{ request.path }}">
+                                    <input type="hidden" name="work" value="{{ work.id }}">
+                                    <input type="text" name="stage" placeholder="Впишите тут новый этап" class="reg_form">
+                                    <label for="max-term">Максимальный срок:</label>
+                                    <input type="datetime-local" id="max-term" name="max-term">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Добавить</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% endif%}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

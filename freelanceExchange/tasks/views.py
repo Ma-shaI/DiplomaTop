@@ -226,3 +226,31 @@ def my_staff(request):
         'staff': staff
     }
     return render(request, 'tasks/my_staff.html', content)
+
+
+def work(request, pk):
+    work = Work.objects.get(id=pk)
+    stages = StagesOfWork.objects.filter(owner=work)
+    context = {
+        'work': work,
+        'stages': stages,
+    }
+
+    return render(request, 'tasks/work.html', context)
+
+
+def add_stage(request):
+    if request.method == 'POST':
+        new_stage = request.POST.get('stage')
+        max_term = request.POST.get('max-term')
+        work_id = request.POST.get('work')
+        if new_stage and max_term and work_id:
+            work = Work.objects.get(id=work_id)
+            stage = StagesOfWork(
+                owner=work,
+                stage=new_stage,
+                max_term=max_term
+            )
+            stage.save()
+            return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))

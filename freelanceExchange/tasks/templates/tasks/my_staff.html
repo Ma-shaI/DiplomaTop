@@ -8,8 +8,7 @@
             {% for worker in staff %}
             <div class="worker">
                 <div class="worker__title">
-
-                    <h4><a href="">{{ worker.work }}</a></h4>
+                    <h4><a href="{% url 'work' worker.id %}">{{ worker.work }}</a></h4>
                     <p>Исполнитель: {{ worker.worker.owner.first_name }} {{worker.worker.owner.last_name }}</p>
                 </div>
                 <div class="worker__btns">
