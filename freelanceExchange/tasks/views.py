@@ -206,12 +206,23 @@ def accept_offer(request, pk):
         answer = request.POST.get('accept')
         if answer == 'true':
             offer.at_work = True
-            offer.save
+            offer.save()
             work = Work(
                 work=offer.task,
                 worker=user
             )
             work.save()
+            return redirect('offers')
         elif answer == 'false':
             offer.delete()
+            return redirect('offers')
     return redirect('offers')
+
+
+def my_staff(request):
+    user = request.user.profile.customer
+    staff = Work.objects.filter(work__owner=user)
+    content = {
+        'staff': staff
+    }
+    return render(request, 'tasks/my_staff.html', content)

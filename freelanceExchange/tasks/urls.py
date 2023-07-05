@@ -15,4 +15,5 @@ urlpatterns = [
     path('update_task/<str:pk>/', views.update_task, name='update_task'),
     path('send_offer/', views.send_offer, name='send_offer'),
     path('accept_offer/<str:pk>/', views.accept_offer, name='accept_offer'),
+    path('my_staff/', views.my_staff, name='my_staff'),
 ]

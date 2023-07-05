@@ -1,0 +1,28 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% include 'base/navbar.html'%}
+<div class="staff">
+    <div class="container">
+        <div class="staff_box">
+            {% if staff %}
+            {% for worker in staff %}
+            <div class="worker">
+                <div class="worker__title">
+
+                    <h4><a href="">{{ worker.work }}</a></h4>
+                    <p>Исполнитель: {{ worker.worker.owner.first_name }} {{worker.worker.owner.last_name }}</p>
+                </div>
+                <div class="worker__btns">
+                    <p class="btn"><a href="{% url 'chat' worker.worker.owner.id %}">Сообщения</a></p>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <h4>Упс, пока здесь пусто! Начните сотрудничество</h4>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

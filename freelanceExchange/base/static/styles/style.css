@@ -970,3 +970,11 @@ li {
   padding-top: 30px;
   text-align: center;
 }
+
+/* my_staff.html */
+.worker {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -69,6 +69,7 @@ class StagesOfWork(models.Model):
     stage = models.TextField()
     done = models.BooleanField(default=False)
     max_term = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.stage}'

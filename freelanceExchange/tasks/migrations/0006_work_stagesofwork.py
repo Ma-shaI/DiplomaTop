@@ -27,6 +27,7 @@ class Migration(migrations.Migration):
             name='StagesOfWork',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('created', models.DateTimeField(auto_now_add=True)),
                 ('stage', models.TextField()),
                 ('done', models.BooleanField(default=False)),
                 ('max_term', models.DateTimeField()),

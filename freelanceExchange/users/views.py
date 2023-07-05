@@ -215,7 +215,7 @@ def profile(request, pk):
         talent = Talent.objects.get(id=s)
         role = profile.freelancer
         freelancer = profile.freelancer
-        tasks = Task.objects.filter(owner=request.user.profile.customer)
+        tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
         context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks': feedbacks, 'freelancer': freelancer,
                    'tasks': tasks}
         return render(request, 'users/profile.html', context)
