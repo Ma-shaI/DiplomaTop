@@ -254,3 +254,14 @@ def add_stage(request):
             stage.save()
             return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))
+
+
+def done_stage(request,pk):
+    if request.method == 'POST':
+        stage_id = request.POST.get('task_id')
+        if stage_id:
+            stage = StagesOfWork.objects.get(id=stage_id)
+            stage.done = not stage.done
+            stage.save()
+        return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))

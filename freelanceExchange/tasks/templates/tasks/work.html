@@ -1,48 +1,65 @@
 {% extends 'base/base.html' %}
 {% block content %}
+{% load static %}
 {% include 'base/navbar.html'%}
 <div class="work-page">
     <div class="container">
         <div class="work-page__box">
-            <div class="work-page__title">
-                <h4>{{ work.work }}</h4>
-                <h6>Исполнитель: {{ work.worker.owner.first_name }} {{work.worker.owner.last_name }}</h6>
-            </div>
-            <div class="work-page__btns">
-                {% if work.worker == request.user.profile.freelancer %}
+            <div class="work-page__header">
+                <div class="work-page__title">
+                    <h4>{{ work.work }}</h4>
+                    <h6>Исполнитель: {{ work.worker.owner.first_name }} {{work.worker.owner.last_name }}</h6>
+                </div>
 
-                <p class="btn"><a href="{% url 'chat' work.work.owner.owner.id  %}">Открыть чат</a></p>
-                {% else %}
-                <p class="btn"><a href="{% url 'chat' work.worker.owner.id %}">Открыть чат</a></p>
-                {% endif %}
+                <div class="work-page__btns">
+                    {% if work.worker == request.user.profile.freelancer %}
+
+                    <p class="btn"><a href="{% url 'chat' work.work.owner.owner.id  %}">Открыть чат</a></p>
+                    {% else %}
+                    <p class="btn"><a href="{% url 'chat' work.worker.owner.id %}">Открыть чат</a></p>
+                    {% endif %}
+                </div>
             </div>
+            <hr>
             {% if work.worker == request.user.profile.freelancer %}
             <div class="work-page__worker">
                 {% for stage in stages %}
-                <ul>
-                    <li>
-                        <div class="stage_info">
-                            <p>{{stage}}</p>
-                            <p>{{ stage.created }}</p>
-                            <p>{{ stage.max_term }}</p>
-                        </div>
-                    </li>
-                </ul>
-
+                <div class="stage_info">
+                    <p>{{stage}} ({{ stage.created }})</p>
+                    <p>Максимальный срок до: {{ stage.max_term }}</p>
+                </div>
+                <div class="stage_done">
+                    <form action="{% url 'done_stage' stage.id %}" method="post" class="my-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="return_url" value="{{ request.path }}">
+                        {% if stage.done %}
+                        <input type="hidden" name="task_id" value="{{ stage.id}}">
+                        <button type="submit" class="done-btn done"></button>
+                        {% else %}
+                        <input type="hidden" name="task_id" value="{{ stage.id}}">
+                        <button type="submit" class="done-btn"></button>
+                        {% endif %}
+                    </form>
+                </div>
                 {% endfor %}
             </div>
             {% else %}
             <div class="work-page__customer">
                 {% for stage in stages %}
-                <ul>
-                    <li>
-                        <div class="stage_info">
-                            <p>{{stage}}</p>
-                            <p>Дата создания: {{ stage.created }}</p>
-                            <p>Максимальный срок исполнения:{{ stage.max_term }}</p>
-                        </div>
-                    </li>
-                </ul>
+                <div class="stage">
+                    <div class="stage_info">
+                        <h6>{{stage}} ({{ stage.created }}) </h6>
+                        <p>Максимальный срок до: {{ stage.max_term }}</p>
+                    </div>
+                    <div class="stage_done">
+                        {% if stage.done %}
+                        <img src="{% static 'icons/check-mark.png' %}" alt="">
+                        {% else %}
+                        <img src="{% static 'icons/dry-clean.png' %}" alt="">
+                        {% endif %}
+                    </div>
+                </div>
+
                 {% endfor %}
             </div>
             <div class="work-page__new-stage">
@@ -61,16 +78,17 @@
                                 </div>
                                 {% csrf_token %}
                                 <div class="modal-body">
-                                     <input type="hidden" name="return_url" value="{{ request.path }}">
+                                    <div class="modal-body__work">
+                                    <input type="hidden" name="return_url" value="{{ request.path }}">
                                     <input type="hidden" name="work" value="{{ work.id }}">
-                                    <input type="text" name="stage" placeholder="Впишите тут новый этап" class="reg_form">
+                                    <input type="text" name="stage" placeholder="Впишите тут новый этап"
+                                           class="reg_form form-work">
                                     <label for="max-term">Максимальный срок:</label>
-                                    <input type="datetime-local" id="max-term" name="max-term">
+                                    <input type="datetime-local" id="max-term" name="max-term" class="reg_form">
+                                </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Добавить</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
-                                    </button>
                                 </div>
                             </form>
                         </div>

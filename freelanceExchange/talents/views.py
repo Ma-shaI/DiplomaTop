@@ -95,9 +95,7 @@ def like_talent(request, pk):
 
         if freelancer_id:
             freelancer = Freelancer.objects.get(id=freelancer_id)
-            print(freelancer.customer_saved.all())
             if request.user.profile.customer in freelancer.customer_saved.all():
-
                 freelancer.customer_saved.remove(profile.customer)
                 freelancer.save()
             else:

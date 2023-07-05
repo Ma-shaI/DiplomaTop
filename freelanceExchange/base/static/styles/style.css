@@ -978,3 +978,49 @@ li {
   justify-content: space-between;
   align-items: center;
 }
+
+/* work.html */
+
+.work-page__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn a {
+  text-decoration: none;
+  color: #000;
+}
+.stage_info {
+  padding: 10px;
+}
+.stage_info h6 {
+  padding: 0;
+  margin: 0;
+}
+.stage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.done-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background-color: aliceblue;
+  background-image: url('../icons/dry-clean.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.done-btn.done {
+  background-image: url('../icons/check-mark.png');
+}
+.modal-body__work {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.reg_form.form-work {
+  width: 80%;
+}
