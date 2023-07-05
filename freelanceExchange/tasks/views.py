@@ -107,7 +107,7 @@ def like_task(request):
 def task(request, pk):
     job = Task.objects.get(id=pk)
     customer = job.owner
-    tasks = Task.objects.filter(owner=customer)
+    tasks = Task.objects.filter(owner=customer).filter(is_published=True)
     feedbacks = customer.owner.owner.all()
     context = {'task': job, 'customer': customer, 'tasks': tasks, 'feedbacks': feedbacks}
     if request.method == 'POST':

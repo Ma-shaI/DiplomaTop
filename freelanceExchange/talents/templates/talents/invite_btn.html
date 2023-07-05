@@ -1,4 +1,5 @@
 {% for task in tasks %}
+{% if not task.offers.id %}
 <div class="invite__task">
     <label>
         <input type="hidden" name="return_url" value="{{ request.path }}">
@@ -7,6 +8,7 @@
         {{ task.title }}
     </label>
 </div>
+{% endif %}
 {% endfor %}
 
 <button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">Закрыть окно</button>

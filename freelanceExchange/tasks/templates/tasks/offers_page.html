@@ -6,6 +6,7 @@
         <div class="offers_box">
             {% if offers %}
             {% for offer in offers %}
+
             <div class="offer">
                 <div class="offer__title">
                     <h3><a href="{% url 'task' offer.task.id %}">{{ offer }}</a></h3>
@@ -13,9 +14,13 @@
                 </div>
                 <div class="offer__btns">
                     <p class="btn"><a href="{% url 'chat' offer.task.owner.owner.id %}">Связаться с клиентом</a></p>
+                    {% if offer.at_work%}
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#myModal">
                         Ответить на оффер
                     </button>
+                    {% else %}
+                    <p class="btn">Вы уже приняли этот оффер</p>
+                    {% endif %}
                     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                          aria-hidden="true">
                         <div class="modal-dialog ">
@@ -32,6 +37,7 @@
                     </div>
                 </div>
             </div>
+
             <hr>
             {% endfor %}
             {% else %}
