@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from .utils import search_tasks
+import datetime
 
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
@@ -220,12 +221,21 @@ def accept_offer(request, pk):
 
 
 def my_staff(request):
-    user = request.user.profile.customer
-    staff = Work.objects.filter(work__owner=user)
-    content = {
-        'staff': staff
-    }
-    return render(request, 'tasks/my_staff.html', content)
+    try:
+        user = request.user.profile.customer
+        staff = Work.objects.filter(work__owner=user)
+        content = {
+            'staff': staff
+        }
+        return render(request, 'tasks/my_staff.html', content)
+    except:
+        user = request.user.profile.freelancer
+        works = Work.objects.filter(worker=user)
+        print(works)
+        content = {
+            'works': works
+        }
+        return render(request, 'tasks/my_works.html', content)
 
 
 def work(request, pk):
@@ -256,12 +266,17 @@ def add_stage(request):
     return redirect(request.POST.get('return_url'))
 
 
-def done_stage(request,pk):
+def done_stage(request, pk):
     if request.method == 'POST':
         stage_id = request.POST.get('task_id')
+        now = datetime.datetime.now()
         if stage_id:
             stage = StagesOfWork.objects.get(id=stage_id)
             stage.done = not stage.done
+
             stage.save()
+            if stage.done == True:
+                stage.update_time = now
+                stage.save()
         return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))

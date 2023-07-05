@@ -68,6 +68,7 @@ class StagesOfWork(models.Model):
     owner = models.ForeignKey(Work, on_delete=models.CASCADE)
     stage = models.TextField()
     done = models.BooleanField(default=False)
+    update_time = models.DateTimeField(blank=True, null=True)
     max_term = models.DateTimeField()
     created = models.DateTimeField(auto_now_add=True)
 

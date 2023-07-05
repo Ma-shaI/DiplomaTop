@@ -8,7 +8,11 @@
             <div class="work-page__header">
                 <div class="work-page__title">
                     <h4>{{ work.work }}</h4>
+                    {% if work.worker == request.user.profile.freelancer %}
+                    <h6>Заказчик: {{ work.work.owner.owner.first_name }} {{work.work.owner.owner.last_name }}</h6>
+                    {% else %}
                     <h6>Исполнитель: {{ work.worker.owner.first_name }} {{work.worker.owner.last_name }}</h6>
+                    {% endif %}
                 </div>
 
                 <div class="work-page__btns">
@@ -24,22 +28,27 @@
             {% if work.worker == request.user.profile.freelancer %}
             <div class="work-page__worker">
                 {% for stage in stages %}
-                <div class="stage_info">
-                    <p>{{stage}} ({{ stage.created }})</p>
-                    <p>Максимальный срок до: {{ stage.max_term }}</p>
-                </div>
-                <div class="stage_done">
-                    <form action="{% url 'done_stage' stage.id %}" method="post" class="my-form">
-                        {% csrf_token %}
-                        <input type="hidden" name="return_url" value="{{ request.path }}">
-                        {% if stage.done %}
-                        <input type="hidden" name="task_id" value="{{ stage.id}}">
-                        <button type="submit" class="done-btn done"></button>
-                        {% else %}
-                        <input type="hidden" name="task_id" value="{{ stage.id}}">
-                        <button type="submit" class="done-btn"></button>
+                <div class="stage">
+                    <div class="stage_info">
+                        <h6>{{stage}} ({{ stage.created }})</h6>
+                        <p>Максимальный срок до: {{ stage.max_term }}</p>
+                        {% if stage.update_time %}
+                        <p>Выполнено: {{ stage.update_time }}</p>
                         {% endif %}
-                    </form>
+                    </div>
+                    <div class="stage_done">
+                        <form action="{% url 'done_stage' stage.id %}" method="post" class="my-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="return_url" value="{{ request.path }}">
+                            {% if stage.done %}
+                            <input type="hidden" name="task_id" value="{{ stage.id}}">
+                            <button type="submit" class="done-btn done"></button>
+                            {% else %}
+                            <input type="hidden" name="task_id" value="{{ stage.id}}">
+                            <button type="submit" class="done-btn"></button>
+                            {% endif %}
+                        </form>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
@@ -50,6 +59,9 @@
                     <div class="stage_info">
                         <h6>{{stage}} ({{ stage.created }}) </h6>
                         <p>Максимальный срок до: {{ stage.max_term }}</p>
+                        {% if stage.update_time %}
+                        <p>Выполнено: {{ stage.update_time }}</p>
+                        {% endif %}
                     </div>
                     <div class="stage_done">
                         {% if stage.done %}
@@ -79,13 +91,15 @@
                                 {% csrf_token %}
                                 <div class="modal-body">
                                     <div class="modal-body__work">
-                                    <input type="hidden" name="return_url" value="{{ request.path }}">
-                                    <input type="hidden" name="work" value="{{ work.id }}">
-                                    <input type="text" name="stage" placeholder="Впишите тут новый этап"
-                                           class="reg_form form-work">
-                                    <label for="max-term">Максимальный срок:</label>
-                                    <input type="datetime-local" id="max-term" name="max-term" class="reg_form">
-                                </div>
+                                        <input type="hidden" name="return_url" value="{{ request.path }}">
+                                        <input type="hidden" name="work" value="{{ work.id }}">
+                                        <input type="text" name="stage" placeholder="Впишите тут новый этап"
+                                               class="reg_form form-work">
+                                        <div class="work__max-term">
+                                            <label for="max-term">Максимальный срок:</label>
+                                            <input type="datetime-local" id="max-term" name="max-term" class="reg_form">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Добавить</button>

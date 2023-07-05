@@ -1020,7 +1020,11 @@ li {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .reg_form.form-work {
-  width: 80%;
+  width: 475px;
+}
+.work__max-term {
+  margin-top: 10px;
 }
