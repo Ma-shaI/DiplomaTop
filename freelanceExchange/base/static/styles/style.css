@@ -826,7 +826,28 @@ li {
   max-height: 65vh;
   overflow: auto;
 }
+.container.chat {
+  padding-top: 0;
+}
+.chat hr {
+  padding: 0;
+  margin: 0;
+}
+.chat__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  background-color: #c4c4ef5b;
+  padding: 7px;
 
+  margin-bottom: 10px;
+}
+.interlocutor__img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
 .new-msg {
   border: 1px solid grey; /* Параметры рамки */
   border-radius: 30px;

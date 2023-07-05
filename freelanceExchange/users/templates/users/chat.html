@@ -2,11 +2,18 @@
 {% load static %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 {% block content %}
-{% include 'base/navbar.html' %}
 
-<div class="chat">
-    <div class="container">
+
+<div class="chat">{% include 'base/navbar.html' %}
+    <div class="container chat">
         <div class="chat__box">
+            <div class="chat__info">
+                <div class="interlocutor__img">
+                    <img src="{{ interlocutor.photo.url }}" alt=""></div>
+                <h5>
+                    <a href="{% url 'profile' interlocutor.id %}">
+                        {{ interlocutor.first_name }} {{ interlocutor.last_name }}</a></h5>
+            </div>
             <div class="chat__block">
                 {% for message in conversation %}
                 {% if message.sender == request.user.profile %}
@@ -27,7 +34,7 @@
                 <form action="{% url 'chat' id %}" method="post" class="msg-form">
                     {% csrf_token %}
                     <div class="new-msg">
-                    <input type="text" placeholder="Введите сообщение" name="msg">
+                        <input type="text" placeholder="Введите сообщение" name="msg">
                     </div>
 
                 </form>

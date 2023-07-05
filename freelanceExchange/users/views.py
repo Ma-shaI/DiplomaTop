@@ -269,7 +269,7 @@ def chat(request, pk):
             msg.is_read = True
             msg.save()
     context = {
-        'conversation': conversation, 'id': pk
+        'conversation': conversation, 'id': pk, 'interlocutor': interlocutor
     }
     if request.method == 'POST':
         msg = request.POST.get('msg')
