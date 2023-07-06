@@ -4,7 +4,7 @@
 <div class="messages">
     <div class="container">
         <div class="messages__box">
-            <h3 class="inbox__title">New Messages(<span>{{unread_count}}</span>)</h3>
+            <h3 class="inbox__title">Сообщения(<span>{{ unread_count }}</span>)</h3>
             <ul class="messages__ul">
                 {% for message in send_messages %}
                 {% if not message.is_read and message.recipient == request.user.profile %}

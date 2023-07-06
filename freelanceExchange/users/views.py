@@ -261,7 +261,6 @@ def all_messages(request):
                         .values('other_user', 'pk')
                         .order_by('other_user')
                         )
-    print(grouped_messages)
     send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by(
         '-created')
     received_messages = Message.objects.filter(recipient=user)

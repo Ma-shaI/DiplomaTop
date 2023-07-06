@@ -37,7 +37,6 @@
                 <div class="profile_left">
                     <div class="div_talent">
                         {% for service in talents %}
-
                         <p class="btn_service"><a href="?s={{ service.id }}">{{ service }}</a></p>
 
                         {% endfor %}
@@ -56,13 +55,13 @@
                                 {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
                             {% elif talent.budget_set.first.max_price and talent.budget_set.first.min_price %}
                             <h4>
-                                до {{ talent.budget_set.first.max_price }} {{ talent.budget_set.first.currency_display
-                                }}/час
+                                до {{ talent.budget_set.first.max_price }}
+                                {{ talent.budget_set.first.get_currency_display }}/час
                             </h4>
                             {% else %}
                             <h4>
-                                {{ talent.budget_set.first.fix_price }} {{ talent.budget_set.first.currency_display
-                                }}/проект
+                                {{ talent.budget_set.first.fix_price }}
+                                {{ talent.budget_set.first.get_currency_display}}/проект
                             </h4>
                             {% endif %}
                             {% if profile.username == request.user.username and request.user.profile.freelancer %}
