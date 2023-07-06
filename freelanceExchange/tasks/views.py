@@ -62,7 +62,7 @@ def task_budget(request, pk):
 
 def find_work(request):
     tasks, search_query = search_tasks(request)
-    tasks, custom_range = paginate_tasks(request, tasks, 3)
+    tasks, custom_range = paginate_tasks(request, tasks, 1)
     context = {'tasks': tasks, 'search_query': search_query, 'custom_range': custom_range}
     if request.GET.get('save'):
         profile = request.user.profile

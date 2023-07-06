@@ -7,7 +7,7 @@
     <div class="container">
         <div class="find-work__box">
             <div class="find-work__search">
-                <form action="" method="get">
+                <form action="{% url 'find_work' %}" method="get" id="search">
                     <div class="form__search">
                         <input type="search" placeholder="Поиск работы" name="search_query" value="{{search_query}}"/>
                         <input type="submit" value=""/>
@@ -33,7 +33,6 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/liked_jquery.js' %}">
-
-</script>
+<script src="{% static 'js/liked_jquery.js' %}"></script>
+<script src="{% static 'js/search_pag.js' %}"></script>
 {% endblock %}
