@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load static %}
 {% block content %}
 {% include 'base/navbar.html'%}
 <div class="offers">
@@ -15,26 +16,32 @@
                 <div class="offer__btns">
                     <p class="btn"><a href="{% url 'chat' offer.task.owner.owner.id %}">Связаться с клиентом</a></p>
                     {% if not offer.at_work %}
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#myModal">
+                    <button onclick="offerShow('{{ offer.id }}')" class="btn">
                         Ответить на оффер
                     </button>
                     {% else %}
                     <p class="btn">Вы уже приняли этот оффер</p>
                     {% endif %}
-                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog ">
-                            <div class="modal-content">
-                            <h3>Вы готовы принять предложение?</h3>
-                                <form action="{% url 'accept_offer' offer.id %}" method="post">
-                                    {% csrf_token %}
-                                    <div class="offers-btns__modal">
-                                    <button type="submit" name="accept" value="true" class="btn">Принять</button>
-                                    <button type="submit" name="accept" value="false" class="btn">Отклонить</button></div>
-                                </form>
+                    <div id="offer-{{ offer.id }}" class="popup">
+
+                        <form action="{% url 'accept_offer' offer.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="popup_info">
+                            <h3 class="modal-title">Вы готовы принять предложение?</h3>
+                            <button onclick="offerClose('{{ freelancer.id }}')"><img
+                                    src="{% static 'icons/close.png' %}" alt="">
+                            </button>
                             </div>
-                        </div>
+                            <div class="offers-btns__modal">
+                                <button type="submit" name="accept" value="true" class="btn">Принять</button>
+                                <button type="submit" name="accept" value="false" class="btn">Отклонить</button>
+                            </div>
+
+
+                        </form>
                     </div>
+
+
                 </div>
             </div>
 

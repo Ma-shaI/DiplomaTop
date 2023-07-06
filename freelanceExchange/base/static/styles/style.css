@@ -875,7 +875,11 @@ li {
   display: none;
   z-index: 1;
 }
-
+.popup_info {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
 .popup h5 {
   padding-bottom: 20px;
 }
@@ -1074,4 +1078,20 @@ li {
 
 .pagination .btn.btn--sub {
   color: var(--color-light);
+}
+.reg {
+  display: flex;
+  flex-direction: column;
+}
+button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  font-size: 20px;
+  padding: 5px 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
