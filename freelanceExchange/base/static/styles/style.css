@@ -1049,3 +1049,29 @@ li {
 .work__max-term {
   margin-top: 10px;
 }
+
+/* pagination.html */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.pagination > ul {
+  flex-wrap: wrap;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.pagination .btn {
+  color: var(--color-sub);
+}
+
+.pagination .btn.btn--sub {
+  color: var(--color-light);
+}

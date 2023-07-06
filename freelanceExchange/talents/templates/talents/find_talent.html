@@ -95,9 +95,10 @@
                 <hr>
                 {% endwith %}
                 {% endfor %}
-
+                {% include 'base/pagination.html' with queryset=freelancers custom_range=custom_range %}
             </div>
         </div>
+
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

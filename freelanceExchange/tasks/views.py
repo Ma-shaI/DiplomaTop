@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
-from .utils import search_tasks
+from .utils import search_tasks, paginate_tasks
 import datetime
 
 
@@ -62,7 +62,8 @@ def task_budget(request, pk):
 
 def find_work(request):
     tasks, search_query = search_tasks(request)
-    context = {'tasks': tasks, 'search_query': search_query}
+    tasks, custom_range = paginate_tasks(request, tasks, 3)
+    context = {'tasks': tasks, 'search_query': search_query, 'custom_range': custom_range}
     if request.GET.get('save'):
         profile = request.user.profile
         tasks = Task.objects.filter(freelancer_saved__owner=profile)

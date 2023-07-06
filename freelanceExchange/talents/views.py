@@ -5,7 +5,7 @@ from users.models import Message
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
-from .utils import search_talent
+from .utils import search_talent, paginate_talent
 from django.http import JsonResponse
 
 
@@ -107,8 +107,9 @@ def like_talent(request, pk):
 
 def find_talent(request):
     freelancers, search_query = search_talent(request)
+    freelancers, custom_range = paginate_talent(request, freelancers, 3)
     tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
-    context = {'freelancers': freelancers, 'tasks': tasks}
+    context = {'freelancers': freelancers, 'tasks': tasks, 'custom_range': custom_range}
     return render(request, 'talents/find_talent.html', context)
 
 

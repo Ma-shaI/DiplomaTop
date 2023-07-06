@@ -9,23 +9,26 @@
             <div class="find-work__search">
                 <form action="" method="get">
                     <div class="form__search">
-                        <input type="search" placeholder="Поиск работы"  name="search_query"  value="{{search_query}}"/>
+                        <input type="search" placeholder="Поиск работы" name="search_query" value="{{search_query}}"/>
                         <input type="submit" value=""/>
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="find-work__block">
-            <h4>Вакансии, которые могут вам понравиться</h4>
-            <div class="find-work__filter">
-                <ul>
-                    <li><a href="{% url 'find_work' %}">Все вакансии</a></li>
-                    <li><a href="?save=True">Сохраненное</a></li>
-                </ul>
-                <hr/>
+
+            <div class="find-work__block">
+                <h4>Вакансии, которые могут вам понравиться</h4>
+                <div class="find-work__filter">
+                    <ul>
+                        <li><a href="{% url 'find_work' %}">Все вакансии</a></li>
+                        <li><a href="?save=True">Сохраненное</a></li>
+                    </ul>
+                    <hr/>
+                </div>
+                {% include 'tasks/like_task.html' %}
+                {% include 'base/pagination.html' with queryset=tasks custom_range=custom_range %}
             </div>
-            {% include 'tasks/like_task.html' %}
         </div>
+
     </div>
 </div>
 
