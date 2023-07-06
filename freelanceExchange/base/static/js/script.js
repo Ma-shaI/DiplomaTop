@@ -165,3 +165,12 @@ function offerClose(freelancerId) {
   var popupDiv = document.querySelector('#offer-' + freelancerId);
   popupDiv.style.display = 'none';
 }
+function delItem(freelancerId) {
+  var popupDiv = document.querySelector('#del_item-' + freelancerId);
+  popupDiv.style.display = 'block';
+}
+
+function delClose(freelancerId) {
+  var popupDiv = document.querySelector('#del_item-' + freelancerId);
+  popupDiv.style.display = 'none';
+}

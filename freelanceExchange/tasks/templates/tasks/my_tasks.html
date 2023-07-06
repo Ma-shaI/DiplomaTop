@@ -22,23 +22,19 @@
                         {% endif %}
                     </div>
                     <div class="task_btns">
-                         {% if not task.is_published %}
-                        <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить черновик</a></p>
-                         {% else %}
-                          <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить</a></p>
-                         {% endif %}
-                        <ul class="menu-dots__ul">
-                            <li class="header__menuItem"><img src="{% static 'icons/free-icon-font-menu-dots.png' %}" alt="">
-                                <ul class="header__menuUl btns__box">
-                                    <li class="header__menuItem"><a href="{% url 'update_task' task.id %}">Изменить</a></li>
-                                    <li class="header__menuItem">
-                                        <button type="button" class="btn__li" data-bs-toggle="modal"
-                                                data-bs-target="#myModal">Удалить
-                                        </button>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+                        {% if not task.is_published %}
+                        <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить черновик</a>
+                        </p>
+                        {% else %}
+                        <p class="btns__my-task-change"><a href="{% url 'update_task' task.id %}">Изменить</a></p>
+                        {% endif %}
+                        {% with action_url_del='delete_task' %}
+                        {% with new_id=task.id %}
+                        {% with title=task.title %}
+                        {% with action_url_update='update_task' %}
+                        {% with action_url_path='my_tasks' %}
+                        {% include 'talents/change-del_talent.html' %}
+                        {% endwith%}{% endwith%}{% endwith%}{% endwith%}{% endwith%}
                     </div>
                     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                          aria-hidden="true">
@@ -55,8 +51,8 @@
                                     </div>
                                     {% csrf_token %}
                                     <div class="modal__btns">
-                                    <button type="submit">Да</button>
-                                    <a href="{% url 'my_tasks' %}">Нет</a></div>
+                                        <button type="submit">Да</button>
+                                        <a href="{% url 'my_tasks' %}">Нет</a></div>
 
                                 </form>
                             </div>

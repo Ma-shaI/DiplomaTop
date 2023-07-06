@@ -47,6 +47,7 @@
                 {% endfor %}
 
                 <div class="div_btn">
+                    <input type="hidden" name="return_url" value="{{ request.path }}">
                     <input type="submit" value="Внести изменения" class="btn"></div>
             </form>
 

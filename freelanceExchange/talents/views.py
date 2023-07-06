@@ -48,9 +48,8 @@ def talent_add(request):
                 currency=currency
             )
             rate.save()
-            return redirect('talent_add')
-
-    return render(request, 'talents/talent_add.html', context)
+            return redirect(request.POST.get('return_url'))
+    return redirect(request.POST.get('return_url'))
 
 
 def talent_update(request, pk):
@@ -72,7 +71,7 @@ def talent_update(request, pk):
                 talent.skills.add(skill.id)
 
             rate_form.save()
-            return redirect('profile', pk=request.user.id)
+            return redirect(request.POST.get('return_url'))
 
     context = {'talent_form': talent_form, 'rate_form': rate_form, 'talent': talent, 'skills': talent.skills.all()}
 
@@ -83,7 +82,7 @@ def talent_delete(request, pk):
     user = request.user.profile.freelancer
     talent = user.talent_set.get(id=pk)
     talent.delete()
-    return redirect('talent_add')
+    return redirect(request.POST.get('return_url'))
 
 
 def like_talent(request, pk):

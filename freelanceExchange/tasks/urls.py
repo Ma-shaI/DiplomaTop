@@ -19,5 +19,6 @@ urlpatterns = [
     path('work/<str:pk>/', views.work, name='work'),
     path('add_stage/', views.add_stage, name='add_stage'),
     path('done_stage/<str:pk>/', views.done_stage, name='done_stage'),
-    path('responded/', views.responded_task, name='responded')
+    path('responded/', views.responded_task, name='responded'),
+    path('publish_task/<str:pk>/', views.publish_task, name='publish_task')
 ]

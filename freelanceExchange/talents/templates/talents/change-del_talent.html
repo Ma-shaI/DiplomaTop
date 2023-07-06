@@ -4,38 +4,31 @@
         <li class="header__menuItem"><img src="{% static 'icons/pencil.png' %}"
                                           alt="">
             <ul class="header__menuUl btns__box">
-                <li class="header__menuItem"><a
-                        href="{% url 'talent_update' talent.id %}">Изменить</a></li>
                 <li class="header__menuItem">
-                    <button type="button" class="btn__li" data-bs-toggle="modal"
-                            data-bs-target="#myModal">Удалить
+                    <a
+                        href="{% url action_url_update new_id %}">Изменить</a></li>
+                <li class="header__menuItem">
+                    <button type="button" class="btn__li"  onclick="delItem('{{ new_id }}')">Удалить
                     </button>
                 </li>
             </ul>
         </li>
     </ul>
-    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content modal__my-task">
+    <div id="del_item-{{ new_id }}" class="popup">
 
-                <form method="POST" class="form" action="{% url 'talent_delete' talent.id %}"
-                      autocomplete="off">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Вы действительно хотите
-                            удалить
-                            {{ talent.title }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                    </div>
-                    {% csrf_token %}
-                    <div class="modal__btns">
-                        <input type="hidden" name="return_url" value="{{ request.path }}">
-                        <button type="submit">Да</button>
-                        <a href="{% url 'profile' request.user.id %}">Нет</a></div>
-
-                </form>
+        <form method="POST" class="form" action="{% url action_url_del new_id %}"
+              autocomplete="off">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Вы действительно хотите
+                    удалить
+                    {{ title }}</h5>
+                <button type="button" class="btn-close" onclick="delClose('{{ new_id }}')"></button>
             </div>
-        </div>
+            {% csrf_token %}
+            <div class="modal__btns">
+                <input type="hidden" name="return_url" value="{{ request.path }}">
+                <button type="submit">Да</button>
+                <button type="button" class="btn" onclick="delClose('{{ new_id }}')">Нет</button></div>
+        </form>
     </div>
 </div>

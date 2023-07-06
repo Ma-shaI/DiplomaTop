@@ -33,6 +33,18 @@ class TaskWizard(LoginRequiredMixin, SessionWizardView):
         return redirect('task_budget', pk=task.id)
 
 
+def publish_task(request, pk):
+    task = Task.objects.get(id=pk)
+    context = {
+        'task': task
+    }
+    if request.method == 'POST':
+        task.is_published = True
+        task.save()
+        return redirect('my_tasks')
+    return render(request, 'tasks/publish_task.html', context)
+
+
 @login_required(login_url='login')
 def task_budget(request, pk):
     task = Task.objects.get(id=pk)
@@ -44,8 +56,8 @@ def task_budget(request, pk):
             currency = request.POST['select_min_price']
         else:
             messages.error(request, 'Валюта должна быть одинаковой')
-
             return render(request, 'tasks/task_budget_form.html', context)
+
         form = BudgetForm(request.POST)
         if form.is_valid():
             budget = form.save(commit=False)
@@ -55,7 +67,8 @@ def task_budget(request, pk):
             else:
                 budget.currency = request.POST['select_fix_price']
             budget.save()
-            return redirect('my_tasks')
+            return redirect('publish_task', pk=task.id)
+        return render(request, 'tasks/task_budget_form.html', context)
 
     return render(request, 'tasks/task_budget_form.html', context)
 

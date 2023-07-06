@@ -9,61 +9,19 @@
             <div class="talents">
                 {% for talent in talents %}
                 <div class="talents__talent">
-                <p>{{talent}}</p>
+                    <p>{{talent}}</p>
+                    {% with action_url_del='talent_delete' %}
+                    {% with new_id=talent.id %}
+                    {% with title=talent.title %}
+                    {% with action_url_update='talent_update' %}
+                    {% include 'talents/change-del_talent.html' %}
+                    {% endwith%}{% endwith%}{% endwith%}{% endwith%}
 
-                {% include 'talents/change-del_talent.html' %}
                 </div>
                 {% endfor %}
             </div>
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Добавить
-            </button>
-            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog ">
-                    <div class="modal-content">
-
-                        <form method="POST" class="form" action="{% url 'talent_add' %}" autocomplete="off">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Добавить специализацию</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            {% csrf_token %}
-                            <div class="modal-body">
-                                {% for field in form %}
-                                {% if field.label == 'Добавьте свои навыки'%}
-                                <div class="form__field">
-                                    <label>{{ field.label }} </label>
-                                    <!--                    {{field}}-->
-                                    <input type="text" name="new_skills"
-                                           placeholder="Введите свое значение через запятую"
-                                           class="reg_form">
-                                </div>
-                                {% elif field.label == 'Почасовая ставка' %}
-                                <div class="rate_form">
-                                    <label>{{ field.label }}</label>
-                                    {{ field }}
-                                </div>
-                                {% elif field.label == 'Валюта' %}
-                                <div class="rate_form">
-                                    {{ field }}
-                                </div>
-                                {% else %}
-                                <div class="form__field">
-                                    <label>{{ field.label }} </label>
-                                    {{field}}
-                                </div>
-                                {% endif %}
-                                {% endfor %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Отправить</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {% include 'talents/talent_add_modal.html' %}
             <div class="div_btn">
                 <a href="{% url 'profile_update' %}" class="btn">Дальше</a></div>
         </div>

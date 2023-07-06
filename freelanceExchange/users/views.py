@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+
+from talents.forms import TalentForm
 from .forms import *
 from .models import *
 from formtools.wizard.views import SessionWizardView
@@ -230,13 +232,14 @@ def profile(request, pk):
         s = request.GET.get('s')
     talent = Talent.objects.get(id=s) if hasattr(profile, 'freelancer') else Task.objects.get(id=s)
     role = profile.freelancer if hasattr(profile, 'freelancer') else None
+    form = TalentForm() if hasattr(profile, 'freelancer') else None
     freelancer = profile.freelancer if hasattr(profile, 'freelancer') else None
     try:
         tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     except:
         tasks=''
     context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, role, freelancer,
-                                 tasks)
+                                 tasks, form)
     return render(request, 'users/profile.html', context)
 
 

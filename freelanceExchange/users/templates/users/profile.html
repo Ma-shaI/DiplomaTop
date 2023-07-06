@@ -17,6 +17,9 @@
                     </div>
                 </div>
                 {% if profile.username == request.user.username %}
+                {% if request.user.profile.freelancer %}
+                    {% include 'talents/talent_add_modal.html' %}
+                    {% endif %}
                 <div class="profile_settings">
                     <p class="profile_btn"><a href="{% url 'profile_update' %}">Настройки профиля</a></p>
                 </div>
@@ -51,18 +54,24 @@
 
                                 {{ talent.hourlyrate_set.first.rate }}
                                 {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
-                            {% elif talent.budget_set.first.max_price %}
+                            {% elif talent.budget_set.first.max_price and talent.budget_set.first.min_price %}
                             <h4>
-                                до {{ talent.budget_set.first.max_price }} {{ talent.budget_set.first.currency_display }}/час
+                                до {{ talent.budget_set.first.max_price }} {{ talent.budget_set.first.currency_display
+                                }}/час
                             </h4>
-                            
                             {% else %}
-                             <h4>
-                                {{ talent.budget_set.first.fix_price }} {{ talent.budget_set.first.currency_display }}/проект
+                            <h4>
+                                {{ talent.budget_set.first.fix_price }} {{ talent.budget_set.first.currency_display
+                                }}/проект
                             </h4>
                             {% endif %}
                             {% if profile.username == request.user.username and request.user.profile.freelancer %}
+                            {% with action_url_del='talent_delete' %}
+                            {% with new_id=talent.id %}
+                            {% with title=talent.title %}
+                            {% with action_url_update='talent_update' %}
                             {% include 'talents/change-del_talent.html' %}
+                            {% endwith%}{% endwith%}{% endwith%}{% endwith%}
                             {% endif %}
                         </div>
                         {% endif %}
