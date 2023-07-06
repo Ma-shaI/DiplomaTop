@@ -1,0 +1,16 @@
+{% extends 'base/base.html'%}
+
+{% block content%}
+<div class="register_block">
+    <div class="container">
+        <div class="register">
+            <form action="{% url 'publish_task' pk %}" method="post" enctype="multipart/form-data">
+                <h3>Опубликовать вакансию?</h3>
+                {% csrf_token%}
+                <button type="submit">Да</button>
+                <a href="{% url 'my_tasks' %}">Оставить в черновиках</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
