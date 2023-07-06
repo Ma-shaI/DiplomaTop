@@ -13,7 +13,7 @@ from talents.models import *
 from django.db.models import Q
 from django.db.models import Max, Count, Case, When, F, Value, CharField, IntegerField
 from tasks.models import Task
-from .utils import paginate_feedbacks
+from .utils import paginate_feedbacks, get_common_context
 from django.db.models import Avg
 
 
@@ -79,8 +79,6 @@ class RegisterWizard(SessionWizardView):
                 return redirect('index')
         messages.error(self.request, 'Пароли должны совпадать')
         return self.render_goto_step(0)
-
-
 
 
 FORMS = [('0', LevelForm), ('1', ResumeForm), ('2', LanguageForm), ('3', EducationForm), ('4', ExperienceForm),
@@ -225,23 +223,21 @@ def profile(request, pk):
         average_rating = round((feedbacks.aggregate(Avg('rating'))['rating__avg']), 2)
     else:
         average_rating = ''
-
     feedbacks, custom_range = paginate_feedbacks(request, feedbacks, 3)
+    talents = profile.freelancer.talent_set.all() if hasattr(profile, 'freelancer') else profile.customer.tasks.all()
+    s = talents[0].id
+    if request.GET.get('s'):
+        s = request.GET.get('s')
+    talent = Talent.objects.get(id=s) if hasattr(profile, 'freelancer') else Task.objects.get(id=s)
+    role = profile.freelancer if hasattr(profile, 'freelancer') else None
+    freelancer = profile.freelancer if hasattr(profile, 'freelancer') else None
     try:
-        s = profile.freelancer.talent_set.all()[0].id
-        if request.GET.get('s'):
-            s = request.GET.get('s')
-        talent = Talent.objects.get(id=s)
-        role = profile.freelancer
-        freelancer = profile.freelancer
         tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
-        context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks': feedbacks, 'freelancer': freelancer,
-                   'tasks': tasks, 'custom_range': custom_range, 'average_rating': average_rating}
-        return render(request, 'users/profile.html', context)
     except:
-        context = {'profile': profile, 'feedbacks': feedbacks, 'custom_range': custom_range,
-                   'average_rating': average_rating}
-        return render(request, 'users/profile.html', context)
+        tasks=''
+    context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, role, freelancer,
+                                 tasks)
+    return render(request, 'users/profile.html', context)
 
 
 def all_messages(request):
