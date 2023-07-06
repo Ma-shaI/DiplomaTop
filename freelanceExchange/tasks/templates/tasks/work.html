@@ -27,15 +27,9 @@
             <hr>
             {% if work.worker == request.user.profile.freelancer %}
             <div class="work-page__worker">
+                <h4>План выполнения</h4>
                 {% for stage in stages %}
                 <div class="stage">
-                    <div class="stage_info">
-                        <h6>{{stage}} ({{ stage.created }})</h6>
-                        <p>Максимальный срок до: {{ stage.max_term }}</p>
-                        {% if stage.update_time %}
-                        <p>Выполнено: {{ stage.update_time }}</p>
-                        {% endif %}
-                    </div>
                     <div class="stage_done">
                         <form action="{% url 'done_stage' stage.id %}" method="post" class="my-form">
                             {% csrf_token %}
@@ -49,25 +43,34 @@
                             {% endif %}
                         </form>
                     </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="work-page__customer">
-                {% for stage in stages %}
-                <div class="stage">
                     <div class="stage_info">
-                        <h6>{{stage}} ({{ stage.created }}) </h6>
+                        <h6>{{stage}} ({{ stage.created }})</h6>
                         <p>Максимальный срок до: {{ stage.max_term }}</p>
                         {% if stage.update_time %}
                         <p>Выполнено: {{ stage.update_time }}</p>
                         {% endif %}
                     </div>
+
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="work-page__customer">
+                <h4>План выполнения:</h4>
+                {% for stage in stages %}
+                <div class="stage">
                     <div class="stage_done">
                         {% if stage.done %}
                         <img src="{% static 'icons/check-mark.png' %}" alt="">
                         {% else %}
                         <img src="{% static 'icons/dry-clean.png' %}" alt="">
+                        {% endif %}
+                    </div>
+                    <div class="stage_info">
+                        <h6>{{stage}} ({{ stage.created }}) </h6>
+                        <p>Максимальный срок до: {{ stage.max_term }}</p>
+                        {% if stage.update_time %}
+                        <p>Выполнено: {{ stage.update_time }}</p>
                         {% endif %}
                     </div>
                 </div>

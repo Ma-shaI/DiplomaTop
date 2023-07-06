@@ -13,6 +13,8 @@ from talents.models import *
 from django.db.models import Q
 from django.db.models import Max, Count, Case, When, F, Value, CharField, IntegerField
 from tasks.models import Task
+from .utils import paginate_feedbacks
+from django.db.models import Avg
 
 
 class MyStorage(FileSystemStorage):
@@ -208,6 +210,8 @@ def profile_update(request):
 def profile(request, pk):
     profile = Profile.objects.get(id=pk)
     feedbacks = profile.owner.all()
+    average_rating =round((feedbacks.aggregate(Avg('rating'))['rating__avg']), 2)
+    feedbacks, custom_range = paginate_feedbacks(request, feedbacks, 3)
     try:
         s = profile.freelancer.talent_set.all()[0].id
         if request.GET.get('s'):
@@ -217,10 +221,10 @@ def profile(request, pk):
         freelancer = profile.freelancer
         tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
         context = {'profile': profile, 'role': role, 'talent': talent, 'feedbacks': feedbacks, 'freelancer': freelancer,
-                   'tasks': tasks}
+                   'tasks': tasks, 'custom_range': custom_range, 'average_rating': average_rating}
         return render(request, 'users/profile.html', context)
     except:
-        context = {'profile': profile, 'feedbacks': feedbacks}
+        context = {'profile': profile, 'feedbacks': feedbacks, 'custom_range': custom_range, 'average_rating':average_rating}
         return render(request, 'users/profile.html', context)
 
 

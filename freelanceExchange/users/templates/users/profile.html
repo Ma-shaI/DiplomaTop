@@ -59,7 +59,7 @@
                     <p>{{ talent.descriptions }}</p>
                     <hr>
                     <div class="profile_skills">
-                        {% if skills %}
+
                         <h5>Навыки</h5>
 
                         <div class="skill_list">
@@ -68,11 +68,11 @@
                             {% endfor %}
 
                         </div>
-                        {% endif %}
+
                     </div>
                     <div class="profile_feedbacks">
                         {% if feedbacks %}
-                        <h5>Отзывы ({{ feedbacks|average_rating }}) </h5>
+                        <h5>Отзывы ({{ average_rating }}) </h5>
                         {% for feedback in feedbacks %}
                         <div class="profile__feedback">
                             <div class="feedback__stars">
@@ -85,6 +85,7 @@
                         {% else %}
                         <h6>Отзывов пока нет</h6>
                         {% endif %}
+                        {% include 'base/pagination.html' with queryset=feedbacks custom_range=custom_range %}
                     </div>
                 </div>
 

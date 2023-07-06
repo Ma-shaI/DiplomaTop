@@ -1,6 +1,6 @@
 from .models import *
 from django.db.models import Q
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
 
 
 def search_tasks(request):
