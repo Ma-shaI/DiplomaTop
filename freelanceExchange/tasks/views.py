@@ -107,7 +107,7 @@ def task(request, pk):
             task.save()
             message = Message.objects.create(
                 sender=request.user.profile,
-                recipient=task.owner,
+                recipient=task.owner.owner,
                 subject='response to a vacancy',
                 body=f'Добрый день, мне интересна ваша вакансия.',
             )
@@ -275,3 +275,12 @@ def done_stage(request, pk):
                 stage.save()
         return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))
+
+
+def responded_task(request):
+    user = request.user.profile.customer
+    tasks = Task.objects.filter(owner=user)
+    context = {
+        'tasks': tasks
+    }
+    return render(request, 'tasks/responded.html', context)

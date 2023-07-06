@@ -38,6 +38,14 @@ body {
   font-family: Arial, sans-serif; /* Рубленый шрифт для текста меню */
   font-size: 10pt; /* Размер названий в пункте меню */
 }
+.header__menu__left li {
+  font-size: 20px;
+}
+.header__menuUl li a {
+  font-size: 18px;
+  padding: 0;
+  margin: 0;
+}
 .header__menuItem .header__menuUl {
   position: absolute; /* Подменю позиционируются абсолютно */
   display: none; /* Скрываем подменю */
@@ -1097,4 +1105,16 @@ button {
 }
 .reg input {
   margin-bottom: 5px;
+}
+
+/* responded.html */
+
+.response {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.offer__title h5 {
+  color: rgba(5, 28, 70, 0.925);
 }

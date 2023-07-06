@@ -18,5 +18,6 @@ urlpatterns = [
     path('my_staff/', views.my_staff, name='my_staff'),
     path('work/<str:pk>/', views.work, name='work'),
     path('add_stage/', views.add_stage, name='add_stage'),
-    path('done_stage/<str:pk>/', views.done_stage, name='done_stage')
+    path('done_stage/<str:pk>/', views.done_stage, name='done_stage'),
+    path('responded/', views.responded_task, name='responded')
 ]
