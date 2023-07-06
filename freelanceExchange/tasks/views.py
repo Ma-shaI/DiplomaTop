@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.http import JsonResponse, HttpResponse
+from users.models import Message
 from .utils import search_tasks, paginate_tasks
 import datetime
 
@@ -69,19 +69,6 @@ def find_work(request):
         tasks = Task.objects.filter(freelancer_saved__owner=profile)
         context = {'tasks': tasks}
         return render(request, 'tasks/find_work.html', context)
-    if request.method == 'POST':
-        task_id = request.POST.get('task_id')
-        if task_id:
-            task = Task.objects.get(id=task_id)
-            if request.user.profile.freelancer in task.freelancer_saved.all():
-                task.freelancer_saved.remove(request.user.profile.freelancer)
-                task.save()
-            else:
-                task.freelancer_saved.add(request.user.profile.freelancer)
-                task.save()
-
-            response_data = {'result': 'success'}
-            return JsonResponse(response_data)
 
     return render(request, 'tasks/find_work.html', context)
 
@@ -118,6 +105,13 @@ def task(request, pk):
             task = Task.objects.get(id=task_id)
             task.freelancer_responded.add(request.user.profile.freelancer)
             task.save()
+            message = Message.objects.create(
+                sender=request.user.profile,
+                recipient=task.owner,
+                subject='response to a vacancy',
+                body=f'Добрый день, мне интересна ваша вакансия.',
+            )
+            message.save()
         return render(request, 'tasks/task.html', context, )
     return render(request, 'tasks/task.html', context)
 

@@ -128,12 +128,13 @@ def choice_task(request):
             freelancer = Freelancer.objects.get(id=freelancer_id)
             freelancer.customer_invited.add(request.user.profile.customer)
             freelancer.save()
+            task = Task.objects.get(id=selected_choice)
             message = Message.objects.create(
                 sender=request.user.profile,
                 recipient=freelancer.owner,
                 subject='invitation to an interview',
-                body=f'Приглашаю Вас на интервью, по поводу вакансии',
-                task=Task.objects.get(id=selected_choice)
+                body=f'Приглашаю Вас на интервью, по поводу вакансии {task.title}',
+                task=task
             )
             message.save()
 

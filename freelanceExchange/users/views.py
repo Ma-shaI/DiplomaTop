@@ -210,7 +210,11 @@ def profile_update(request):
 def profile(request, pk):
     profile = Profile.objects.get(id=pk)
     feedbacks = profile.owner.all()
-    average_rating =round((feedbacks.aggregate(Avg('rating'))['rating__avg']), 2)
+    if feedbacks:
+        average_rating = round((feedbacks.aggregate(Avg('rating'))['rating__avg']), 2)
+    else:
+        average_rating = ''
+
     feedbacks, custom_range = paginate_feedbacks(request, feedbacks, 3)
     try:
         s = profile.freelancer.talent_set.all()[0].id

@@ -54,12 +54,11 @@
                                 {% if request.user.profile.customer in freelancer.customer_invited.all %}
                                 <p class="respond-btn responded invite">Вы уже пригласили</p>
                                 {% else %}
-                                {% if task %}
+                                {% if tasks %}
                                 <button onclick="showPopup('{{ freelancer.id }}')" class="btn invite">Пригласить на
                                     интервью
                                 </button>
                                 <div id="popup-{{ freelancer.id }}" class="popup">
-                                    <p>{{ freelancer.id }}</p>
                                     <h5 class="modal-title" id="exampleModalLabel">Выберите ваше задание, которое вы
                                         хотите предложить
                                         фрилансеру</h5>

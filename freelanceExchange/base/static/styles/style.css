@@ -1095,3 +1095,6 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
+.reg input {
+  margin-bottom: 5px;
+}

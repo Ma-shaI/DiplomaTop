@@ -13,8 +13,7 @@
 
             <form action="" method="post">
                 {% csrf_token %}
-
-                <div>
+                <div class="reg">
                     {{ wizard.management_form }}
                     {% if wizard.form.forms %}
                     {{ wizard.form.management_form }}
