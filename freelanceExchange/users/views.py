@@ -6,7 +6,7 @@ from formtools.wizard.views import SessionWizardView
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, login, authenticate
 from django.core.files.storage import FileSystemStorage
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from talents.models import *
@@ -49,27 +49,38 @@ class RegisterWizard(SessionWizardView):
         first_name = form_list[1].cleaned_data['first_name']
         last_name = form_list[1].cleaned_data['last_name']
         email = form_list[1].cleaned_data['email']
-        password = form_list[1].cleaned_data['password1']
+        password1 = form_list[1].cleaned_data['password1']
+        password2 = form_list[1].cleaned_data['password2']
+        if password1 == password2:
+            password = password1
 
-        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email,
-                                   password=password)
-        user.set_password(password)
-        user.save()
+            if User.objects.filter(username=username).exists():
+                messages.error(self.request, 'Пользователь с такой почтой уже существует')
+                return self.render_goto_step(0)
+            else:
+                user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email,
+                                           password=password)
+                user.set_password(password)
+                user.save()
 
-        login(self.request, user)
-        profile = self.request.user.profile
-        profile.role = Role.objects.get(name=form_list[0].cleaned_data['role'])
+                login(self.request, user)
+                profile = self.request.user.profile
+                profile.role = Role.objects.get(name=form_list[0].cleaned_data['role'])
 
-        profile.save()
-        if form_list[0].cleaned_data['role'] == 'freelancer':
-            freelancer = Freelancer.objects.create(owner=profile)
-            freelancer.save()
-            return redirect('freelancer_login')
-        else:
-            customer = Customer.objects.create(owner=profile)
-            customer.save()
-            return redirect('task_add')
-        return redirect('index')
+                profile.save()
+                if form_list[0].cleaned_data['role'] == 'freelancer':
+                    freelancer = Freelancer.objects.create(owner=profile)
+                    freelancer.save()
+                    return redirect('freelancer_login')
+                else:
+                    customer = Customer.objects.create(owner=profile)
+                    customer.save()
+                    return redirect('task_add')
+                return redirect('index')
+        messages.error(self.request, 'Пароли должны совпадать')
+        return self.render_goto_step(0)
+
+
 
 
 FORMS = [('0', LevelForm), ('1', ResumeForm), ('2', LanguageForm), ('3', EducationForm), ('4', ExperienceForm),
@@ -228,7 +239,8 @@ def profile(request, pk):
                    'tasks': tasks, 'custom_range': custom_range, 'average_rating': average_rating}
         return render(request, 'users/profile.html', context)
     except:
-        context = {'profile': profile, 'feedbacks': feedbacks, 'custom_range': custom_range, 'average_rating':average_rating}
+        context = {'profile': profile, 'feedbacks': feedbacks, 'custom_range': custom_range,
+                   'average_rating': average_rating}
         return render(request, 'users/profile.html', context)
 
 

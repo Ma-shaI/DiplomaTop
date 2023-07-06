@@ -1,6 +1,6 @@
 {% extends 'base/base.html'%}
 {% load i18n %}
-
+{% load static %}
 {% block content %}
 <div class="register_block">
     <div class="container">
@@ -41,4 +41,6 @@
         </div>
     </div>
 </div>
+
+<script srs="{% static 'password-validation' %}"></script>
 {% endblock %}
