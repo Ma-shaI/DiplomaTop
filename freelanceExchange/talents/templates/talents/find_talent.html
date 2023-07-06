@@ -18,6 +18,7 @@
             </div>
             <div class="find-talent__block">
                 {% for freelancer in freelancers %}
+                {% with talent=freelancer.talent_set.first %}
                 <div class="talent_box">
                     <div class="find-talent__talent">
                         <div class="talent__title">
@@ -92,7 +93,7 @@
                     </div>
                 </div>
                 <hr>
-
+                {% endwith %}
                 {% endfor %}
 
             </div>

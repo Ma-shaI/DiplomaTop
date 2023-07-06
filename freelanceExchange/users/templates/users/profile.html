@@ -22,8 +22,10 @@
                 </div>
                 {% else %}
                 <div class="profile__all-btns">
-                {% include 'users/leave_review.html' %}
-                {% include 'talents/talents-btn.html' %}
+                    {% include 'users/leave_review.html' %}
+                    {% if tasks %}
+                    {% include 'talents/talents-btn.html' %}
+                    {% endif %}
                 </div>
                 {% endif %}
             </div>
@@ -40,28 +42,33 @@
                 </div>
 
                 <div class="profile_right">
-
                     <div class="profile_title">
+                        {% if talent %}
                         <h4>{{ talent.title}}</h4>
                         <div class="title_hourlyrate">
-                        <h4>
-                            {{ talent.hourlyrate_set.first.rate }}
-                            {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
-                        {% if profile.username == request.user.username and request.user.profile.freelancer %}
-                        {% include 'talents/change-del_talent.html' %}
-                        {% endif %}</div>
+                            <h4>
+                                {{ talent.hourlyrate_set.first.rate }}
+                                {{ talent.hourlyrate_set.first.get_currency_display }}/час</h4>
+                            {% if profile.username == request.user.username and request.user.profile.freelancer %}
+                            {% include 'talents/change-del_talent.html' %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
                     </div>
                     <p>{{ talent.descriptions }}</p>
                     <hr>
                     <div class="profile_skills">
+                        {% if skills %}
                         <h5>Навыки</h5>
 
                         <div class="skill_list">
                             {% for skill in talent.skills.all %}
                             <p>{{ skill }}</p>
                             {% endfor %}
-                        </div>
 
+                        </div>
+                        {% endif %}
                     </div>
                     <div class="profile_feedbacks">
                         {% if feedbacks %}
