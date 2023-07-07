@@ -7,6 +7,7 @@
         <div class="offers_box">
             {% if tasks %}
             {% for task in tasks %}
+            {% if task.is_published %}
             {% if task.freelancer_responded.all %}
             <div class="responses">
                 <h4>На вакансию <span>"{{ task }}"</span> откликнулись</h4>
@@ -19,13 +20,41 @@
                         <p>{{ freelancer.serves.all|join:', ' }}</p>
                     </div>
                     <div class="response__btns">
+                        {% if freelancer in task.freelancer_refused.all %}
+                        <p class="rejection">Отказался от найма </p>
+                        {% else %}
                         <p class="btn"><a href="{% url 'chat' freelancer.owner.id %}">Связаться</a></p>
+                        {% endif %}
                         <p class="btn"><a href="{% url 'profile' freelancer.owner.id %}">Посмотреть профиль</a></p>
                     </div>
                 </div>
                 {% endfor %}
                 <hr>
+                 <h4>На вакансию <span>"{{ task }}"</span> вы пригласили</h4>
+                {% for offer in offers %}
+                {% with freelancer=offer.prospective_employee %}
+                <div class="response">
+                    <div class="offer__title">
+                        <h5>
+                            {{ freelancer.owner.first_name }}
+                            {{ freelancer.owner.last_name }}</h5>
+                        <p>{{ freelancer.serves.all|join:', ' }}</p>
+                    </div>
+                    <div class="response__btns">
+                        {% if freelancer in task.freelancer_refused.all %}
+                        <p class="rejection">Отказался от найма </p>
+                        {% else %}
+                        <p class="btn"><a href="{% url 'chat' freelancer.owner.id %}">Связаться</a></p>
+                        {% endif %}
+                        <p class="btn"><a href="{% url 'profile' freelancer.owner.id %}">Посмотреть профиль</a></p>
+                    </div>
+                </div>
+                {% endwith %}
+                {% endfor %}
             </div>
+            {% else %}
+            <h4>На вакансию {{ task }} пока никто не откликнулся</h4>
+            {% endif %}
             {% endif %}
             {% endfor %}
             {% else %}

@@ -1118,3 +1118,10 @@ button {
 .offer__title h5 {
   color: rgba(5, 28, 70, 0.925);
 }
+.rejection {
+  background-color: rgba(3, 25, 67, 0.582);
+  padding: 10px 25px;
+  margin: 15px 10px;
+  border-radius: 10px;
+  float: right;
+}

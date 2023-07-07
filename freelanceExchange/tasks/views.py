@@ -194,8 +194,6 @@ def send_offer(request):
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         freelancer_id = request.POST.get('freelancer_id')
-        print(task_id)
-        print(freelancer_id)
         if task_id and freelancer_id:
             freelancer = Freelancer.objects.get(id=freelancer_id)
             task = Task.objects.get(id=task_id)
@@ -204,6 +202,7 @@ def send_offer(request):
                 prospective_employee=freelancer
             )
             offer.save()
+            return redirect(request.POST.get('return_url'))
         return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))
 
@@ -226,6 +225,9 @@ def accept_offer(request, pk):
             work.save()
             return redirect('offers')
         elif answer == 'false':
+            task = offer.task
+            task.freelancer_refused.add(user)
+            task.save()
             offer.delete()
             return redirect('offers')
     return redirect('offers')
@@ -295,8 +297,10 @@ def done_stage(request, pk):
 
 def responded_task(request):
     user = request.user.profile.customer
+    offers = Offers.objects.filter(task__owner=user)
     tasks = Task.objects.filter(owner=user)
     context = {
+        'offers': offers,
         'tasks': tasks
     }
     return render(request, 'tasks/responded.html', context)

@@ -1,7 +1,7 @@
 {% for task in tasks %}
-
+{% if freelancer not in task.freelancer_refused %}
 <div class="invite__task">
-    {% if not task.offers.id %}
+    {% if not task.offers.id and request.user.profile.customer not in freelancer.customer_invited.all %}
     <label>
         <input type="hidden" name="return_url" value="{{ request.path }}">
         <input type="hidden" name="{{ hidden_input_name }}" value="{{ hidden_input_value }}">
@@ -10,7 +10,12 @@
     </label>
     {% endif %}
 </div>
-
+{% else %}
+<div class="invite__task">
+    <p>{{ freelancer.owner.first_name }} уже отказался от вакансии {{ task }}</p>
+</div>
+{% endif %}
 {% endfor %}
+<input type="hidden" name="return_url" value="{{ request.path }}">
 <button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">Закрыть окно</button>
 <button type="submit" class="btn">Выбрать</button>

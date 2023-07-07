@@ -48,6 +48,7 @@ class Task(models.Model):
     is_published = models.BooleanField(default=False, verbose_name='Опубликовать')
     freelancer_saved = models.ManyToManyField(Freelancer, blank=True, related_name='saved_tasks')
     freelancer_responded = models.ManyToManyField(Freelancer, blank=True, related_name='responded_tasks')
+    freelancer_refused = models.ManyToManyField(Freelancer, blank=True, related_name='refused_tasks')
 
     def __str__(self):
         return f'{self.title}'
