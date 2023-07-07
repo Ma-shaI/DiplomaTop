@@ -18,9 +18,11 @@ class Talent(models.Model):
     skills = models.ManyToManyField('Skills', blank=True, verbose_name='Навыки')
     is_published = models.BooleanField(default=False, verbose_name='Опубликовать')
 
-
     def __str__(self):
         return f"{self.title}"
+
+    class Meta:
+        ordering = ['-time_updated']
 
 
 class HourlyRate(models.Model):

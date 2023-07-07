@@ -52,6 +52,9 @@ class Task(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    class Meta:
+        ordering = ['-time_updated']
+
 
 class Work(models.Model):
     work = models.OneToOneField(Task, on_delete=models.CASCADE)
@@ -74,6 +77,9 @@ class StagesOfWork(models.Model):
 
     def __str__(self):
         return f'{self.stage}'
+
+    class Meta:
+        ordering = ['max_term']
 
 
 class Offers(models.Model):

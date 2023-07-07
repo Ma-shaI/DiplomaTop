@@ -77,6 +77,7 @@ class Freelancer(models.Model):
     serves = models.ManyToManyField(Services, blank=True)
     customer_saved = models.ManyToManyField('Customer', blank=True, related_name='saved_talent')
     customer_invited = models.ManyToManyField('Customer', blank=True, related_name='invited_talent')
+
     def __str__(self):
         return f'{self.owner}'
 
@@ -150,3 +151,6 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f'{self.owner}'
+
+    class Meta:
+        ordering = ['-created']
