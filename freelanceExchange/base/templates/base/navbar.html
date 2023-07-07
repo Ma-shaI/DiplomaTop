@@ -21,7 +21,7 @@
                     <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="{% url  'my_staff' %}">Мои работы</a></li>
                         <li class="header__menuItem"><a href="#">Все контракты</a></li>
-<!--                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>-->
+                        <!--                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>-->
                     </ul>
                 </li>
                 <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения</a></li>
@@ -35,10 +35,16 @@
                     </ul>
                 </li>
                 <li class="header__menuItem">Мои задачи
-                <ul class="header__menuUl">
+                    <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="{% url 'task_add' %}">Разместить вакансию</a></li>
                         <li class="header__menuItem"><a href="{% url 'my_tasks' %}">Мои задачи</a></li>
-<!--                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>-->
+                        <!--                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>-->
+                    </ul>
+                </li>
+                <li class="header__menuItem">Сотрудники
+                    <ul class="header__menuUl">
+                        <li class="header__menuItem"><a href="{% url 'responded' %}">Откликнувшиеся</a></li>
+                        <li class="header__menuItem"><a href="{% url 'my_staff' %}">Мои сотрудники</a></li>
                     </ul>
                 </li>
                 <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения</a></li>
@@ -61,21 +67,8 @@
             </ul>
         </div>
         <nav class="header__nav">
-            <form action="" method="get">
-                <div class="form__search__navbar">
-                    <input type="search" placeholder="Поиск работы"/>
-
-                </div>
-
-            </form>
             <ul class="header__menu__right">
-                <!--                <li class="header__menuItem">-->
 
-                <!--                    <ul class="header__menuUl">-->
-                <!--                        <li class="header__menuItem"><a href="#">Найти талант</a></li>-->
-                <!--                        <li class="header__menuItem"><a href="#">Найти работу</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
                 {% if request.user.is_authenticated%}
                 <li class="header__menuItem"><a href="{% url 'profile' request.user.id %}">{{ request.user.first_name}}
                 </a></li>
