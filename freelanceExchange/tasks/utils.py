@@ -11,10 +11,10 @@ def search_tasks(request):
 
     tasks = Task.objects.distinct().filter(
         Q(is_published=True) &
-        (Q(title__icontains=search_query) |
-         Q(experiences__icontains=search_query) |
-         Q(description__icontains=search_query) |
-         Q(skills__title__icontains=search_query))
+        (Q(title__iregex=search_query) |
+         Q(experiences__iregex=search_query) |
+         Q(description__iregex=search_query) |
+         Q(skills__title__iregex=search_query))
     )
     return tasks, search_query
 
