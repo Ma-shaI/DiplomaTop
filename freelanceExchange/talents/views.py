@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
 from .utils import search_talent, paginate_talent
-from django.http import JsonResponse
+from django.contrib import messages
 
 
 @login_required(login_url='login')
@@ -29,7 +29,9 @@ def talent_add(request):
                 is_published = True
             except MultiValueDictKeyError:
                 is_published = False
-
+            if not service or not rate:
+                messages.error(request, 'Заполните поля Специальность и Почасовая ставка')
+                return redirect(request.POST.get('return_url'))
             talent = Talent(
                 owner=user,
                 service=Services.objects.get(id=service),

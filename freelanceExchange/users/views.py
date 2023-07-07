@@ -157,7 +157,6 @@ class FreelanceLogin(LoginRequiredMixin, SessionWizardView):
         user.bio = form_list[5].cleaned_data['bio']
         user.resume = form_list[1].cleaned_data['resume']
         user.save()
-
         return redirect('serves_add')
 
 

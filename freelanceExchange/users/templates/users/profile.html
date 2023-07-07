@@ -50,7 +50,7 @@
                     {% if freelancer %}
                     <div class="profile__language">
                         <h5>Языки</h5>
-                        {% for language in freelancer.language_set.all %}
+                        {% for language in request.user.profile.language_set.all %}
                         <div class="language">
                             <h6>{{ language.get_language_display }}:</h6>
                             <p>{{ language.get_level_display }}</p></div>

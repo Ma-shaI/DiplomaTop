@@ -41,7 +41,7 @@ class TalentUpdateForm(ModelForm):
 
 class RateForm(ModelForm):
     rate = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form_rate'}), label='Почасовая ставка',
-                              required=False)
+                              required=True)
     currency = forms.ChoiceField(widget=forms.Select(attrs={'class': 'reg_form_currency'}), choices=CURRENCY,
                                  label='Валюта', required=False, )
 
