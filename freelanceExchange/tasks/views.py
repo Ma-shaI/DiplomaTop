@@ -9,6 +9,7 @@ from django.contrib import messages
 from users.models import Message
 from .utils import search_tasks, paginate_tasks
 import datetime
+from base.utils import get_messages
 
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
@@ -77,6 +78,7 @@ def find_work(request):
     tasks, search_query = search_tasks(request)
     tasks, custom_range = paginate_tasks(request, tasks, 5)
     context = {'tasks': tasks, 'search_query': search_query, 'custom_range': custom_range}
+    context.update(get_messages(request.user.profile))
     if request.GET.get('save'):
         profile = request.user.profile
         tasks = Task.objects.filter(freelancer_saved__owner=profile)
@@ -91,6 +93,7 @@ def like_task(request):
     profile = request.user.profile
     tasks = Task.objects.filter(freelancer_saved__owner=profile)
     context = {'tasks': tasks}
+    context.update(get_messages(request.user.profile))
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         if task_id:
@@ -112,6 +115,7 @@ def task(request, pk):
     tasks = Task.objects.filter(owner=customer).filter(is_published=True)
     feedbacks = customer.owner.owner.all()
     context = {'task': job, 'customer': customer, 'tasks': tasks, 'feedbacks': feedbacks}
+    context.update(get_messages(request.user.profile))
     if request.method == 'POST':
         task_id = request.POST.get('task_id')
         if task_id:
@@ -133,6 +137,7 @@ def saved_tasks(request):
     profile = request.user.profile
     tasks = Task.objects.filter(freelancer_saved__owner=profile)
     context = {'tasks': tasks}
+    context.update(get_messages(request.user.profile))
     return render(request, 'tasks/saved_tasks.html', context)
 
 
@@ -140,6 +145,7 @@ def my_offers(request):
     user = request.user.profile.freelancer
     offers = Offers.objects.filter(prospective_employee=user)
     context = {'offers': offers}
+    context.update(get_messages(request.user.profile))
     return render(request, 'tasks/offers_page.html', context)
 
 
@@ -147,8 +153,9 @@ def my_tasks(request):
     profile = request.user.profile.customer
     task_in = Task.objects.filter(owner=profile)
     tasks = task_in.exclude(offers__isnull=False)
-    contex = {'tasks': tasks}
-    return render(request, 'tasks/my_tasks.html', contex)
+    context = {'tasks': tasks}
+    context.update(get_messages(request.user.profile))
+    return render(request, 'tasks/my_tasks.html', context)
 
 
 def delete_task(request, pk):
@@ -215,6 +222,7 @@ def accept_offer(request, pk):
         if answer == 'true':
             task = offer.task
             task.is_published = False
+            task.freelancer_responded.remove(user)
             task.save()
             offer.at_work = True
             offer.save()
@@ -237,18 +245,20 @@ def my_staff(request):
     try:
         user = request.user.profile.customer
         staff = Work.objects.filter(work__owner=user)
-        content = {
+        context = {
             'staff': staff
         }
-        return render(request, 'tasks/my_staff.html', content)
+        context.update(get_messages(request.user.profile))
+        return render(request, 'tasks/my_staff.html', context)
     except:
         user = request.user.profile.freelancer
         works = Work.objects.filter(worker=user)
         print(works)
-        content = {
+        context = {
             'works': works
         }
-        return render(request, 'tasks/my_works.html', content)
+        context.update(get_messages(request.user.profile))
+        return render(request, 'tasks/my_works.html', context)
 
 
 def work(request, pk):
@@ -258,7 +268,7 @@ def work(request, pk):
         'work': work,
         'stages': stages,
     }
-
+    context.update(get_messages(request.user.profile))
     return render(request, 'tasks/work.html', context)
 
 

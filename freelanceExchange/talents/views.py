@@ -7,6 +7,7 @@ from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
 from .utils import search_talent, paginate_talent
 from django.contrib import messages
+from base.utils import get_messages
 
 
 @login_required(login_url='login')
@@ -15,6 +16,7 @@ def talent_add(request):
     user = request.user.profile.freelancer
     talents = Talent.objects.filter(owner=user)
     context = {'form': form, 'talents': talents}
+    context['']
     if request.method == 'POST':
         form = TalentForm(request.POST)
         if form.is_valid():
@@ -91,6 +93,8 @@ def like_talent(request, pk):
     profile = request.user.profile
     freelancers = Freelancer.objects.filter(customer_saved__owner=profile)
     context = {'freelancers': freelancers}
+    context.update(get_messages(request.user.profile))
+
     if request.method == 'POST':
         freelancer_id = request.POST.get('task_id')
 
@@ -111,6 +115,7 @@ def find_talent(request):
     freelancers, custom_range = paginate_talent(request, freelancers, 5)
     tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     context = {'freelancers': freelancers, 'tasks': tasks, 'custom_range': custom_range, 'search_query': search_query}
+    context.update(get_messages(request.user.profile))
     return render(request, 'talents/find_talent.html', context)
 
 
@@ -118,6 +123,7 @@ def saved_talents(request):
     profile = request.user.profile
     talents = Freelancer.objects.filter(customer_saved__owner=profile)
     context = {'talents': talents, 'tasks': Task.objects.filter(owner=profile.customer)}
+    context.update(get_messages(request.user.profile))
     return render(request, 'talents/saved_talents.html', context)
 
 

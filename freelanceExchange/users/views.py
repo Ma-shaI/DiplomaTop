@@ -17,6 +17,7 @@ from django.db.models import Max, Count, Case, When, F, Value, CharField, Intege
 from tasks.models import Task
 from .utils import paginate_feedbacks, get_common_context
 from django.db.models import Avg
+from base.utils import get_messages
 
 
 class MyStorage(FileSystemStorage):
@@ -36,8 +37,9 @@ def index(request):
         freelancer = request.user.profile.freelancer
     except:
         freelancer = request.user
-
-    return render(request, 'users/index.html', {'user': request.user, 'freelancer': freelancer})
+    context ={'user': request.user, 'freelancer': freelancer}
+    context.update(get_messages(request.user.profile))
+    return render(request, 'users/index.html', context)
 
 
 class RegisterWizard(SessionWizardView):
@@ -166,7 +168,6 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-
         try:
             user = User.objects.get(username=username)
         except ObjectDoesNotExist:
@@ -184,7 +185,6 @@ def login_user(request):
 
 def logout_user(request):
     logout(request)
-
     return redirect('index')
 
 
@@ -196,6 +196,7 @@ def serves_add(request):
         user.serves.set(serves)
         return redirect('talent_add')
     context = {'service': Services.objects.all()}
+
     return render(request, 'users/serves_add.html', context)
 
 
@@ -239,6 +240,7 @@ def profile(request, pk):
         tasks = ''
     context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, role, freelancer,
                                  tasks, form)
+    context.update(get_messages(request.user.profile))
     return render(request, 'users/profile.html', context)
 
 
@@ -262,15 +264,8 @@ def all_messages(request):
                         )
     send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by(
         '-created')
-    received_messages = Message.objects.filter(recipient=user)
-    unread_count = received_messages.filter(is_read=False).count()
-
-    context = {
-        'send_messages': send_messages,
-        'unread_count': unread_count,
-        'received_messages': received_messages,
-    }
-
+    context = {'send_messages': send_messages}
+    context.update(get_messages(request.user.profile))
     return render(request, 'users/all_messages.html', context)
 
 
@@ -288,6 +283,7 @@ def chat(request, pk):
     context = {
         'conversation': conversation, 'id': pk, 'interlocutor': interlocutor
     }
+    context.update(get_messages(request.user.profile))
     if request.method == 'POST':
         msg = request.POST.get('msg')
         if msg:

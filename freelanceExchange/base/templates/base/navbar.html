@@ -9,11 +9,11 @@
             <ul class="header__menu__left">
                 {% if user.is_authenticated %}
                 {% if user.profile.freelancer %}
-                <li class="header__menuItem">Найти работу
+                <li class="header__menuItem">Найти работу ({{ offers_count }})
                     <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="{% url 'find_work' %}">Найти работу</a></li>
                         <li class="header__menuItem"><a href="{% url 'saved_tasks' %}">Сохраненные задания</a></li>
-                        <li class="header__menuItem"><a href="{% url 'offers' %}">Предложения</a></li>
+                        <li class="header__menuItem"><a href="{% url 'offers' %}">Предложения </a></li>
 
                     </ul>
                 </li>
@@ -24,13 +24,12 @@
                         <!--                        <li class="header__menuItem"><a href="#">Рабочий дневник</a></li>-->
                     </ul>
                 </li>
-                <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения</a></li>
+                <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения ({{ unread_count }})</a></li>
                 {% elif user.profile.customer %}
                 <li class="header__menuItem">Найти талант
                     <ul class="header__menuUl">
                         <li class="header__menuItem"><a href="{% url 'find_talent' %}">Найти талант</a></li>
-                        <li class="header__menuItem"><a href="{% url 'responded' %}">Откликнувшиеся</a></li>
-                        <li class="header__menuItem"><a href="{% url 'my_staff' %}">Мои сотрудники</a></li>
+
                         <li class="header__menuItem"><a href="{% url 'saved_talents' %}">Сохраненные таланты</a></li>
                     </ul>
                 </li>
@@ -47,7 +46,7 @@
                         <li class="header__menuItem"><a href="{% url 'my_staff' %}">Мои сотрудники</a></li>
                     </ul>
                 </li>
-                <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения</a></li>
+                <li class="header__menuItem"><a href="{% url 'all_messages' %}">Сообщения ({{ unread_count }})</a></li>
                 {% endif %}
                 {% else %}
 

@@ -1,21 +1,27 @@
 {% for task in tasks %}
-{% if freelancer not in task.freelancer_refused %}
+{% if freelancer in task.freelancer_refused.all %}
 <div class="invite__task">
-    {% if not task.offers.id and request.user.profile.customer not in freelancer.customer_invited.all %}
+    <p>{{ freelancer.owner.first_name }} уже отказался от вакансии {{ task }}</p>
+</div>
+{% else %}
+<div class="invite__task">
+    {% if not task.offers.id %}
     <label>
-        <input type="hidden" name="return_url" value="{{ request.path }}">
-        <input type="hidden" name="{{ hidden_input_name }}" value="{{ hidden_input_value }}">
-        <input type="radio" name="{{ radio_button_name }}" value="{{ task.id }}">
+        <input type="hidden" name="return_url" value="{{ request.path }}"/>
+        <input
+                type="hidden"
+                name="{{ hidden_input_name }}"
+                value="{{ hidden_input_value }}"
+        />
+        <input type="radio" name="{{ radio_button_name }}" value="{{ task.id }}"/>
         {{ task.title }}
     </label>
     {% endif %}
 </div>
-{% else %}
-<div class="invite__task">
-    <p>{{ freelancer.owner.first_name }} уже отказался от вакансии {{ task }}</p>
-</div>
 {% endif %}
 {% endfor %}
-<input type="hidden" name="return_url" value="{{ request.path }}">
-<button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">Закрыть окно</button>
+<input type="hidden" name="return_url" value="{{ request.path }}"/>
+<button onclick="{{ close_popup_function }}('{{ freelancer.id }}')" class="btn">
+    Закрыть окно
+</button>
 <button type="submit" class="btn">Выбрать</button>

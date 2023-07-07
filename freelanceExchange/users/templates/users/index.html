@@ -2,7 +2,6 @@
 {% load show_menu %}
 
 {% block content %}
-{% include 'base/navbar.html' %}
 {% show_menu_items %}
 {% if request.user != 'AnonymousUser' %}
 <h1>hi, I'm {{user.first_name }} {{user.last_name}} </h1>
