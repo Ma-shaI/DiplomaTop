@@ -7,13 +7,16 @@ $('.msg-form').submit(function (event) {
   var button = $(event.target);
   var action = button.attr('name') + '=' + button.attr('value');
 
+  if (!msg.val()) {
+    return;
+  }
+
   $.ajax({
     type: 'POST',
     url: url,
     headers: { 'X-CSRFToken': csrf_token },
     data: { msg: msg.val(), action: action },
     success: function (response) {
-      console.log('OK');
       var chatMsg = $('<div>').addClass('chat__msg');
       var msgRecipient = $('<div>').addClass('msg__recipient');
       var chatMsgRecipient = $('<div>').addClass('chat__msg-recipient');

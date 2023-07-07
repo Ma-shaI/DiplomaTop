@@ -291,13 +291,14 @@ def chat(request, pk):
     }
     if request.method == 'POST':
         msg = request.POST.get('msg')
-        new_msg = Message(
-            sender=user,
-            recipient=interlocutor,
-            body=msg
-        )
-        new_msg.save()
-        return render(request, 'users/chat.html', context)
+        if msg:
+            new_msg = Message(
+                sender=user,
+                recipient=interlocutor,
+                body=msg
+            )
+            new_msg.save()
+            return render(request, 'users/chat.html', context)
     return render(request, 'users/chat.html', context)
 
 
