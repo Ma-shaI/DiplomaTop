@@ -214,6 +214,9 @@ def accept_offer(request, pk):
     if request.method == 'POST':
         answer = request.POST.get('accept')
         if answer == 'true':
+            task = offer.task
+            task.is_published = False
+            task.save()
             offer.at_work = True
             offer.save()
             work = Work(
