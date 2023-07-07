@@ -18,8 +18,8 @@
                 </div>
                 {% if profile.username == request.user.username %}
                 {% if request.user.profile.freelancer %}
-                    {% include 'talents/talent_add_modal.html' %}
-                    {% endif %}
+                {% include 'talents/talent_add_modal.html' %}
+                {% endif %}
                 <div class="profile_settings">
                     <p class="profile_btn"><a href="{% url 'profile_update' %}">Настройки профиля</a></p>
                 </div>
@@ -37,8 +37,13 @@
                 <div class="profile_left">
                     <div class="div_talent">
                         {% for service in talents %}
-                        <p class="btn_service"><a href="?s={{ service.id }}">{{ service }}</a></p>
-
+                        {% if service.owner.owner == request.user.profile %}
+                        <p class="btn_service"><a href="?s={{ service.id }}">{{ service }} </a></p>
+                        {% else %}
+                        {% if service.is_published %}
+                        <p class="btn_service"><a href="?s={{ service.id }}">{{ service }} </a></p>
+                        {% endif %}
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>

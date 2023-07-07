@@ -49,7 +49,7 @@ def talent_add(request):
             )
             rate.save()
             return redirect(request.POST.get('return_url'))
-    return redirect(request.POST.get('return_url'))
+    return render(request, 'talents/talent_add.html', context)
 
 
 def talent_update(request, pk):
@@ -71,7 +71,7 @@ def talent_update(request, pk):
                 talent.skills.add(skill.id)
 
             rate_form.save()
-            return redirect(request.POST.get('return_url'))
+            return redirect('profile', pk=request.user.profile.id)
 
     context = {'talent_form': talent_form, 'rate_form': rate_form, 'talent': talent, 'skills': talent.skills.all()}
 
