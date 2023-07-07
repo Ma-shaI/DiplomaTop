@@ -1,6 +1,5 @@
 from .models import *
 from django.db.models import Q
-from django.core.paginator import Paginator
 
 
 def search_tasks(request):
@@ -24,20 +23,3 @@ def search_tasks(request):
 
     )
     return tasks, search_query
-
-
-def paginate_tasks(request, tasks, results):
-    page = request.GET.get('page', 1)
-    paginator = Paginator(tasks, results)
-
-    tasks = paginator.get_page(page)
-    left_index = int(page) - 4
-
-    if left_index < 1:
-        left_index = 1
-    right_index = int(page) + 5
-    if right_index > paginator.num_pages:
-        right_index = paginator.num_pages + 1
-    custom_range = range(left_index, right_index)
-
-    return tasks, custom_range

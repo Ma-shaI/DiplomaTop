@@ -17,7 +17,7 @@ from django.db.models import Max, Count, Case, When, F, Value, CharField, Intege
 from tasks.models import Task
 from .utils import paginate_feedbacks, get_common_context
 from django.db.models import Avg
-from base.utils import get_messages
+from base.utils import get_messages, paginate_data
 
 
 class MyStorage(FileSystemStorage):
@@ -264,7 +264,8 @@ def all_messages(request):
                         )
     send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by(
         '-created')
-    context = {'send_messages': send_messages}
+    send_messages, custom_range = paginate_data(request, send_messages, 2)
+    context = {'send_messages': send_messages, 'custom_range': custom_range}
     context.update(get_messages(request.user.profile))
     return render(request, 'users/all_messages.html', context)
 

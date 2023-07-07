@@ -5,9 +5,9 @@ from users.models import Message
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from tasks.models import Task
-from .utils import search_talent, paginate_talent
+from .utils import search_talent
 from django.contrib import messages
-from base.utils import get_messages
+from base.utils import get_messages, paginate_data
 
 
 @login_required(login_url='login')
@@ -112,7 +112,7 @@ def like_talent(request, pk):
 
 def find_talent(request):
     freelancers, search_query = search_talent(request)
-    freelancers, custom_range = paginate_talent(request, freelancers, 5)
+    freelancers, custom_range = paginate_data(request, freelancers, 5)
     tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     context = {'freelancers': freelancers, 'tasks': tasks, 'custom_range': custom_range, 'search_query': search_query}
     context.update(get_messages(request.user.profile))

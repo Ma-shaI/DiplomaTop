@@ -23,7 +23,7 @@
                     {% endif %}
                 </li>
 
-                {% endfor %}
+                {% endfor %}{% include 'base/pagination.html' with queryset=send_messages custom_range=custom_range %}
             </ul>
 
         </div>

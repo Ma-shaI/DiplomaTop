@@ -7,10 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from users.models import Message
-from .utils import search_tasks, paginate_tasks
+from .utils import search_tasks
 import datetime
-from base.utils import get_messages
-
+from base.utils import get_messages, paginate_data
 
 class TaskWizard(LoginRequiredMixin, SessionWizardView):
     template_name = 'tasks/task_add.html'
@@ -76,7 +75,7 @@ def task_budget(request, pk):
 
 def find_work(request):
     tasks, search_query = search_tasks(request)
-    tasks, custom_range = paginate_tasks(request, tasks, 5)
+    tasks, custom_range = paginate_data(request, tasks, 5)
     context = {'tasks': tasks, 'search_query': search_query, 'custom_range': custom_range}
     context.update(get_messages(request.user.profile))
     if request.GET.get('save'):
