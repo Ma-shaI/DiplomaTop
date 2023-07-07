@@ -136,12 +136,11 @@ def paginate_feedbacks(request, feedbacks, results):
     return feedbacks, custom_range
 
 
-def get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent=None, role=None,
+def get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent=None,
                        freelancer=None, tasks=None, form=None):
     context = {'profile': profile, 'feedbacks': feedbacks, 'custom_range': custom_range,
                'average_rating': average_rating, 'talents': talents}
-    if role:
-        context['role'] = role
+
     if freelancer:
         context['freelancer'] = freelancer
     if tasks:

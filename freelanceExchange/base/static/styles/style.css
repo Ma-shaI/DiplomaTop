@@ -976,10 +976,12 @@ li {
   -moz-appearance: none;
   appearance: none;
 }
+
 .profile__all-btns {
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 10px;
 }
 
 .offers_box {
@@ -1143,4 +1145,25 @@ button {
 .profile__language,
 .profile__education {
   margin-bottom: 5px;
+}
+
+/* index.html */
+
+.main__block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.main__left h1 {
+  text-align: center;
+  font-style: italic;
+}
+.main__right img {
+  height: 80%;
+  width: 80%;
+}
+.main__left {
+  display: flex;
+  flex-direction: column;
 }

@@ -3,5 +3,8 @@ from .utils import get_messages
 
 
 def index(request):
-    context = get_messages(request.user.profile)
-    return render(request, 'base/index.html', context)
+    try:
+        contex = get_messages(request.user.profile)
+    except:
+        contex={}
+    return render(request, 'base/index.html', contex)

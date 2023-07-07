@@ -25,10 +25,29 @@
                 </div>
                 {% else %}
                 <div class="profile__all-btns">
-                    {% include 'users/leave_review.html' %}
+
                     {% if tasks %}
                     {% include 'talents/talents-btn.html' %}
+
+                    <button onclick="showSend('{{ freelancer.id }}')" class="btn btn-primary">Нанять</button>
+                    <div id="send-{{ freelancer.id }}" class="popup">
+                        <h5 class="modal-title">Выберите ваше задание, которое вы хотите предложить
+                            фрилансеру</h5>
+                        <form action="{% url 'send_offer' %}" method="post">
+                            {% csrf_token %}
+                            {% with hidden_input_name="freelancer_id" %}
+                            {% with hidden_input_value=freelancer.id%}
+                            {% with radio_button_name="task_id" %}
+                            {% with close_popup_function="closeSend" %}
+                            {% include 'talents/invite_btn.html' %}
+                            {% endwith %}{% endwith %}{% endwith %}{% endwith %}
+
+                        </form>
+
+                    </div>
+
                     {% endif %}
+                    {% include 'users/leave_review.html' %}
                 </div>
                 {% endif %}
             </div>
@@ -67,7 +86,8 @@
                     {% endif %}
                     {% if freelancer.resume %}
                     <div class="profile__resume">
-                        <h5>Резюме:</h5><a href="{{ freelancer.resume.url }}" target="_blank"><img src="{% static 'icons/document.png' %}" alt=""></a>
+                        <h5>Резюме:</h5><a href="{{ freelancer.resume.url }}" target="_blank"><img
+                            src="{% static 'icons/document.png' %}" alt=""></a>
                     </div>
                     {% endif %}
                     {% endif %}

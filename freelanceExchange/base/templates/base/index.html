@@ -1,6 +1,69 @@
 {% extends 'base/base.html' %}
 {% load show_menu %}
+{% load static %}
 {% block content %}
-{% show_menu_items %}
-<h1>Hello Freelance Exchange </h1>
+
+<div class="main__header">
+    <div class="container">
+        <div class="header__box">
+            {% if not user.is_authenticated %}
+            <div class="main__block">
+                <div class="main__left">
+                    <h1>
+                        Найди работу своей мечты
+                    </h1>
+                    <h6>Выделись среди конкурентов и сделай еще один шаг на получение желаемой работы</h6>
+                    <p class="btn"><a href="{% url 'login_user' %}">Найти работу</a></p>
+                </div>
+                <div class="main__right">
+                    <img src="{% static 'icons/main.png' %}" alt="">
+                </div>
+            </div>
+            <div class="main__block">
+                <div class="main__right">
+                    <img src="{% static 'icons/main2.png' %}" alt="">
+                </div>
+                <div class="main__left">
+                    <h1>
+                        Найди "своего" фрилансера
+                    </h1>
+                    <h6>На этой площадке ты можешь найти человека, который поможет тебе в выполнении любой работы</h6>
+                    <p class="btn"><a href="{% url 'login_user' %}">Начать поиск</a></p>
+                </div>
+
+            </div>
+            {% else %}
+            {% if request.user.profile.freelancer %}
+            <div class="main__block">
+                <div class="main__left">
+                    <h1>
+                        Найди работу своей мечты
+                    </h1>
+                    <h6>Выделись среди конкурентов и сделай еще один шаг на получение желаемой работы</h6>
+                    <p class="btn"><a href="{% url 'find_work' %}">Найти работу</a></p>
+                </div>
+                <div class="main__right">
+                    <img src="{% static 'icons/main.png' %}" alt="">
+                </div>
+            </div>
+            {% else %}
+            <div class="main__block">
+                <div class="main__right">
+                    <img src="{% static 'icons/main2.png' %}" alt="">
+                </div>
+                <div class="main__left">
+                    <h1>
+                        Найди "своего" фрилансера
+                    </h1>
+                    <h6>На этой площадке ты можешь найти человека, который поможет тебе в выполнении любой работы</h6>
+                    <p class="btn"><a href="{% url 'find_talent' %}">Начать поиск</a></p>
+                </div>
+
+            </div>
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
 {% endblock%}

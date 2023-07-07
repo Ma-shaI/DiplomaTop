@@ -32,16 +32,6 @@ class MyStorage(FileSystemStorage):
         return name
 
 
-def index(request):
-    try:
-        freelancer = request.user.profile.freelancer
-    except:
-        freelancer = request.user
-    context ={'user': request.user, 'freelancer': freelancer}
-    context.update(get_messages(request.user.profile))
-    return render(request, 'users/index.html', context)
-
-
 class RegisterWizard(SessionWizardView):
     template_name = 'users/register_form.html'
     done_template = 'users/index.html'
@@ -226,19 +216,23 @@ def profile(request, pk):
     else:
         average_rating = ''
     feedbacks, custom_range = paginate_feedbacks(request, feedbacks, 3)
-    talents = profile.freelancer.talent_set.all() if hasattr(profile, 'freelancer') else profile.customer.tasks.all()
-    s = talents[0].id
-    if request.GET.get('s'):
-        s = request.GET.get('s')
-    talent = Talent.objects.get(id=s) if hasattr(profile, 'freelancer') else Task.objects.get(id=s)
-    role = profile.freelancer if hasattr(profile, 'freelancer') else None
+    try:
+        talents = profile.freelancer.talent_set.all() if hasattr(profile,
+                                                                 'freelancer') else profile.customer.tasks.all()
+        s = talents[0].id
+        if request.GET.get('s'):
+            s = request.GET.get('s')
+        talent = Talent.objects.get(id=s) if hasattr(profile, 'freelancer') else Task.objects.get(id=s)
+    except:
+        talents = ''
+        talent = ''
     form = TalentForm() if hasattr(profile, 'freelancer') else None
     freelancer = profile.freelancer if hasattr(profile, 'freelancer') else None
     try:
         tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     except:
         tasks = ''
-    context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, role, freelancer,
+    context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, freelancer,
                                  tasks, form)
     context.update(get_messages(request.user.profile))
     return render(request, 'users/profile.html', context)
