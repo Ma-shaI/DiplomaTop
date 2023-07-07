@@ -1125,3 +1125,6 @@ button {
   border-radius: 10px;
   float: right;
 }
+.task__description {
+  font-style: italic;
+}
