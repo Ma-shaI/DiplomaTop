@@ -1,5 +1,6 @@
 {% extends 'base/base.html' %}
 {% load my_tags %}
+{% load static %}
 {% block content %}
 {% include 'base/navbar.html'%}
 
@@ -46,6 +47,31 @@
                         {% endif %}
                         {% endfor %}
                     </div>
+                    {% if freelancer %}
+                    <div class="profile__language">
+                        <h5>Языки</h5>
+                        {% for language in freelancer.language_set.all %}
+                        <div class="language">
+                            <h6>{{ language.get_language_display }}:</h6>
+                            <p>{{ language.get_level_display }}</p></div>
+                        {% endfor %}
+                    </div>
+                    {% if freelancer.education_set.all %}
+                    <div class="profile__education">
+                        <h5>Образование:</h5>
+                        {% for education in freelancer.education_set.all %}
+                        <div class="language">
+                            <h6>{{ education.institution }}:</h6>
+                            <p>{{ education.major }}</p></div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    {% if freelancer.resume %}
+                    <div class="profile__resume">
+                        <h5>Резюме:</h5><a href="{{ freelancer.resume.url }}" target="_blank"><img src="{% static 'icons/document.png' %}" alt=""></a>
+                    </div>
+                    {% endif %}
+                    {% endif %}
                 </div>
 
                 <div class="profile_right">
@@ -96,6 +122,7 @@
                         </div>
 
                     </div>
+                    <hr>
                     <div class="profile_feedbacks">
                         {% if feedbacks %}
                         <h5>Отзывы ({{ average_rating }}) </h5>

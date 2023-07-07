@@ -1128,3 +1128,19 @@ button {
 .task__description {
   font-style: italic;
 }
+
+.language,
+.profile__resume {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+.language h6,
+.education h6 {
+  margin: 0;
+}
+.profile__language,
+.profile__education {
+  margin-bottom: 5px;
+}
