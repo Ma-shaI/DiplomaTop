@@ -258,7 +258,7 @@ def all_messages(request):
                         )
     send_messages = Message.objects.filter(pk__in=[msg['pk'] for msg in grouped_messages]).order_by('is_read').order_by(
         '-created')
-    send_messages, custom_range = paginate_data(request, send_messages, 2)
+    send_messages, custom_range = paginate_data(request, send_messages, 10)
     context = {'send_messages': send_messages, 'custom_range': custom_range}
     context.update(get_messages(request.user.profile))
     return render(request, 'users/all_messages.html', context)
