@@ -89,5 +89,8 @@ class Offers(models.Model):
     request_date = models.DateTimeField(auto_now_add=True)
     at_work = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ['-request_date']
+
     def __str__(self):
         return f'{self.task}'

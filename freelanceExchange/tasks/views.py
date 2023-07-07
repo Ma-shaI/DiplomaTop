@@ -126,7 +126,7 @@ def task(request, pk):
                 sender=request.user.profile,
                 recipient=task.owner.owner,
                 subject='response to a vacancy',
-                body=f'Добрый день, мне интересна ваша вакансия.',
+                body=f'Добрый день, мне интересна ваша вакансия {task.title}',
             )
             message.save()
         return render(request, 'tasks/task.html', context, )
