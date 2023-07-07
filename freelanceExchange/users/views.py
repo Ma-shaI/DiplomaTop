@@ -237,7 +237,7 @@ def profile(request, pk):
     try:
         tasks = Task.objects.filter(owner=request.user.profile.customer).filter(is_published=True)
     except:
-        tasks=''
+        tasks = ''
     context = get_common_context(profile, feedbacks, custom_range, average_rating, talents, talent, role, freelancer,
                                  tasks, form)
     return render(request, 'users/profile.html', context)
@@ -318,3 +318,24 @@ def leave_review(request, pk):
             feedback.save()
         return redirect(request.POST.get('return_url'))
     return redirect(request.POST.get('return_url'))
+
+
+def language_add(request):
+    form = LanguageForm()
+    user = request.user.profile
+    if request.method == 'POST':
+        form = LanguageForm(request.POST)
+        if form.is_valid():
+            language = request.POST.get('2-language')
+            level = request.POST.get('2-level')
+            language_add = Language(
+                owner=user,
+                language=language,
+                level=level
+            )
+            language_add.save()
+            return redirect(request.POST.get('return_url'))
+    context = {
+        'form': form
+    }
+    return redirect(request, 'users/language.html', context)

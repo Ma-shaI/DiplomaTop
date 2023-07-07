@@ -83,9 +83,10 @@ class ExperienceForm(forms.Form):
     start_work_month = forms.ChoiceField(choices=MONTH, label='start_month', initial='',
                                          widget=forms.Select(attrs={'class': 'reg_form work exp'}), required=False
                                          )
-    start_work_year = forms.IntegerField(widget=forms.TextInput(attrs={'class': 'reg_form work exp', 'placeholder': 'Год'}),
-                                         required=False,
-                                         label='start')
+    start_work_year = forms.IntegerField(
+        widget=forms.TextInput(attrs={'class': 'reg_form work exp', 'placeholder': 'Год'}),
+        required=False,
+        label='start')
     work_here = forms.BooleanField(label='Работаю здесь',
                                    widget=forms.CheckboxInput(attrs={'class': 'work_here'}), initial=True,
                                    required=False)
@@ -96,16 +97,14 @@ class ExperienceForm(forms.Form):
 
 
 class LanguageForm(forms.Form):
-    language = forms.ChoiceField(choices=LANGUAGE, label='Язык', widget=forms.Select(attrs={'class': 'form_select'}),
+    language = forms.ChoiceField(choices=LANGUAGE, label='Язык',
+                                 widget=forms.Select(attrs={'class': 'form_select lang'}),
+                                 initial='',
                                  required=False)
-    level = forms.ChoiceField(choices=LEVEL, label='Мой уровень', widget=forms.Select(attrs={'class': 'form_select'}),
+    level = forms.ChoiceField(choices=LEVEL, label='Мой уровень',
+                              widget=forms.Select(attrs={'class': 'form_select lang'}),
                               initial='',
                               required=False)
-
-    def __init__(self, *args, **kwargs):
-        initial_language = kwargs.pop('initial_language', 'eng')
-        super(LanguageForm, self).__init__(*args, **kwargs)
-        self.fields['language'].initial = initial_language
 
 
 class ProfileForm(ModelForm):

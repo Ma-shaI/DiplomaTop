@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="register_block">
     <div class="container">
@@ -8,17 +8,16 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ wizard.management_form }}
-                {% for field in wizard.form %}
-                <div class="form__field">
-
-                    <label> {{ field.label }}</label>
-                    {{ field}}
-                </div>
-                {% endfor %}
+                {% for language in request.user.profile.language_set.all %}
+                <p>{{ language.get_language_display }} {{ language.get_level_display }}</p>
+                {% endfor%}
                 <div class="div_btn">
-                    <input type="submit" value="Дальше" class="btn"></div>
+                    <input type="submit" value="Дальше" class="btn">
+                </div>
             </form>
+            {% include 'users/add_language.html' %}
         </div>
     </div>
 </div>
+<script src="{% static 'js/language_add.js' %}"></script>
 {% endblock %}

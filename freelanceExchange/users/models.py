@@ -112,7 +112,7 @@ class EndWork(models.Model):
 
 
 class Language(models.Model):
-    owner = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE)
     language = models.CharField(max_length=200, choices=LANGUAGE, blank=True, null=True)
     level = models.CharField(max_length=200, choices=LEVEL, blank=True, null=True)
 
